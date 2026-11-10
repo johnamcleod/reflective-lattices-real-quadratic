@@ -2,17 +2,19 @@
 
 Each entry gives its status and how it will be resolved. None of these is assumed away.
 
-## Q1. The close-pair conditions: Mark's γ-test versus the prototype
+## Q1. Close-pair conditions: Mark's γ-test vs the prototype. RESOLVED (10 Nov 2026)
 
-- **Mark** (Lemma 11, (25)–(26)) requires γk²/(A′BN) ∈ o and γk′²/(AB′N′) ∈ o, with γ given in closed form.
-- **The prototype** (`rank3.enumerate_close_pair`) computes s and s′ explicitly. It requires 2(s·s′)/s² ∈ O and 2(s·s′)/s′² ∈ O, and in addition s·s′ < 0 and (s·s′)² > s²s′² (S and S′ ultraparallel).
-- **Why it matters.** The two must be shown equivalent, up to the extra geometric filters. Mark may or may not have imposed the ultraparallel filter, which would change the count of 97526. The ℤ[√2] close-pair count was never finished in the prototype.
-- **Status:** open. Resolve by comparing both implementations over ℤ[√2] (gate A.3.2).
+- **Equivalence.** Mark's (25) are exactly the root conditions 2(s·s′)/s² ∈ o and 2(s·s′)/s′² ∈ o, because s² = 2A′BN/k² and s′² = 2AB′N′/k′² at her scale.
+- **Exact agreement.** Over ℤ[√2], all 97526 configurations passing these conditions agree entry by entry with Mark's printed (27), including the closed-form γ of (26).
+- **The extra filter is inert.** The prototype's ultraparallel filter (s·s′ < 0 and (s·s′)² > s²s′²) removes **none** of them, so the count is 97526 with or without it.
+- `tests/test_configs.py::test_close_pair_zsqrt2`.
 
-## Q2. The Coxeter restriction in Lemma 9
+## Q2. Coxeter restriction in Lemma 9. CONFIRMED, recorded in DISCREPANCIES #1
 
-- Mark's Lemma 9 is printed with the full box 0 < AB, A′B′ < 4. The counts 282/1736 are reproduced only with AB, A′B′ ∈ {4cos²(π/m)}; the full box gives 360/1794.
-- **Status:** the counts suggest Mark's program imposed the restriction. It is geometrically valid, because R∩T is a vertex of a Coxeter polygon. It is also needed for CC′ < 4. To be stated explicitly in the manuscript.
+- Our code reproduces the prototype's finding: with the printed full box 0 < AB, A′B′ < 4 the counts are 360/1794; with AB, A′B′ ∈ {4cos²(π/m)} they are 282/1736, which is Mark's Table 1.
+- **Geometric justification.** R∩T and R′∩T are vertices of a Coxeter polygon.
+- The same restriction applies to A′B′ in Lemma 10. The (22)/(23) counts 5777/88836 match with it.
+- `tests/test_configs.py::test_short_edge_full_box_differs`.
 
 ## Q3. Short-edge lattices: 134/351 versus Mark's 130/341
 
@@ -38,3 +40,10 @@ Each entry gives its status and how it will be resolved. None of these is assume
 ## Q7. Step-1 §4.1 for A₁² corners
 
 - The claim that "b is a unit" is unproven for right-angled corners (step-1 §9 item 4). Not needed by the pipeline, which handles A₁² generically, but the manuscript must not claim it.
+
+## Q8. Normalisation of s in (22)/(27) relative to the re-derived form
+
+- Mark's s (and r′) equal ours divided by the unit u, where u² = w = AB′C′/(A′BC). This gives the same mirrors, and changes neither k (taken modulo unit squares) nor the lattice stage.
+- N = 4/(r′²(G⁻¹)₃₃) equals Mark's (21), N = 4 + 4(CC′+β+A′B′)/(AB−4), in every case over both rings.
+- This settles the "μ′² vs 2μ′²" question in favour of μ′², as the step-2 notes said.
+- **Status:** resolved.

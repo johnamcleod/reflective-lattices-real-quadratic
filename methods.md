@@ -38,6 +38,7 @@ The task: classify the strongly squarefree (SSF) reflective rank-3 hyperbolic la
 - **Element representation.** Hot loops do not use `Fraction` objects. An element of K is an integer triple (a, b, n) meaning (a + bω)/n, with n > 0 and gcd(a,b,n) = 1.
   - Signs are decided exactly: sign(a + b√D) by comparing a² with D·b² when the signs of a and b differ. For φ, write a + bφ = (2a + b + b√5)/2.
 - **C kernel.** The plan is to move the configuration loops to C (GMP via libpari) only if profiling shows the ℤ[√2] close-pair run needs more than about 24 h on 8 cores. That decision will be recorded here with measurements.
+- **Measured (gate A.3.2).** With integer-triple arithmetic the full ℤ[√2] close-pair configuration enumeration takes 76 CPU-minutes, about 10 min wall on 8 workers. So **no C kernel is needed for the configurations.** The lattice stage will be profiled at gate A.3.3 before deciding.
 - **Oracle.** `prototype/` holds the supplied Python, unmodified. Tests compare the production code with it wherever the prototype is fast enough.
 
 ## 3. Exactness policy
