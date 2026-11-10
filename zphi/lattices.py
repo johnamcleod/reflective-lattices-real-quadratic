@@ -262,10 +262,15 @@ def finish(G: Mat, Mb: Mat, roots: Sequence[Vec]) -> Optional[Mat]:
     return GM
 
 
-def candidates(G: Mat, roots: Sequence[Vec], with_basis: bool = False):
-    """SSF lattices M with span(roots) <= M <= hull (prime-by-prime).
+def candidates(G: Mat, roots: Sequence[Vec], with_basis: bool = False,
+               ssf_prune: bool = True):
+    """Lattices M with span(roots) <= M <= hull in which every root is primitive.
 
-    Returns a list of primitive Gram matrices (or (Gram, basis) pairs)."""
+    ssf_prune=True (default): only SSF M (primitive rescaling has squarefree det),
+    enumerated prime by prime with local pruning; returns Gram matrices (or
+    (Gram, basis) pairs).
+    ssf_prune=False: every such M ("reflection-stable enlargements", Mark §3.5);
+    returns triples (Gram, basis, is_ssf)."""
     R = G[0][0].R
     Rb, Hb, N0 = hull_data(G, roots)
     if not is_integral_mat(N0):
@@ -285,10 +290,12 @@ def candidates(G: Mat, roots: Sequence[Vec], with_basis: bool = False):
         keep = []
         for N2 in local_superlattices(e, p):
             Np = [[b[i] * N2[i][j] for j in range(3)] for i in range(3)]
-            GM = gram_of(G, mat_mul(HU, Np))
-            s = min(valuation(x, p) for row in GM for x in row if not x.is_zero())
-            if valuation(det(GM), p) - 3 * s <= 1:
-                keep.append(Np)
+            if ssf_prune:
+                GM = gram_of(G, mat_mul(HU, Np))
+                s = min(valuation(x, p) for row in GM for x in row if not x.is_zero())
+                if valuation(det(GM), p) - 3 * s > 1:
+                    continue
+            keep.append(Np)
         if not keep:
             return []
         local_choices.append(keep)
@@ -299,7 +306,67 @@ def candidates(G: Mat, roots: Sequence[Vec], with_basis: bool = False):
         else:
             Nfull = S
         Mb = mat_mul(HU, Nfull)
-        GM = finish(G, Mb, roots)
-        if GM is not None:
-            out.append((GM, Mb) if with_basis else GM)
+        if ssf_prune:
+            GM = finish(G, Mb, roots)
+            if GM is not None:
+                out.append((GM, Mb) if with_basis else GM)
+        else:
+            Minv = inv(Mb)
+            ok = True
+            for x in roots:
+                c = mat_vec(Minv, x)
+                if not gcd_list(c, R).is_unit():
+                    ok = False
+                    break
+            if not ok:
+                continue
+            GM, _ = primitive_gram(gram_of(G, Mb))
+            out.append((GM, Mb, is_squarefree(det(GM))))
     return out
+
+
+# ------------------------------------------------------ local simplicity
+
+def vertex_pairs(kind: str, n_roots: int) -> List[Tuple[int, int]]:
+    """Index pairs (into cfg.roots) of configuration roots meeting at a vertex of the
+    chamber (consecutive edges). roots = [r, t, r'] (+ [s]) (+ [s, s'])."""
+    if kind == "short_edge":
+        return [(0, 1), (2, 1)]            # R∩T, R'∩T  (+ R∩R' for triangles)
+    if kind == "short_pair":
+        return [(0, 3), (3, 1), (2, 1)]    # R∩S, S∩T, T∩R'
+    return [(0, 3), (3, 1), (1, 4), (4, 2)]  # R∩S, S∩T, T∩S', S'∩R'
+
+
+def dihedral_order(G: Mat, x: Vec, y: Vec) -> int:
+    """m with 4 (x.y)^2 / (x^2 y^2) = 4 cos^2(pi/m); raises if not a Coxeter angle."""
+    from .boxes import gammas
+    R = G[0][0].R
+    g = 4 * bil(G, x, y) ** 2 / (bil(G, x, x) * bil(G, y, y))
+    for m, v in gammas(R).items():
+        if g == v:
+            return m
+    raise ValueError(f"not a Coxeter angle: {g}")
+
+
+def local_simplicity(G: Mat, Mb: Mat, roots: Sequence[Vec], kind: str,
+                     triangle: bool) -> Tuple[bool, List[Tuple[int, int]]]:
+    """At every vertex of the configuration with angle pi/m, the lattice M must have
+    exactly m mirrors through that vertex (otherwise the two configuration roots
+    are not simple roots there: some mirror of M passes between them).
+
+    Returns (ok, [(m, mirrors)] per vertex)."""
+    from .definite import mirrors_through_vertex
+    GM, _ = primitive_gram(gram_of(G, Mb))   # roots are invariant under rescaling
+    Minv = inv(Mb)
+    pairs = list(vertex_pairs(kind, len(roots)))
+    if triangle:
+        pairs.append((0, 2))
+    info = []
+    ok = True
+    for i, j in pairs:
+        m = dihedral_order(G, roots[i], roots[j])
+        cnt = mirrors_through_vertex(GM, mat_vec(Minv, roots[i]), mat_vec(Minv, roots[j]))
+        info.append((m, cnt))
+        if cnt != m:
+            ok = False
+    return ok, info

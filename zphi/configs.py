@@ -288,3 +288,34 @@ def scaled_gram(cfg: Config) -> Mat:
     scale = C if Ap.is_zero() else Bp
     vs = mark_order(cfg)
     return [[scale * bil(cfg.G, x, y) for y in vs] for x in vs]
+
+
+# ------------------------------------------------------- rebuild from key
+
+def build(kind: str, key: Key) -> Optional[Config]:
+    """Reconstruct the Config with the given key (deterministic)."""
+    A, B, Ap, Bp, C, Cp = key[:6]
+    R = A.R
+    r = gram_rtr(A, B, Ap, Bp, C, Cp)
+    if r is None:
+        return None
+    G, eps = r
+    roots = [_e(R, 0), _e(R, 1), _e(R, 2)]
+    if kind in ("short_pair", "close_pair"):
+        Gi = inv(G)
+        v = [Gi[i][2] for i in range(3)]
+        k = key[6]
+        roots.append([(-2 / (k * Gi[2][2])) * c for c in v])
+    if kind == "close_pair":
+        vp = [Gi[i][0] for i in range(3)]
+        kp = key[7]
+        roots.append([(-2 / (kp * Gi[0][0])) * c for c in vp])
+    return Config(kind, tuple(key), G, roots, eps)
+
+
+def is_triangle(cfg: Config) -> bool:
+    """Short edge with C C' a Coxeter value (R and R' meet: P is a triangle)."""
+    if cfg.kind != "short_edge":
+        return False
+    z = cfg.key[4] * cfg.key[5]
+    return any(z == g for m, g in gammas(z.R).items() if m != 2)
