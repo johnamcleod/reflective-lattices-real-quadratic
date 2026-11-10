@@ -1,0 +1,17 @@
+name = "ReflectZphi"
+version = "0.1.0"
+defaultTargets = ["ReflectZphi"]
+
+[leanOptions]
+pp.unicode.fun = true
+autoImplicit = false
+maxRecDepth = 8192
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "v4.35.0"
+
+[[lean_lib]]
+name = "ReflectZphi"
