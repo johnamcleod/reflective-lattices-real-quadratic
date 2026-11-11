@@ -16,10 +16,14 @@ Each entry gives its status and how it will be resolved. None of these is assume
 - The same restriction applies to A′B′ in Lemma 10. The (22)/(23) counts 5777/88836 match with it.
 - `tests/test_configs.py::test_short_edge_full_box_differs`.
 
-## Q3. Short-edge lattices: 134/351 versus Mark's 130/341
+## Q3. Lattice-stage counts versus Mark's Table 1 (gate A.3.3)
 
-- Mark §3.5 also "removed any where the root sequence was not a chain of roots due to not being locally simple". The prototype does not.
-- **Status:** hypothesis, to be tested in gate A.3.3 by adding a local-simplicity filter. A second possible cause is the hull: Mark used all roots of R, the prototype only the configuration roots, which would make the prototype's list larger.
+- **Original form:** short-edge lattices 134/351 against Mark's 130/341.
+- **Tested hypotheses:**
+  1. *Local simplicity removes the excess.* No. Our filter (Mark §2.8(3): at each configuration vertex of angle π/m the lattice has exactly m mirrors) cuts the short-edge SSF counts 134 → 77 and 351 → 286, which is far below 130/341. For type (23) the post-filter count 1190 is nearer 1096 than the pre-filter 1262. So we cannot tell whether Mark's "squarefree enlargements" column is taken before or after her local-simplicity removal. Her §3.5 sentence order suggests before.
+  2. *Hull over all roots of R (Mark §2.9).* It does not reproduce her numbers either; see DISCREPANCIES #3.
+- **Status:** open. Our enumeration is a provable superset of the lattices in which the configuration vectors are roots, so completeness does not depend on resolving this. **It is not assumed away:** gate A.3.4 compares the final reflective lists. Any lattice we find that is reflective, SSF and missing from Mark's 432 would be a substantive discrepancy, to be reported.
+- Mark's text also says her enumeration had redundancies ("large overestimates"), so her counts are not canonical invariants. Item-by-item reproduction is not possible without her program.
 
 ## Q4. Missing companion files
 

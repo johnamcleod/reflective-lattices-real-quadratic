@@ -196,3 +196,19 @@ def test_H2_glue_example():
     phi = R.w
     G = [[R(2), -phi, R(2)], [-phi, R(2), R(0)], [R(2), R(0), R(2) + phi]]
     assert det(G) == R(-3)
+
+
+def test_reduced_short_vectors_same_set():
+    import random
+    from zphi.definite import short_vectors, short_vectors_reduced, _int_det, lll_gram
+    rng = random.Random(7)
+    for _ in range(40):
+        n = rng.choice([2, 3, 4])
+        while True:
+            A = [[rng.randint(-9, 9) for _ in range(n)] for _ in range(n)]
+            if _int_det(A):
+                break
+        T = [[sum(A[k][i] * A[k][j] for k in range(n)) for j in range(n)] for i in range(n)]
+        assert abs(_int_det(lll_gram(T))) == 1
+        b = rng.randint(1, 80)
+        assert set(short_vectors(T, b)) == set(short_vectors_reduced(T, b))

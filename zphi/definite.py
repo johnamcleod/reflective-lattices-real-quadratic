@@ -64,6 +64,78 @@ def short_vectors(T, bound) -> Iterator[Tuple[int, ...]]:
     yield from rec(n - 1, bound)
 
 
+def lll_gram(T) -> List[List[int]]:
+    """Exact LLL (delta = 3/4) on a positive definite integer Gram matrix T.
+
+    Returns an integer matrix U (columns = new basis) with det U = +-1; U^T T U is
+    LLL-reduced. Exact rational arithmetic throughout. Correctness of callers only
+    needs U unimodular (asserted), not reducedness: reduction only speeds up
+    Fincke-Pohst, whose output is mapped back through U."""
+    n = len(T)
+    U = [[int(i == j) for j in range(n)] for i in range(n)]
+
+    def g(a, b):        # <u_a, u_b>_T
+        return sum(U[i][a] * T[i][j] * U[j][b] for i in range(n) for j in range(n))
+
+    def gso():
+        mu = [[Fr(0)] * n for _ in range(n)]
+        Bs = [Fr(0)] * n
+        for i in range(n):
+            for j in range(i):
+                mu[i][j] = (Fr(g(i, j)) - sum((mu[j][k] * mu[i][k] * Bs[k] for k in range(j)),
+                                              Fr(0))) / Bs[j]
+            Bs[i] = g(i, i) - sum((mu[i][k] ** 2 * Bs[k] for k in range(i)), Fr(0))
+        return mu, Bs
+
+    k = 1
+    while k < n:
+        mu, Bs = gso()
+        for j in range(k - 1, -1, -1):
+            c = round(mu[k][j])
+            if c:
+                for r in range(n):
+                    U[r][k] -= c * U[r][j]
+                mu, Bs = gso()
+        if Bs[k] >= (Fr(3, 4) - mu[k][k - 1] ** 2) * Bs[k - 1]:
+            k += 1
+        else:
+            for r in range(n):
+                U[r][k], U[r][k - 1] = U[r][k - 1], U[r][k]
+            k = max(k - 1, 1)
+    assert abs(_int_det(U)) == 1
+    return U
+
+
+def _int_det(M) -> int:
+    """Exact determinant of a square integer matrix (Fraction elimination)."""
+    A = [[Fr(x) for x in row] for row in M]
+    n, d = len(A), Fr(1)
+    for i in range(n):
+        p = next((r for r in range(i, n) if A[r][i] != 0), None)
+        if p is None:
+            return 0
+        if p != i:
+            A[i], A[p] = A[p], A[i]
+            d = -d
+        d *= A[i][i]
+        for r in range(i + 1, n):
+            f = A[r][i] / A[i][i]
+            for c in range(i, n):
+                A[r][c] -= f * A[i][c]
+    assert d.denominator == 1
+    return int(d)
+
+
+def short_vectors_reduced(T, bound) -> Iterator[Tuple[int, ...]]:
+    """Same set as short_vectors(T, bound), enumerated on an LLL-reduced basis."""
+    n = len(T)
+    U = lll_gram(T)
+    T2 = [[sum(U[i][a] * T[i][j] * U[j][b] for i in range(n) for j in range(n))
+           for b in range(n)] for a in range(n)]
+    for y in short_vectors(T2, bound):
+        yield tuple(sum(U[i][a] * y[a] for a in range(n)) for i in range(n))
+
+
 # ---------------------------------------------------- O-lattices, restriction
 
 def trace_form(Q: Mat) -> List[List[int]]:
@@ -91,7 +163,7 @@ def vectors_of_norms(Q: Mat, norms: Sequence[El]) -> List[Tuple[Vec, El]]:
     bound = max(n.trace() for n in norms)
     out = []
     m = len(Q)
-    for z in short_vectors(T, bound):
+    for z in short_vectors_reduced(T, bound):
         if not any(z):
             continue
         v = [R(z[2 * i], z[2 * i + 1]) for i in range(m)]
