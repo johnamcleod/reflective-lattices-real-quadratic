@@ -212,3 +212,24 @@ def test_reduced_short_vectors_same_set():
         assert abs(_int_det(lll_gram(T))) == 1
         b = rng.randint(1, 80)
         assert set(short_vectors(T, b)) == set(short_vectors_reduced(T, b))
+
+
+def test_integer_fincke_pohst_matches_fraction_reference():
+    import random
+    from fractions import Fraction as F
+    from zphi.definite import short_vectors, short_vectors_fraction, _int_det
+    rng = random.Random(3)
+    for _ in range(150):
+        n = rng.choice([1, 2, 3, 4, 5, 6])
+        while True:
+            A = [[rng.randint(-7, 7) for _ in range(n)] for _ in range(n)]
+            if _int_det(A):
+                break
+        den = rng.choice([1, 3, 64])
+        T = [[F(sum(A[k][i] * A[k][j] for k in range(n)), den) + (F(1, 5) if i == j else 0)
+              for j in range(n)] for i in range(n)]
+        b = F(rng.randint(1, 40), rng.choice([1, 2, 3]))
+        got = sorted(short_vectors(T, b))
+        assert got == sorted(short_vectors_fraction(T, b))
+        assert all(sum(z[i] * T[i][j] * z[j] for i in range(n) for j in range(n)) <= b
+                   for z in got)
