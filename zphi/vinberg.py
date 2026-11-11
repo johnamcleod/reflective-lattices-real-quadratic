@@ -220,6 +220,28 @@ def _round_down_pd(T):
             raise ValueError("form not positive definite at 2^-4096 resolution")
 
 
+def _int_norm_forms(Gm: Mat, U):
+    """Integer 6x6 matrices N0, N1 and den > 0 with, for z in Z^6 and the vector
+    x = sum_j (y_2j + y_2j+1 w) e_j, y = U z:   Q(x) = (z^T N0 z + (z^T N1 z) w) / den.
+    Exact (from the Gram entries in K)."""
+    from math import lcm
+    R = Gm[0][0].R
+    c = [R.one, R.w]
+    B = [[Gm[k // 2][l // 2] * c[k % 2] * c[l % 2] for l in range(6)] for k in range(6)]
+    den = 1
+    for row in B:
+        for x in row:
+            den = lcm(den, x.n)
+    A0 = [[B[k][l].a * (den // B[k][l].n) for l in range(6)] for k in range(6)]
+    A1 = [[B[k][l].b * (den // B[k][l].n) for l in range(6)] for k in range(6)]
+
+    def conj(A):
+        return [[sum(U[p][a] * A[p][q] * U[q][b] for p in range(6) for q in range(6))
+                 for b in range(6)] for a in range(6)]
+
+    return conj(A0), conj(A1), den
+
+
 # ------------------------------------------------------------- the lattice
 
 class Lattice:
@@ -285,8 +307,19 @@ class Lattice:
             TU = [[sum(U[p][a] * T[p][q] * U[q][b] for p in range(6) for q in range(6))
                    for b in range(6)] for a in range(6)]
             TL = _round_down_pd(TU)
+            N0, N1, den = _int_norm_forms(Gm, U)
+            ta, tb = m.a * den, m.b * den      # Q(r) = m  <=>  (zN0z, zN1z) m.n = (ta, tb)
+            mn = m.n
+            rng6 = range(6)
             for z in short_vectors(TL, 2):
                 if not any(z):
+                    continue
+                # exact integer pre-filter on the norm (no field arithmetic)
+                N0z = [sum(N0[p][q] * z[q] for q in rng6) for p in rng6]
+                if sum(z[p] * N0z[p] for p in rng6) * mn != ta:
+                    continue
+                N1z = [sum(N1[p][q] * z[q] for q in rng6) for p in rng6]
+                if sum(z[p] * N1z[p] for p in rng6) * mn != tb:
                     continue
                 y = [sum(U[p][k] * z[k] for k in range(6)) for p in range(6)]
                 w = [R(y[2 * j], y[2 * j + 1]) for j in range(3)]
@@ -412,8 +445,22 @@ def vinberg(G: Mat, start: Sequence[Vec], Delta0: Fr = Fr(1), Delta_max: Fr = Fr
             v0 = [-x for x in v0]
     # orient v0 so that r1.v0... v0 is orthogonal to r1, r2; choose the sheet with
     # a fixed sign convention: any timelike v0 works (the chamber is in its cone)
+    return _vinberg_loop(G, v0, [r1, r2], Delta0, Delta_max, max_roots, time_limit,
+                         interior=False)
+
+
+def vinberg_interior(G: Mat, v0: Vec, Delta0: Fr = Fr(1), Delta_max: Fr = Fr(10 ** 6),
+                     max_roots: int = 200, time_limit: Optional[float] = None) -> Dict:
+    """Vinberg's algorithm from a control vector v0 in the interior of a chamber (no
+    initial roots). Valid when v0 lies on no mirror: this is checked, since a root
+    with r.v0 = 0 is enumerated at distance 0 and then raises."""
+    return _vinberg_loop(G, v0, [], Delta0, Delta_max, max_roots, time_limit,
+                         interior=True)
+
+
+def _vinberg_loop(G, v0, acc, Delta0, Delta_max, max_roots, time_limit, interior):
     L = Lattice(G, v0)
-    acc: List[Vec] = [r1, r2]
+    acc = [list(r) for r in acc]
     Delta = Fr(Delta0)
     done = None   # exact distance already processed (El) or None
     import time as _time
@@ -422,7 +469,10 @@ def vinberg(G: Mat, start: Sequence[Vec], Delta0: Fr = Fr(1), Delta_max: Fr = Fr
         if time_limit is not None and _time.time() - t_start > time_limit:
             return {"status": "undetermined", "roots": acc, "cycle": None,
                     "Delta": Delta, "reason": "time_limit"}
-        cands = [c for c in L.roots_upto(Delta) if not c[0].is_zero()]
+        allc = L.roots_upto(Delta)
+        if interior and any(c[0].is_zero() for c in allc):
+            raise ValueError("v0 lies on a mirror")
+        cands = [c for c in allc if not c[0].is_zero()]
         if done is not None:
             cands = [c for c in cands if (c[0] - done).sign() > 0]
         cands.sort(key=cmp_to_key(_cmp))

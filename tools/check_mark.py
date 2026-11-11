@@ -18,7 +18,10 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 
 from zphi.ring import ZS2 as R, from_json, gcd_list  # noqa: E402
-from zphi.vinberg import vinberg, check_polygon  # noqa: E402
+from zphi.vinberg import vinberg, vinberg_interior, check_polygon, vertex_vector, _emb_val, _sqrt_bounds  # noqa: E402
+from zphi.linalg import bil  # noqa: E402
+from fractions import Fraction as Fr  # noqa: E402
+from math import isqrt  # noqa: E402
 
 CK = os.path.join(ROOT, "checkpoints", "mark_check")
 
@@ -28,6 +31,30 @@ def mirror_key(r):
     for x in r:
         if not x.is_zero():
             return tuple((y / x).coords() for y in r)
+
+
+def interior_point(G, rts, closed):
+    """A point strictly inside the chamber: positive rational combination of the
+    vertices r_i ∩ r_{i+1} of the printed (consecutive) roots, each scaled by a
+    rational ~ 1/sqrt|v^2| so the point is central. Checked: r.v0 < 0 for every
+    printed root, and v0 timelike."""
+    R = G[0][0].R
+    s = _sqrt_bounds(R.disc)[0]
+    pts = []
+    n = len(rts)
+    for i in range(n if closed else n - 1):
+        p = vertex_vector(G, rts[i], rts[(i + 1) % n])
+        j = next(j for j in range(n) if j not in (i, (i + 1) % n)
+                 and not bil(G, rts[j], p).is_zero())
+        if bil(G, rts[j], p).sign() > 0:
+            p = [-x for x in p]
+        q = -_emb_val(bil(G, p, p), s)
+        c = Fr(1, max(1, isqrt(int(q) + 1)))
+        pts.append([R(c) * x for x in p])
+    v0 = [sum((p[k] for p in pts), R.zero) for k in range(3)]
+    assert all(bil(G, r, v0).sign() < 0 for r in rts), "v0 not interior"
+    assert bil(G, v0, v0).sign() < 0
+    return v0
 
 
 def work(idx):
@@ -48,7 +75,14 @@ def work(idx):
     out["cert_s"] = round(time.time() - t, 2)
     t = time.time()
     try:
-        v = vinberg(G, rts[:2], max_roots=80, orient=rts[2])
+        closed = e["symmetry_order"] == 1
+        if closed or len(rts) >= 4:        # >= 3 vertices: the sum is interior
+            v0 = interior_point(G, rts, closed)
+            v = vinberg_interior(G, v0, max_roots=200)
+            out["start"] = "interior"
+        else:
+            v = vinberg(G, rts[:2], max_roots=200, orient=rts[2])
+            out["start"] = "vertex"
         out["vinberg"] = v["status"]
         out["n_roots"] = len(v["roots"])
         vk = {mirror_key(r) for r in v["roots"]}
@@ -58,6 +92,11 @@ def work(idx):
             (len(vk) == len(mk) * e["symmetry_order"])
         out["roots"] = [[x.to_json() for x in r] for r in v["roots"]]
         out["cycle"] = v["cycle"]
+        if v["status"] == "reflective":     # certificate on the full chamber
+            full = [v["roots"][k] for k in v["cycle"]]
+            c = check_polygon(G, full)
+            out["full_cert_ok"] = c["ok"]
+            out["full_cert_issues"] = c["issues"][:3]
     except Exception as ex:  # recorded, never hidden
         out["vinberg"] = "error"
         out["error"] = repr(ex)

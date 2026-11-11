@@ -12,7 +12,7 @@ implies Tr(Q(v)) = Tr(n).
 from __future__ import annotations
 
 from fractions import Fraction as Fr
-from math import floor, ceil, sqrt
+from math import floor, ceil, sqrt, isqrt
 from typing import Iterator, List, Sequence, Tuple
 
 from .linalg import Mat, Vec, bil, det, mat_vec
@@ -34,7 +34,57 @@ def _ldl(T):
 
 
 def short_vectors(T, bound) -> Iterator[Tuple[int, ...]]:
-    """All integer vectors z (including 0) with z^T T z <= bound, T positive definite."""
+    """All integer vectors z (including 0) with z^T T z <= bound, T positive definite.
+
+    Pure integer arithmetic: with q = LDL^T coefficients (exact rationals) put over a
+    common denominator D (Qd = D q), the Fincke-Pohst recursion
+        Q(x) = sum_i q_ii (x_i - c_i)^2,  c_i = -sum_{j>i} q_ij x_j
+    is run with every quantity scaled to an integer, and the range of x_i comes from
+    |x_i - c_i| <= sqrt(R / q_ii) <= isqrt(floor(R / q_ii)) + 1. No floats."""
+    from math import lcm
+    n = len(T)
+    q = _ldl(T)
+    for i in range(n):
+        if q[i][i] <= 0:
+            raise ValueError("not positive definite")
+    D = 1
+    for i in range(n):
+        for j in range(i, n):
+            D = lcm(D, q[i][j].denominator)
+    Qd = [[int(q[i][j] * D) if j >= i else 0 for j in range(n)] for i in range(n)]
+    bound = Fr(bound)
+    bd = bound.denominator
+    D3 = D ** 3
+    Rs0 = bound.numerator * D3        # R scaled by K = D^3 * bd
+    x = [0] * n
+
+    def rec(i, Rs):
+        # C = D * (-c_i);  dD := (x_i - c_i) D = x_i D + C
+        C = sum(Qd[i][j] * x[j] for j in range(i + 1, n))
+        qii = Qd[i][i]
+        # R / q_ii = (Rs / (D^3 bd)) / (qii / D) = Rs / (D^2 bd qii)
+        s = isqrt(Rs // (D * D * bd * qii)) + 1
+        # centre -C / D:  x_i in [floor(-C/D) - s, ceil(-C/D) + s]
+        lo = (-C) // D - s
+        hi = -((C) // D) + s
+        for xi in range(lo, hi + 1):
+            dD = xi * D + C
+            rem = Rs - qii * dD * dD * bd
+            if rem < 0:
+                continue
+            x[i] = xi
+            if i == 0:
+                yield tuple(x)
+            else:
+                yield from rec(i - 1, rem)
+        x[i] = 0
+
+    yield from rec(n - 1, Rs0)
+
+
+def short_vectors_fraction(T, bound) -> Iterator[Tuple[int, ...]]:
+    """Reference implementation (exact Fractions, float-guided ranges widened by 1);
+    kept for testing short_vectors."""
     n = len(T)
     q = _ldl(T)
     for i in range(n):
