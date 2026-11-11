@@ -1,7 +1,8 @@
 """Vinberg's algorithm (Bugaenko's version for totally real fields), rank 3, exact.
 
 Lattice: (O^3, G), G admissible (signature (2,1) at id, positive definite at sigma).
-Roots: primitive r, Q(r) = m totally positive, 2 G r in m O^3; m runs over canonical
+Roots: primitive r, Q(r) = m totally positive, 2 G r in m O^3 (so r lies in the
+sublattice L_m = O^3 ∩ (m/2) G^-1 O^3, on which norm-m roots are enumerated); m runs over canonical
 representatives of the totally positive divisors of 2 det G modulo unit squares, so
 each mirror carries exactly one root pair +-r of each listed norm it supports.
 
@@ -28,7 +29,13 @@ from typing import Dict, List, Optional, Sequence, Tuple
 import numpy as np
 
 from .definite import short_vectors, cross, is_root as _is_root
-from .linalg import Mat, Vec, bil, det, inv, mat_vec, transpose
+from .linalg import (Mat, Vec, bil, det, inv, mat_vec, mat_mul, transpose, hnf_basis,
+                     is_integral_mat)
+
+
+def json_key(x):
+    import json
+    return json.dumps(x)
 from .ring import El, Ring, gcd_list, tp_divisors
 from .boxes import gammas
 
@@ -37,8 +44,9 @@ PREC = 200  # bits for the rational approximation of sqrt(disc)
 
 # ------------------------------------------------------- restriction of scalars
 
-def _sqrt_bounds(disc: int) -> Tuple[Fr, Fr]:
-    S = 1 << PREC
+def _sqrt_bounds(disc: int, prec: int = PREC) -> Tuple[Fr, Fr]:
+    """s_lo < sqrt(disc) < s_hi, s_hi - s_lo = 2^-prec."""
+    S = 1 << prec
     r = isqrt(disc * S * S)
     return Fr(r, S), Fr(r + 1, S)
 
@@ -52,51 +60,49 @@ def _emb_val(z: El, s: Fr) -> Fr:
     return (z.a + z.b * w) / z.n
 
 
-def _forms(G: Mat, v0: Vec, s: Fr):
-    """Rational 6x6 Grams of H_id and Q_sigma on Z^6 (x_j = a_j + b_j w), with sqrt(disc)
-    replaced by s (id) and -s (sigma)."""
+def _forms_exact(G: Mat, v0: Vec):
+    """6x6 matrices A, B over K with, for y in Z^6 and x = M y (x_j = a_j + b_j w):
+        H_id(x) = id(y^T A y),   Q_sigma(x) = sigma(y^T B y),
+    where H = G - 2 (G v0)(G v0)^T / Q(v0) and B = M^T G M. Exact in K."""
     R = G[0][0].R
-    Gid = [[_emb_val(G[i][j], s) for j in range(3)] for i in range(3)]
-    Gsg = [[_emb_val(G[i][j], -s) for j in range(3)] for i in range(3)]
     Gv = mat_vec(G, v0)
-    gv = [_emb_val(x, s) for x in Gv]
-    q0 = _emb_val(bil(G, v0, v0), s)
-    Hid = [[Gid[i][j] - 2 * gv[i] * gv[j] / q0 for j in range(3)] for i in range(3)]
-    wi = (R.c1 + s) / 2
-    ws = (R.c1 - s) / 2
+    q0 = bil(G, v0, v0)
+    H = [[G[i][j] - 2 * Gv[i] * Gv[j] / q0 for j in range(3)] for i in range(3)]
+    M = [[R.zero] * 6 for _ in range(3)]
+    for j in range(3):
+        M[j][2 * j] = R.one
+        M[j][2 * j + 1] = R.w
 
-    def E(w):
-        # columns: (a_0, b_0, a_1, b_1, a_2, b_2) -> x in R^3
-        M = [[Fr(0)] * 6 for _ in range(3)]
-        for j in range(3):
-            M[j][2 * j] = Fr(1)
-            M[j][2 * j + 1] = w
-        return M
+    def pull(X):
+        return [[sum((M[i][p] * X[i][j] * M[j][q] for i in range(3) for j in range(3)),
+                     R.zero) for q in range(6)] for p in range(6)]
 
-    Ei, Es = E(wi), E(ws)
-
-    def pull(A, M):
-        return [[sum(M[i][p] * A[i][j] * M[j][q] for i in range(3) for j in range(3))
-                 for q in range(6)] for p in range(6)]
-
-    return pull(Hid, Ei), pull(Gsg, Es)
+    return pull(H), pull(G)
 
 
-def _lower_form(G: Mat, v0: Vec, Ci: Fr, Cs: Fr):
-    """Rational T_lo with T_lo(x) <= T(x) for all x in R^6 (see module docstring)."""
+def _lower_form(G: Mat, v0: Vec, Ci: Fr, Cs: Fr, prec: int = PREC):
+    """Rational T_lo with T_lo(y) <= T(y) := id(y^T A y)/Ci + sigma(y^T B y)/Cs for all
+    y in R^6 (A, B from _forms_exact).
+
+    Rigour: each entry T_pq(s) = emb(A_pq, s)/Ci + emb(B_pq, -s)/Cs is an affine
+    function of s, and the true value is at s* = sqrt(disc) in [s_lo, s_hi]. With
+    T_lo := T(s_lo) - E, the error e_pq := |T_pq(s_hi) - T_pq(s_lo)| bounds
+    |T_pq(s*) - T_pq(s_lo)| (affine), and y^T (T(s*) - T(s_lo)) y >= -sum_p y_p^2
+    sum_q e_pq (|y_p y_q| <= (y_p^2 + y_q^2)/2). So subtracting sum_q e_pq from the
+    p-th diagonal entry gives a lower bound."""
     R = G[0][0].R
     if R.D == 1:
         raise NotImplementedError("Z: use a 3-dim enumeration")
-    s_lo, s_hi = _sqrt_bounds(R.disc)
-    Ai_lo, As_lo = _forms(G, v0, s_lo)
-    Ai_hi, As_hi = _forms(G, v0, s_hi)
-    T = [[Ai_lo[p][q] / Ci + As_lo[p][q] / Cs for q in range(6)] for p in range(6)]
-    T2 = [[Ai_hi[p][q] / Ci + As_hi[p][q] / Cs for q in range(6)] for p in range(6)]
-    # entries are smooth in s; |T(s) - T(s_lo)| <= 4 max|T(s_hi) - T(s_lo)| + 2^-150
-    # for s in [s_lo, s_hi] (generous: second-order terms are O(2^-400)).
-    eta = 4 * max(abs(T2[p][q] - T[p][q]) for p in range(6) for q in range(6)) + Fr(1, 1 << 150)
-    # |x^T E x| <= 6 eta |x|^2 for |E_pq| <= eta
-    return [[T[p][q] - (6 * eta if p == q else 0) for q in range(6)] for p in range(6)]
+    A, B = _forms_exact(G, v0)
+    s_lo, s_hi = _sqrt_bounds(R.disc, prec)
+
+    def T(s):
+        return [[_emb_val(A[p][q], s) / Ci + _emb_val(B[p][q], -s) / Cs for q in range(6)]
+                for p in range(6)]
+
+    Tl, Th = T(s_lo), T(s_hi)
+    e = [[abs(Th[p][q] - Tl[p][q]) for q in range(6)] for p in range(6)]
+    return [[Tl[p][q] - (sum(e[p]) if p == q else 0) for q in range(6)] for p in range(6)]
 
 
 def _lll_float(T) -> List[List[int]]:
@@ -155,6 +161,65 @@ def _round_down(T, bits=48):
     return out
 
 
+def _is_pd(T) -> bool:
+    from .definite import _ldl
+    q = _ldl(T) if all(T[i][i] > 0 for i in range(len(T))) else None
+    return q is not None and all(q[i][i] > 0 for i in range(len(T)))
+
+
+def _pivots(T):
+    from .definite import _ldl
+    q = _ldl(T)
+    return [q[i][i] for i in range(len(T))]
+
+
+def _lll_exact(T, max_rounds: int = 12) -> List[List[int]]:
+    """Unimodular U making the rational PD form T well-conditioned. Repeated exact
+    integer LLL on round(S * U^T T U), with S chosen from the smallest exact LDL pivot
+    of the current form, until the exact pivots of U^T T U satisfy the Lovasz-type
+    bound d_{k} >= d_{k-1}/4 (or max_rounds). Any unimodular U is valid for the
+    enumeration; only speed depends on the reduction."""
+    from .definite import lll_gram
+    n = len(T)
+    U = [[int(i == j) for j in range(n)] for i in range(n)]
+
+    def conj(U):
+        return [[sum(U[p][a] * T[p][q] * U[q][b] for p in range(n) for q in range(n))
+                 for b in range(n)] for a in range(n)]
+
+    Tc = T
+    for _ in range(max_rounds):
+        d = _pivots(Tc)
+        if all(d[k] * 4 >= d[k - 1] for k in range(1, n)):
+            break
+        dmin = min(d)
+        k = max(0, 40 - (dmin.numerator.bit_length() - dmin.denominator.bit_length()))
+        while True:
+            S = 1 << k
+            Ti = [[round(Tc[p][q] * S) for q in range(n)] for p in range(n)]
+            if _is_pd(Ti):
+                break
+            k += 20
+        V = lll_gram(Ti)
+        U = [[sum(U[i][j] * V[j][c] for j in range(n)) for c in range(n)] for i in range(n)]
+        Tc = conj(U)
+    return U
+
+
+def _round_down_pd(T):
+    """_round_down with the grid refined until the result is positive definite (it is
+    a lower bound for T at every precision)."""
+    d = min(_pivots(T))
+    bits = max(48, 48 - (d.numerator.bit_length() - d.denominator.bit_length()))
+    while True:
+        TL = _round_down(T, bits)
+        if _is_pd(TL):
+            return TL
+        bits *= 2
+        if bits > 4096:
+            raise ValueError("form not positive definite at 2^-4096 resolution")
+
+
 # ------------------------------------------------------------- the lattice
 
 class Lattice:
@@ -168,6 +233,25 @@ class Lattice:
         self.det = det(G)
         self.norms = tp_divisors(2 * self.det)
         self._cache: Dict[Tuple, List] = {}
+        self._sub: Dict = {}
+
+    def _sublattice(self, m: El):
+        """Basis Bm (columns) of L_m = O^3 ∩ (m/2) G^-1 O^3, which contains every root
+        of norm m (2 G r in m O^3); with Gram Bm^T G Bm and v0 in Bm-coordinates.
+        L_m is the dual (w.r.t. the dot product) of O^3 + (2/m) G O^3."""
+        key = m.to_json() if hasattr(m, "to_json") else repr(m)
+        key = json_key(key)
+        if key not in self._sub:
+            R = self.R
+            n = len(self.G)
+            gens = [[R.one if i == j else R.zero for i in range(n)] for j in range(n)]
+            gens += [[2 * self.G[i][j] / m for i in range(n)] for j in range(n)]
+            P = hnf_basis(gens)
+            Bm = transpose(inv(P))
+            assert is_integral_mat(Bm)
+            Gm = mat_mul(mat_mul(transpose(Bm), self.G), Bm)
+            self._sub[key] = (Bm, Gm, mat_vec(inv(Bm), self.v0))
+        return self._sub[key]
 
     def is_root(self, r: Vec) -> bool:
         return _is_root(self.G, r)
@@ -189,16 +273,24 @@ class Lattice:
             ms = max(_emb_val(m.conj(), x) for x in sb)   # >= sigma(m)
             Ci = mi * (1 + 2 * Delta) * (1 + Fr(1, 10 ** 12))
             Cs = ms * (1 + Fr(1, 10 ** 12))
-            T = _lower_form(self.G, self.v0, Ci, Cs)
-            U = _lll_float(T)
+            Bm, Gm, v0m = self._sublattice(m)
+            prec = PREC
+            T = _lower_form(Gm, v0m, Ci, Cs, prec)
+            while not _is_pd(T):
+                prec *= 2
+                if prec > 1 << 14:
+                    raise ValueError("lower form not positive definite")
+                T = _lower_form(Gm, v0m, Ci, Cs, prec)
+            U = _lll_exact(T)
             TU = [[sum(U[p][a] * T[p][q] * U[q][b] for p in range(6) for q in range(6))
                    for b in range(6)] for a in range(6)]
-            TL = _round_down(TU)
+            TL = _round_down_pd(TU)
             for z in short_vectors(TL, 2):
                 if not any(z):
                     continue
                 y = [sum(U[p][k] * z[k] for k in range(6)) for p in range(6)]
-                r = [R(y[2 * j], y[2 * j + 1]) for j in range(3)]
+                w = [R(y[2 * j], y[2 * j + 1]) for j in range(3)]
+                r = mat_vec(Bm, w)
                 if bil(self.G, r, r) != m:
                     continue
                 t = bil(self.G, r, self.v0)
@@ -292,7 +384,8 @@ def _cmp(a, b):
 
 
 def vinberg(G: Mat, start: Sequence[Vec], Delta0: Fr = Fr(1), Delta_max: Fr = Fr(10 ** 6),
-            max_roots: int = 60, orient: Optional[Vec] = None) -> Dict:
+            max_roots: int = 60, orient: Optional[Vec] = None,
+            time_limit: Optional[float] = None) -> Dict:
     """Vinberg's algorithm with v0 = the vertex r_1^⊥ ∩ r_2^⊥ of the two given simple
     roots `start` (they must meet at a Coxeter angle and be the simple roots of the
     stabiliser of v0; this is asserted by counting mirrors through v0).
@@ -323,7 +416,12 @@ def vinberg(G: Mat, start: Sequence[Vec], Delta0: Fr = Fr(1), Delta_max: Fr = Fr
     acc: List[Vec] = [r1, r2]
     Delta = Fr(Delta0)
     done = None   # exact distance already processed (El) or None
+    import time as _time
+    t_start = _time.time()
     while Delta <= Delta_max:
+        if time_limit is not None and _time.time() - t_start > time_limit:
+            return {"status": "undetermined", "roots": acc, "cycle": None,
+                    "Delta": Delta, "reason": "time_limit"}
         cands = [c for c in L.roots_upto(Delta) if not c[0].is_zero()]
         if done is not None:
             cands = [c for c in cands if (c[0] - done).sign() > 0]
@@ -423,7 +521,9 @@ def check_polygon(G: Mat, roots: Sequence[Vec]) -> Dict:
         d = bil(G, v, p) ** 2 / (q * bil(G, p, p)) - 1
         if (d - Delta_el).sign() > 0:
             Delta_el = d
-    Delta = Fr(int(float(Delta_el) * 1.000001) + 1)
+    Delta = Fr(int(float(Delta_el)) + 1)
+    while (Delta_el - Delta_el.R(Delta)).sign() > 0:   # exact: Delta >= Delta_el
+        Delta += 1
     L = Lattice(G, v)
     crossing = 0
     for d, m, r in L.roots_upto(Delta):

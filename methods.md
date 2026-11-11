@@ -139,3 +139,14 @@ The PDFs and their text conversions are in `papers/`.
 | Guglielmetti, thesis (Fribourg 2017) | to fetch |
 | Mcleod, thesis (Durham 2013) | copy in `../reflect-z2/papers/`; to be copied here |
 | Bugaenko 1984/1990 | probably unavailable; cited secondhand, flagged |
+
+## Planned refactor: field profiles (after gate A.3.4, before the ℤ[φ] lattice stage)
+
+All algorithms (configurations, hull, SNF, local enumeration, Vinberg, certificates, isometries) take a ring object and never branch on the field. The refactor makes that object an explicit strategy, composed rather than subclassed:
+
+- **Generic order arithmetic** for ℤ[ω] with ω² = c₁ω + c₀: signs, norms, Euclidean division, unit reduction, restriction of scalars. It is written once from (c₀, c₁, fundamental unit).
+- **A per-field profile** (data): the fundamental unit; the admissible Coxeter orders m with 4cos²(π/m) ∈ O (replacing the `D == 2` / `D == 5` branches in `boxes.gammas`); the residue fields of small primes; the box bounds; and reference values for the tests.
+- **ℤ** becomes a separate degree-1 profile, used only by the oracle tests (replacing the `D == 1` branches).
+- **Hypotheses are checked, not assumed:** (H1) O Euclidean, since HNF, SNF and egcd need a PID; (H2) degree 2, since the restriction of scalars is to ℤ⁶ with one conjugate. A field failing either is rejected with an explicit error. Field-specific lemmas (corner normal forms, glue conditions, (U2)/(N2)) stay out of the generic layer.
+
+Afterwards gates A.3.1–A.3.4 are rerun unchanged as the regression test. The manuscript mirrors this split: Part I is the general method, with the hypotheses each result uses; Part II covers ℤ[√2] (validation) and then ℤ[φ].

@@ -76,3 +76,18 @@ def test_non_isometric_distinct_det():
     G1, r1 = load(E[0])
     G2, r2 = load(E[1])
     assert find_isometry(G1, r1, G2, r2) is None
+
+
+@pytest.mark.parametrize("i", [0, 2, 7, 11])
+def test_sublattice_enumeration_same_roots(i):
+    """roots_upto on L_m equals roots_upto on the full lattice O^3."""
+    from zphi.vinberg import Lattice, vertex_vector
+    from zphi.linalg import ident
+    G, rts = load(entries()[i])
+    v0 = vertex_vector(G, rts[0], rts[1])
+    a = Lattice(G, v0)
+    b = Lattice(G, v0)
+    I = ident(R, 3)
+    b._sublattice = lambda m: (I, G, v0)
+    for D in (1, 4):
+        assert sorted(map(str, a.roots_upto(D))) == sorted(map(str, b.roots_upto(D)))

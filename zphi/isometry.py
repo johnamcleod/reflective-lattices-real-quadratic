@@ -98,3 +98,34 @@ def find_isometry(G1: Mat, roots1: Sequence[Vec], G2: Mat, roots2: Sequence[Vec]
             if all(mat_vec(phi, roots1[i]) == imgs[i] for i in range(n)):
                 return phi
     return None
+
+
+def classify(items):
+    """items: list of (label, G, roots in cyclic order) for reflective lattices.
+    Returns (classes, certs): classes = list of lists of labels (one per isometry
+    class, representative first); certs = {label: (rep_label, phi)} with
+    phi^T G_rep phi = G_label for every non-representative.
+
+    Lattices with different invariant_key are non-isometric (the key is an isometry
+    invariant of the chamber up to dihedral symmetry). Within a bucket, each item is
+    compared with the representatives found so far by find_isometry (complete: a
+    failed search proves non-isometry, given correct chambers)."""
+    from collections import defaultdict
+    buckets = defaultdict(list)
+    for it in items:
+        buckets[invariant_key(it[1], it[2])].append(it)
+    classes, certs = [], {}
+    for key in sorted(buckets, key=repr):
+        reps = []
+        for lab, G, rts in buckets[key]:
+            for c in reps:
+                _, Gr, rr = c[0]
+                phi = find_isometry(G, rts, Gr, rr)
+                if phi is not None:
+                    c.append((lab, G, rts))
+                    certs[lab] = (c[0][0], phi)
+                    break
+            else:
+                reps.append([(lab, G, rts)])
+        classes.extend([[x[0] for x in c] for c in reps])
+    return classes, certs
