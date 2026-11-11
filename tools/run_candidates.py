@@ -25,10 +25,11 @@ from zphi.lattices import primitive_gram, vertex_pairs, dihedral_order  # noqa: 
 from zphi.linalg import inv, mat_vec, bil, gram_of  # noqa: E402
 from zphi.ring import from_json, get_ring  # noqa: E402
 from zphi.run_lattices import records  # noqa: E402
-from zphi.vinberg import vinberg  # noqa: E402
+from zphi.vinberg import check_polygon  # noqa: E402
+from zphi.chamber import chamber_search  # noqa: E402
 
 KINDS = ("short_edge", "short_pair", "close_pair")
-TIME_LIMIT = 300   # seconds of Vinberg per lattice before "undetermined"
+MAX_HOPS = 40      # hop budget before "undetermined" (non-reflective candidates never close)
 
 
 def jobs(D):
@@ -63,13 +64,16 @@ def work(args):
                    and not bil(GM, rts[k], _vertex(GM, rts[i], rts[j])).is_zero()), None)
     t = time.time()
     try:
-        v = vinberg(GM, [rts[i], rts[j]], max_roots=max_roots, orient=orient,
-                    time_limit=TIME_LIMIT)
-        out["status"] = v["status"]
-        out["roots"] = [[x.to_json() for x in r] for r in v["roots"]]
-        out["cycle"] = v["cycle"]
-        out["reason"] = v.get("reason")
-        out["Delta"] = str(v["Delta"])
+        cs = chamber_search(GM, start=(rts[i], rts[j]), orient=orient,
+                            max_hops=MAX_HOPS)
+        out["hops"] = cs["hops"]
+        out["roots"] = [[x.to_json() for x in r] for r in cs["roots"]]
+        if cs["status"] == "closed":
+            c = check_polygon(GM, cs["roots"])     # the proof of reflectivity
+            out["status"] = "reflective" if c["ok"] else "certificate_failed"
+            out["cert_issues"] = c["issues"][:3]
+        else:
+            out["status"] = "undetermined"
     except Exception as ex:   # recorded, never hidden
         out["status"] = "error"
         out["error"] = repr(ex)

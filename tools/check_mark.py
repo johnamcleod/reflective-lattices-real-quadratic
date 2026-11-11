@@ -20,6 +20,7 @@ sys.path.insert(0, ROOT)
 from zphi.ring import ZS2 as R, from_json, gcd_list  # noqa: E402
 from zphi.vinberg import vinberg, vinberg_interior, check_polygon, vertex_vector, _emb_val, _sqrt_bounds  # noqa: E402
 from zphi.linalg import bil  # noqa: E402
+from zphi.chamber import chamber_search  # noqa: E402
 from fractions import Fraction as Fr  # noqa: E402
 from math import isqrt  # noqa: E402
 
@@ -78,8 +79,13 @@ def work(idx):
         closed = e["symmetry_order"] == 1
         if closed or len(rts) >= 4:        # >= 3 vertices: the sum is interior
             v0 = interior_point(G, rts, closed)
-            v = vinberg_interior(G, v0, max_roots=200)
-            out["start"] = "interior"
+            cs = chamber_search(G, v0)
+            out["start"] = "hop"
+            out["hops"] = cs["hops"]
+            # the search is a heuristic; the certificate below is the proof
+            v = {"status": "reflective" if cs["status"] == "closed" else "undetermined",
+                 "roots": cs["roots"],
+                 "cycle": list(range(len(cs["roots"]))) if cs["status"] == "closed" else None}
         else:
             v = vinberg(G, rts[:2], max_roots=200, orient=rts[2])
             out["start"] = "vertex"
@@ -97,6 +103,8 @@ def work(idx):
             c = check_polygon(G, full)
             out["full_cert_ok"] = c["ok"]
             out["full_cert_issues"] = c["issues"][:3]
+            if not c["ok"]:
+                out["vinberg"] = "certificate_failed"
     except Exception as ex:  # recorded, never hidden
         out["vinberg"] = "error"
         out["error"] = repr(ex)

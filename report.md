@@ -63,6 +63,30 @@ Runtime (8 workers):
   - **Fix:** exact LLL on the trace form before enumeration (`definite.lll_gram`, `short_vectors_reduced`). The vector sets are unchanged (tested).
   - The 5 configurations then took 0.5 s each, so a rerun of the whole stage would be well under an hour.
 
+## Gate A.3.4 (part 1): Mark's appendix, verified and classified
+
+`tools/check_mark.py` and `tools/mark_classes.py` produce `data/mark_check.json` and `data/mark_classes.json`.
+
+| | Count |
+|---|---|
+| Entries parsed from the appendix | 522 |
+| Certified reflective: exact polygon certificate on the full chamber | **522** |
+| Chamber equals Mark's printed simple roots (for symmetric entries, the printed period and its images) | **522** |
+| Isometry classes | **144** (Mark: 432) |
+| Merge certificates φ ∈ GL₃(ℤ[√2]), φᵀ G_rep φ = G_entry, re-verified in PARI | 378 / 378 |
+
+How each chamber was found:
+
+- 384 entries ran Vinberg from an interior point built from the printed roots.
+- 105 entries used hop search. Vinberg runs to a small radius; the control point then hops to a point that is provably inside the same chamber, and this repeats until the walls close.
+- 33 entries ran Vinberg from a vertex, because their printed period is too short to give an interior point.
+
+In every case the chamber found was then checked by the exact polygon certificate, which is the proof of reflectivity.
+
+The 432 vs 144 gap is DISCREPANCIES #4 and is still open.
+
+Still to do for gate A.3.4: our own candidates (2373 SSF and locally simple, plus 325 others), whose reflective ones must be compared with these 144 classes. That needs non-reflectivity certificates (not yet written). A hop-search run that simply fails to close is not a proof.
+
 ## ℤ[φ] configuration counts so far (regression only; no published values)
 
 | Type | (15) | (16) | (22) | (23) | (27) |
