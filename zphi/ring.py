@@ -14,6 +14,7 @@ All signs are decided exactly from 2(a + b*w) = (2a + b*c1) +- b*sqrt(disc).
 """
 from __future__ import annotations
 
+from fractions import Fraction
 from math import gcd as igcd, isqrt
 from typing import Dict, Iterable, List, Tuple
 
@@ -223,10 +224,15 @@ class El:
 
     # conversions ------------------------------------------------------------
     def __float__(s):
+        """Approximate value at id (for ordering/steering only). Exact rational
+        arithmetic with sqrt(disc) to 2^-80, then one rounding: no overflow or
+        cancellation for large coordinates."""
         R = s.R
         if R.D == 1:
-            return s.a / s.n
-        return (s.a + s.b * (R.c1 + R.disc ** 0.5) / 2) / s.n
+            return float(Fraction(s.a, s.n))
+        S = 1 << 80
+        sq = Fraction(isqrt(R.disc * S * S), S)
+        return float((s.a + s.b * (R.c1 + sq) / 2) / s.n)
 
     def sfloat(s):
         return float(s.conj())

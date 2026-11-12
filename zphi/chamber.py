@@ -39,7 +39,7 @@ class _Frame:
     are taken only of y_i * sqrt|d_i|, so float geometry never sees the (possibly
     huge, ill-conditioned) entries of G. Used only to steer the search."""
 
-    def __init__(self, G):
+    def __init__(self, G, centre=None):
         R = G[0][0].R
         self.R = R
         self.s = _sqrt_bounds(R.disc)[0]
@@ -51,6 +51,10 @@ class _Frame:
         basis, d = [], []
         cand = [E[0], E[1], E[2], [Fr(1), Fr(1), Fr(0)], [Fr(0), Fr(1), Fr(1)],
                 [Fr(1), Fr(0), Fr(1)], [Fr(1), Fr(1), Fr(1)]]
+        if centre is not None:
+            # start Gram-Schmidt at the (rational image of the) centre: the frame is
+            # then a boost to the centre, well conditioned near it
+            cand = [[_emb_val(c, self.s) for c in centre]] + cand
 
         def dot(u, v):
             return sum(u[i] * A[i][j] * v[j] for i in range(n) for j in range(n))
@@ -82,12 +86,21 @@ class _Frame:
     def dot(self, a, b):
         return sum(self.sg[i] * a[i] * b[i] for i in range(3))
 
-    def from_f(self, p):
-        """Exact (rational) vector at the float frame point p (floats are exact
-        binary rationals; limit_denominator keeps the entries small)."""
-        y = [Fr(p[i] / self.sq[i]).limit_denominator(10 ** 15) for i in range(3)]
+    def from_f(self, p, digits=12):
+        """Small integral vector on (approximately) the ray of the float frame point p:
+        exact rational preimage, scaled so its largest coordinate is ~10^digits, then
+        rounded (a control point only matters up to positive scaling; the caller
+        verifies it exactly)."""
+        from math import gcd
+        y = [Fr(p[i] / self.sq[i]) for i in range(3)]
         x = [sum(self.B[i][k] * y[k] for k in range(3)) for i in range(3)]
-        return [self.R(c) for c in x]
+        mx = max(abs(c) for c in x)
+        xi = [round(c / mx * 10 ** digits) for c in x]
+        g = 0
+        for c in xi:
+            g = gcd(g, c)
+        g = g or 1
+        return [self.R(c // g) for c in xi]
 
 
 def _inv3(M):
@@ -101,7 +114,7 @@ def _inv3(M):
     return [[adj[r][k] / det for k in range(3)] for r in range(3)]
 
 
-def _hop_target(F, x, walls, Delta, visited, ndir=720, frac=0.85):
+def _hop_target(F, x, walls, Delta, visited, ndir=720, frac=0.85, walk=0.0):
     """Float choice of next control points (in the frame F): on the sphere of radius
     frac*rho about x, directions satisfying the found walls, ordered by distance from
     previously visited centres (prefer unexplored)."""
@@ -141,10 +154,23 @@ def _hop_target(F, x, walls, Delta, visited, ndir=720, frac=0.85):
     if not pts:
         return []
 
+    vis = []
+    for v in visited:
+        vf = F.to_f(v)
+        qv = F.dot(vf, vf)
+        if qv < 0:
+            vis.append([c / math.sqrt(-qv) for c in vf])
+
     def score(p):
-        if not visited:
-            return 0.0
-        return min(math.acosh(max(1.0, -F.dot(p, v))) for v in visited)
+        # prefer unexplored points (far from visited centres) that stay close to the
+        # boundary of the chamber (near a found wall): this walks along the boundary,
+        # where the corners are
+        e = 0.0 if not vis else \
+            min(math.acosh(max(1.0, -F.dot(p, v))) for v in vis)
+        if not wf:
+            return e
+        dw = min(math.asinh(abs(F.dot(w, p))) for w in wf)
+        return e - walk * dw
 
     pts.sort(key=lambda p: -score(p))
     return pts[:8]
@@ -152,7 +178,7 @@ def _hop_target(F, x, walls, Delta, visited, ndir=720, frac=0.85):
 
 def chamber_search(G: Mat, v0: Optional[Vec] = None, Delta_hop: Fr = Fr(64),
                    max_hops: int = 40, max_roots: int = 400, start=None,
-                   orient: Optional[Vec] = None) -> Dict:
+                   orient: Optional[Vec] = None, try_translation: bool = False) -> Dict:
     """Walls of the chamber containing the interior point v0, found by hopping.
     Returns dict(status='closed'|'open', roots (walls, cyclic order if closed),
     hops, centres)."""
@@ -166,36 +192,52 @@ def chamber_search(G: Mat, v0: Optional[Vec] = None, Delta_hop: Fr = Fr(64),
             x = [-c for c in x]
     else:
         x = list(v0)
+    centres = [] if start is not None else [list(x)]   # exact interior points of C
+    lll_cache = {}                                      # warm-start LLL across hops
     visited = []
     hops = 0
     while hops < max_hops:
         hops += 1
         if hops == 1 and start is not None:
             # Vinberg from the vertex of two simple roots (Bugaenko start); x = vertex
-            v = vinberg(G, list(start), Delta_max=Fr(Delta_hop), max_roots=max_roots,
-                        orient=orient)
+            v = vinberg(G, list(start), Delta0=Fr(Delta_hop), Delta_max=Fr(Delta_hop),
+                        max_roots=max_roots, orient=orient)
             if v["status"] == "reflective":
                 return {"status": "closed", "roots": [v["roots"][i] for i in v["cycle"]],
                         "hops": 1}
         else:
-            v = vinberg_interior(G, x, Delta_max=Fr(Delta_hop), max_roots=max_roots)
+            # one round at the full radius (valid for any starting radius)
+            v = vinberg_interior(G, x, Delta0=Fr(Delta_hop), Delta_max=Fr(Delta_hop),
+                                 max_roots=max_roots, lll_cache=lll_cache)
         for r in v["roots"]:
             k = _mirror_key(r)
             if k not in keys:
                 keys.add(k)
                 walls.append(list(r))
-        xf = F.to_f(x)
-        qx = F.dot(xf, xf)
-        if qx < 0:
-            visited.append([c / math.sqrt(-qx) for c in xf])
+        visited.append(list(x))
+        F = _Frame(G, centre=x)
         if len(walls) >= 3:
             comp, cyc = polygon(G, walls, x)
             if comp:
                 return {"status": "closed", "roots": [walls[i] for i in cyc],
                         "hops": hops}
+        if try_translation and centres and len(walls) >= 4:
+            from .nonrefl import find_translation, make_certificate
+            t = find_translation(G, walls, centres[-1])
+            if t is not None:
+                a, b, c, d, g = t
+                xc = _best_centre(G, centres, a, b, c, d)
+                return {"status": "translation", "roots": walls, "hops": hops,
+                        "cert": make_certificate(G, xc, a, b, c, d, g)}
         # choose and verify the next control point
         nxt = None
-        for p in _hop_target(F, x, walls, Delta_hop, visited):
+        targets = []
+        for frac in (0.85, 0.5, 0.25, 0.1):      # thin regions: smaller spheres
+            targets = _hop_target(F, x, walls, Delta_hop, visited, frac=frac,
+                                  walk=1.0 if try_translation else 0.0)
+            if targets:
+                break
+        for p in targets:
             y = F.from_f(p)
             if not all(bil(G, r, y).sign() < 0 for r in walls):
                 continue
@@ -210,4 +252,21 @@ def chamber_search(G: Mat, v0: Optional[Vec] = None, Delta_hop: Fr = Fr(64),
         if nxt is None:
             break
         x = nxt
+        centres.append(list(nxt))
     return {"status": "open", "roots": walls, "hops": hops}
+
+
+def _best_centre(G, centres, a, b, c, d):
+    """The interior point minimising the larger cosh^2-distance to the two corners
+    (the certificate's enumeration radius); must satisfy the four open half-spaces."""
+    from .nonrefl import _oriented_vertex
+    best, bv = None, None
+    for x in centres:
+        if not all(bil(G, r, x).sign() < 0 for r in (a, b, c, d)):
+            continue
+        v = _oriented_vertex(G, a, b, x)
+        w = _oriented_vertex(G, c, d, x)
+        cost = max(float(bil(G, x, p) ** 2 / (bil(G, x, x) * bil(G, p, p))) for p in (v, w))
+        if bv is None or cost < bv:
+            best, bv = x, cost
+    return best if best is not None else centres[-1]

@@ -173,7 +173,7 @@ def _pivots(T):
     return [q[i][i] for i in range(len(T))]
 
 
-def _lll_exact(T, max_rounds: int = 12) -> List[List[int]]:
+def _lll_exact(T, max_rounds: int = 12, U0=None) -> List[List[int]]:
     """Unimodular U making the rational PD form T well-conditioned. Repeated exact
     integer LLL on round(S * U^T T U), with S chosen from the smallest exact LDL pivot
     of the current form, until the exact pivots of U^T T U satisfy the Lovasz-type
@@ -181,13 +181,14 @@ def _lll_exact(T, max_rounds: int = 12) -> List[List[int]]:
     enumeration; only speed depends on the reduction."""
     from .definite import lll_gram
     n = len(T)
-    U = [[int(i == j) for j in range(n)] for i in range(n)]
+    U = [row[:] for row in U0] if U0 is not None else \
+        [[int(i == j) for j in range(n)] for i in range(n)]
 
     def conj(U):
         return [[sum(U[p][a] * T[p][q] * U[q][b] for p in range(n) for q in range(n))
                  for b in range(n)] for a in range(n)]
 
-    Tc = T
+    Tc = conj(U) if U0 is not None else T
     for _ in range(max_rounds):
         d = _pivots(Tc)
         if all(d[k] * 4 >= d[k - 1] for k in range(1, n)):
@@ -245,7 +246,7 @@ def _int_norm_forms(Gm: Mat, U):
 # ------------------------------------------------------------- the lattice
 
 class Lattice:
-    def __init__(self, G: Mat, v0: Vec):
+    def __init__(self, G: Mat, v0: Vec, lll_cache: Optional[Dict] = None):
         self.G = G
         self.R = G[0][0].R
         self.v0 = list(v0)
@@ -256,6 +257,7 @@ class Lattice:
         self.norms = tp_divisors(2 * self.det)
         self._cache: Dict[Tuple, List] = {}
         self._sub: Dict = {}
+        self._lll = lll_cache if lll_cache is not None else {}
 
     def _sublattice(self, m: El):
         """Basis Bm (columns) of L_m = O^3 ∩ (m/2) G^-1 O^3, which contains every root
@@ -303,7 +305,9 @@ class Lattice:
                 if prec > 1 << 14:
                     raise ValueError("lower form not positive definite")
                 T = _lower_form(Gm, v0m, Ci, Cs, prec)
-            U = _lll_exact(T)
+            ck = json_key(m.to_json())
+            U = _lll_exact(T, U0=self._lll.get(ck))
+            self._lll[ck] = U
             TU = [[sum(U[p][a] * T[p][q] * U[q][b] for p in range(6) for q in range(6))
                    for b in range(6)] for a in range(6)]
             TL = _round_down_pd(TU)
@@ -450,16 +454,18 @@ def vinberg(G: Mat, start: Sequence[Vec], Delta0: Fr = Fr(1), Delta_max: Fr = Fr
 
 
 def vinberg_interior(G: Mat, v0: Vec, Delta0: Fr = Fr(1), Delta_max: Fr = Fr(10 ** 6),
-                     max_roots: int = 200, time_limit: Optional[float] = None) -> Dict:
+                     max_roots: int = 200, time_limit: Optional[float] = None,
+                     lll_cache: Optional[Dict] = None) -> Dict:
     """Vinberg's algorithm from a control vector v0 in the interior of a chamber (no
     initial roots). Valid when v0 lies on no mirror: this is checked, since a root
     with r.v0 = 0 is enumerated at distance 0 and then raises."""
     return _vinberg_loop(G, v0, [], Delta0, Delta_max, max_roots, time_limit,
-                         interior=True)
+                         interior=True, lll_cache=lll_cache)
 
 
-def _vinberg_loop(G, v0, acc, Delta0, Delta_max, max_roots, time_limit, interior):
-    L = Lattice(G, v0)
+def _vinberg_loop(G, v0, acc, Delta0, Delta_max, max_roots, time_limit, interior,
+                  lll_cache=None):
+    L = Lattice(G, v0, lll_cache)
     acc = [list(r) for r in acc]
     Delta = Fr(Delta0)
     done = None   # exact distance already processed (El) or None
@@ -559,11 +565,16 @@ def check_polygon(G: Mat, roots: Sequence[Vec]) -> Dict:
                 issues.append(f"vertex {i+1} not strictly inside half-plane {k2+1}")
         if bil(G, p, p).sign() >= 0:
             issues.append(f"vertex {i+1} not timelike")
+    # all vertices in one sheet of the cone (timelike p, p' are in one sheet iff p.p' < 0)
+    for i in range(1, len(oriented)):
+        if bil(G, oriented[0], oriented[i]).sign() >= 0:
+            issues.append(f"vertices 1 and {i+1} lie in different sheets")
     if issues:
         return {"ok": False, "angles": angles, "issues": issues}
     # interior point: sum of the vertices (in the same sheet, hence timelike, inside)
     v = [sum((p[j] for p in oriented), R.zero) for j in range(3)]
     q = bil(G, v, v)
+    assert q.sign() < 0
     # max_i sinh^2 d(v, p_i) = (v.p)^2/(v^2 p^2) - 1
     Delta_el = max(((bil(G, v, p) ** 2 / (q * bil(G, p, p)) - 1) for p in oriented),
                    key=lambda z: float(z))

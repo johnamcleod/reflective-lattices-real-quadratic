@@ -27,8 +27,10 @@ from zphi.ring import from_json, get_ring  # noqa: E402
 from zphi.run_lattices import records  # noqa: E402
 from zphi.vinberg import check_polygon  # noqa: E402
 from zphi.chamber import chamber_search  # noqa: E402
+from zphi.nonrefl import check_nonreflective  # noqa: E402
 
 KINDS = ("short_edge", "short_pair", "close_pair")
+ALL = "--all" in sys.argv   # also run non-locally-simple candidates (cross-check)
 MAX_HOPS = 40      # hop budget before "undetermined" (non-reflective candidates never close)
 
 
@@ -37,7 +39,11 @@ def jobs(D):
     for kind in KINDS:
         for rec in records(D, kind):
             for li, L in enumerate(rec["lattices"]):
-                out.append((D, kind, rec["key"], li, L))
+                # only locally simple candidates need deciding: every reflective SSF
+                # lattice arises from a configuration of its own simple roots, which
+                # is locally simple (methods.md)
+                if L["locally_simple"] or ALL:
+                    out.append((D, kind, rec["key"], li, L))
     return out
 
 
@@ -65,12 +71,17 @@ def work(args):
     t = time.time()
     try:
         cs = chamber_search(GM, start=(rts[i], rts[j]), orient=orient,
-                            max_hops=MAX_HOPS)
+                            max_hops=MAX_HOPS, try_translation=True)
         out["hops"] = cs["hops"]
         out["roots"] = [[x.to_json() for x in r] for r in cs["roots"]]
         if cs["status"] == "closed":
             c = check_polygon(GM, cs["roots"])     # the proof of reflectivity
             out["status"] = "reflective" if c["ok"] else "certificate_failed"
+            out["cert_issues"] = c["issues"][:3]
+        elif cs["status"] == "translation":
+            c = check_nonreflective(GM, cs["cert"])   # the proof of non-reflectivity
+            out["status"] = "nonreflective" if c["ok"] else "nonrefl_cert_failed"
+            out["cert"] = cs["cert"]
             out["cert_issues"] = c["issues"][:3]
         else:
             out["status"] = "undetermined"
@@ -87,9 +98,10 @@ def _vertex(G, r, s):
 
 
 def main():
-    D = int(sys.argv[1])
-    workers = int(sys.argv[2]) if len(sys.argv) > 2 else os.cpu_count()
-    max_roots = int(sys.argv[3]) if len(sys.argv) > 3 else 80
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    D = int(args[0])
+    workers = int(args[1]) if len(args) > 1 else os.cpu_count()
+    max_roots = int(args[2]) if len(args) > 2 else 80
     ck = os.path.join(ROOT, "checkpoints", "cand", str(D))
     os.makedirs(ck, exist_ok=True)
     J = jobs(D)
