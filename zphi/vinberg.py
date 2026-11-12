@@ -517,7 +517,7 @@ def _interior_hint(G, acc, v0):
 
 # ------------------------------------------------------ certificate check
 
-def check_polygon(G: Mat, roots: Sequence[Vec]) -> Dict:
+def check_polygon(G: Mat, roots: Sequence[Vec], ball_delta: Fr = Fr(256)) -> Dict:
     """Verify that `roots` (cyclically ordered) are the simple roots of a chamber of
     the reflection group of (O^3, G), and that the chamber is a compact Coxeter polygon:
       1. each is a root; consecutive pairs meet at a Coxeter angle pi/m;
@@ -571,27 +571,83 @@ def check_polygon(G: Mat, roots: Sequence[Vec]) -> Dict:
             issues.append(f"vertices 1 and {i+1} lie in different sheets")
     if issues:
         return {"ok": False, "angles": angles, "issues": issues}
-    # interior point: sum of the vertices (in the same sheet, hence timelike, inside)
-    v = [sum((p[j] for p in oriented), R.zero) for j in range(3)]
-    q = bil(G, v, v)
-    assert q.sign() < 0
-    # max_i sinh^2 d(v, p_i) = (v.p)^2/(v^2 p^2) - 1
-    Delta_el = max(((bil(G, v, p) ** 2 / (q * bil(G, p, p)) - 1) for p in oriented),
-                   key=lambda z: float(z))
-    for p in oriented:  # exact max
-        d = bil(G, v, p) ** 2 / (q * bil(G, p, p)) - 1
-        if (d - Delta_el).sign() > 0:
-            Delta_el = d
-    Delta = Fr(int(float(Delta_el)) + 1)
-    while (Delta_el - Delta_el.R(Delta)).sign() > 0:   # exact: Delta >= Delta_el
-        Delta += 1
-    L = Lattice(G, v)
-    crossing = 0
-    for d, m, r in L.roots_upto(Delta):
-        sides = [bil(G, list(r), p).sign() for p in oriented]
-        if any(s > 0 for s in sides) and any(s < 0 for s in sides):
-            crossing += 1
-            issues.append(f"mirror of {r} crosses P")
+    # (3) no mirror meets int P. P is tiled by the fan triangles (v, p_i, p_{i+1}),
+    # v = a positive combination of the vertices, each subdivided until it lies in a small ball; a mirror
+    # meeting int P meets some tile, hence the ball around that tile (balls are
+    # convex), so it is listed by that ball's enumeration.
+    v = _centre(G, oriented)
+    assert bil(G, v, v).sign() < 0
+    tiles = [(v, oriented[i], oriented[(i + 1) % n]) for i in range(n)]
+    n_balls, Dmax, cache = 0, Fr(0), {}
+    for c, Delta in cover_balls(G, tiles, thresh=ball_delta):
+        n_balls += 1
+        Dmax = max(Dmax, Delta)
+        for d, m, r in Lattice(G, c, lll_cache=cache).roots_upto(Delta):
+            sides = [bil(G, list(r), p).sign() for p in oriented]
+            if any(s > 0 for s in sides) and any(s < 0 for s in sides):
+                issues.append(f"mirror of {r} crosses P")
+                break
+        if issues:
             break
     return {"ok": not issues, "angles": angles, "issues": issues,
-            "Delta": str(Delta)}
+            "Delta": str(Dmax), "balls": n_balls}
+
+
+def ceil_el(z: El) -> Fr:
+    """Exact ceiling (as an integer Fraction >= z) of a real element."""
+    D = Fr(int(float(z)) + 1)
+    while (z - z.R(D)).sign() > 0:
+        D += 1
+    return D
+
+
+def _cosh2(G, p, q):
+    pq = bil(G, p, q)
+    return pq * pq / (bil(G, p, p) * bil(G, q, q))
+
+
+def _centre(G: Mat, S) -> Vec:
+    """A point of the convex hull of S (positive combination sum w_p p), with
+    w_p ~ 1/sqrt|p.p| so that the points are weighted as unit vectors (the weights are
+    rational; any positive weights are valid, they only steer)."""
+    R = S[0][0].R
+    ws = [Fr(1 / abs(float(bil(G, p, p))) ** 0.5) for p in S]
+    top = max(ws)
+    ws = [(w / top).limit_denominator(1 << 20) or Fr(1, 1 << 20) for w in ws]
+    return [sum((p[j] * w for p, w in zip(S, ws)), R.zero) for j in range(3)]
+
+
+def cover_balls(G: Mat, simplices, thresh: Fr = Fr(16), max_depth: int = 24):
+    """For simplices (tuples of 2 or 3 timelike points of one sheet, i.e. geodesic
+    segments or triangles), yield (c, Delta) with: the simplices are covered by the
+    balls {y : sinh^2 d(c, y) <= Delta}. Each simplex S is split along its longest edge
+    until c = a positive combination of its points (_centre) has Delta = ceil(max_p cosh^2 d(c, p) - 1) <= thresh;
+    S lies in that ball because balls are convex and contain the points of S. Split
+    points s*p + q (s > 0 rational) lie on the edge, so the pieces tile S exactly."""
+    stack = [(tuple(S), 0) for S in simplices]
+    while stack:
+        S, depth = stack.pop()
+        k = len(S)
+        c = _centre(G, S)
+        Del = max((_cosh2(G, c, p) - 1 for p in S), key=float)
+        for p in S:
+            e = _cosh2(G, c, p) - 1
+            if (e - Del).sign() > 0:
+                Del = e
+        D = ceil_el(Del)
+        if D <= thresh or depth >= max_depth:
+            yield c, D
+            continue
+        # split the longest edge (float only steers the choice; the tiling is exact)
+        edges = [(i, j) for i in range(k) for j in range(i + 1, k)]
+        i, j = max(edges, key=lambda e: float(_cosh2(G, S[e[0]], S[e[1]])))
+        p, q = S[i], S[j]
+        ratio = float(bil(G, q, q) / bil(G, p, p))
+        sc = Fr(ratio ** 0.5).limit_denominator(64)
+        if sc <= 0:
+            sc = Fr(1)
+        m = [p[t] * sc + q[t] for t in range(3)]
+        for a, b in ((i, j), (j, i)):
+            T = list(S)
+            T[a] = m
+            stack.append((tuple(T), depth + 1))

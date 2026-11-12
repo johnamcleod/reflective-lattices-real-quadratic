@@ -25,7 +25,7 @@ from typing import Dict, List, Optional, Sequence
 from .definite import mirrors_through_vertex
 from .linalg import Mat, Vec, bil, det, inv, mat_mul, mat_vec, transpose, is_integral_mat
 from .ring import El, unit_sqrt
-from .vinberg import Lattice, coxeter_m, vertex_vector, _is_root
+from .vinberg import Lattice, coxeter_m, cover_balls, vertex_vector, _is_root
 
 
 def _cols(cols):
@@ -46,19 +46,19 @@ def _ceil_el(z: El) -> Fr:
     return D
 
 
-def _segment_clear(G: Mat, x: Vec, v: Vec, walls_at_v) -> Optional[str]:
+def _segment_clear(G: Mat, x: Vec, v: Vec, walls_at_v=None) -> Optional[str]:
     """None if no mirror crosses the open segment (x, v) and x is on no mirror; else a
-    reason. Mirrors meeting [x, v] are within distance d(x, v) of x; we enumerate all
-    roots r with sinh^2 d(x, H_r) <= sinh^2 d(x, v) and r.x <= 0."""
-    xv = bil(G, x, v)
-    Delta = _ceil_el(xv * xv / (bil(G, x, x) * bil(G, v, v)) - 1)
-    L = Lattice(G, x)
-    for d, m, r in L.roots_upto(Delta):
-        rx = bil(G, list(r), x)
-        if rx.is_zero():
-            return f"x lies on the mirror of {r}"
-        if bil(G, list(r), v).sign() > 0:
-            return f"mirror of {r} crosses (x, v)"
+    reason. The segment [x, v] is covered by small balls (vinberg.cover_balls); a
+    mirror meeting it (or through x) is listed by the enumeration of some ball."""
+    cache = {}
+    for c, Delta in cover_balls(G, [(x, v)], thresh=Fr(256)):
+        for d, m, r in Lattice(G, c, lll_cache=cache).roots_upto(Delta):
+            sx = bil(G, list(r), x).sign()
+            sv = bil(G, list(r), v).sign()
+            if sx == 0:
+                return f"x lies on the mirror of {r}"
+            if sx * sv < 0:
+                return f"mirror of {r} crosses (x, v)"
     return None
 
 

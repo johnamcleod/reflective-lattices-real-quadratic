@@ -14,6 +14,7 @@ lattice: {kind, key, li, ls, gram, status, roots, cycle, ...}.
 """
 import json
 import os
+from fractions import Fraction as Fr
 import sys
 import time
 
@@ -31,7 +32,24 @@ from zphi.nonrefl import check_nonreflective  # noqa: E402
 
 KINDS = ("short_edge", "short_pair", "close_pair")
 ALL = "--all" in sys.argv   # also run non-locally-simple candidates (cross-check)
-MAX_HOPS = 40      # hop budget before "undetermined" (non-reflective candidates never close)
+def _opt(name, default, conv=int):
+    return conv(next((a.split("=", 1)[1] for a in sys.argv if a.startswith(f"--{name}=")), default))
+
+
+MAX_HOPS = _opt("hops", 40)   # hop budget before "undetermined" (non-reflective never close)
+JOB_SECONDS = _opt("limit", 900)
+DELTA_HOP = _opt("delta", 64)  # sinh^2 of the hop radius
+REDO = _opt("redo", "", str)       # pass name: rerun only unresolved (timeout/undetermined) jobs
+SAMPLE = _opt("sample", 0)     # with --redo: only the first N unresolved jobs (experiments)
+# wall-clock limit per candidate; exceeded -> status "timeout" (decides nothing)
+
+
+class _Timeout(BaseException):   # not swallowed by "except Exception"
+    pass
+
+
+def _alarm(signum, frame):
+    raise _Timeout()
 
 
 def jobs(D):
@@ -69,9 +87,14 @@ def work(args):
     orient = next((rts[k] for k in range(len(rts)) if k not in (i, j)
                    and not bil(GM, rts[k], _vertex(GM, rts[i], rts[j])).is_zero()), None)
     t = time.time()
+    import signal
+    print(f"start {kind} {json.dumps(kj)} {li}", file=sys.stderr, flush=True)
+    signal.signal(signal.SIGALRM, _alarm)
+    signal.alarm(JOB_SECONDS)
     try:
         cs = chamber_search(GM, start=(rts[i], rts[j]), orient=orient,
-                            max_hops=MAX_HOPS, try_translation=True)
+                            max_hops=MAX_HOPS, try_translation=True,
+                            Delta_hop=Fr(DELTA_HOP))
         out["hops"] = cs["hops"]
         out["roots"] = [[x.to_json() for x in r] for r in cs["roots"]]
         if cs["status"] == "closed":
@@ -85,9 +108,14 @@ def work(args):
             out["cert_issues"] = c["issues"][:3]
         else:
             out["status"] = "undetermined"
+    except _Timeout:
+        out["status"] = "timeout"
+        out["limit"] = JOB_SECONDS
     except Exception as ex:   # recorded, never hidden
         out["status"] = "error"
         out["error"] = repr(ex)
+    finally:
+        signal.alarm(0)
     out["sec"] = round(time.time() - t, 2)
     return out
 
@@ -106,12 +134,27 @@ def main():
     os.makedirs(ck, exist_ok=True)
     J = jobs(D)
     print(f"{len(J)} lattices", flush=True)
-    done = set()
-    for f in os.listdir(ck):
-        if f.endswith(".jsonl"):
-            for line in open(os.path.join(ck, f)):
-                r = json.loads(line)
-                done.add((r["kind"], json.dumps(r["key"]), r["li"]))
+    def read(dirn):
+        out = {}
+        for f in sorted(os.listdir(dirn)):
+            if f.endswith(".jsonl"):
+                for line in open(os.path.join(dirn, f)):
+                    r = json.loads(line)
+                    out[(r["kind"], json.dumps(r["key"]), r["li"])] = r["status"]
+        return out
+    first = read(ck)
+    if REDO:
+        unresolved = {k for k, st in first.items() if st in ("timeout", "undetermined")}
+        ck = os.path.join(ck, REDO)
+        os.makedirs(ck, exist_ok=True)
+        done = set(read(ck))
+        J = [j for j in J if (j[1], json.dumps(j[2]), j[3]) in unresolved]
+        if SAMPLE:
+            J = J[::max(1, len(J) // SAMPLE)][:SAMPLE]
+        print(f"pass {REDO}: {len(J)} unresolved; hops={MAX_HOPS} delta={DELTA_HOP} "
+              f"limit={JOB_SECONDS}s", flush=True)
+    else:
+        done = set(first)
     todo = [j + (max_roots,) for j in J if (j[1], json.dumps(j[2]), j[3]) not in done]
     print(f"{len(todo)} to do", flush=True)
     from multiprocessing import Pool
@@ -119,10 +162,10 @@ def main():
     t0 = time.time()
     path = os.path.join(ck, f"run_{int(t0)}.jsonl")
     with Pool(workers) as pool, open(path, "a") as f:
-        for k, r in enumerate(pool.imap_unordered(work, todo, chunksize=4)):
+        for k, r in enumerate(pool.imap_unordered(work, todo, chunksize=1)):
             f.write(json.dumps(r) + "\n")
             f.flush()
-            if (k + 1) % 100 == 0:
+            if (k + 1) % 25 == 0:
                 print(f"{k+1}/{len(todo)} {time.time()-t0:.0f}s", flush=True)
     allr = [json.loads(line) for fn in sorted(os.listdir(ck)) if fn.endswith(".jsonl")
             for line in open(os.path.join(ck, fn))]
