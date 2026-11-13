@@ -12,3 +12,9 @@ open ReflectZphi
 #print axioms ReflectZphi.zsqrt2_isPID
 #print axioms ReflectZphi.isUnit_epsSqrt2
 #print axioms ReflectZphi.iota1S_sqrt2
+#print axioms ReflectZphi.boxBound_three_one
+#print axioms ReflectZphi.zsqrt13_isPID
+#print axioms ReflectZphi.isUnit_eps13
+#print axioms ReflectZphi.three_eq
+#print axioms ReflectZphi.thirteen_eq
+#print axioms ReflectZphi.prime_two_13
