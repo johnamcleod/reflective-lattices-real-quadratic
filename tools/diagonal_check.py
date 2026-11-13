@@ -8,7 +8,7 @@
 (b) Every SSF admissible <-d,1,1> with |N(d)| <= NMAX is run (chamber search, then the
     boundary walk if needed). Each reflective one must be in our list (it has a pi/4
     corner at e0: the roots of e0^perp = <1,1> are +-e1, +-e2, +-e1+-e2, four mirrors).
-Writes data/diagonal_5.json.
+Writes data/diagonal_<D>.json.  Usage: diagonal_check.py [NMAX] [WORKERS] [--D=5]
 """
 import json
 import os
@@ -24,9 +24,11 @@ from zphi.vinberg import check_polygon  # noqa: E402
 from zphi.isometry import find_isometry, invariant_key  # noqa: E402
 from zphi.linalg import mat_mul, transpose, det  # noqa: E402
 
-R = get_ring(5)
-NMAX = int(sys.argv[1]) if len(sys.argv) > 1 else 200
-WORKERS = int(sys.argv[2]) if len(sys.argv) > 2 else 8
+_ARGS = [a for a in sys.argv[1:] if not a.startswith("--")]
+D = int(next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--D=")), 5))
+R = get_ring(D)
+NMAX = int(_ARGS[0]) if len(_ARGS) > 0 else 200
+WORKERS = int(_ARGS[1]) if len(_ARGS) > 1 else 8
 LIMIT = 1800
 
 
@@ -105,11 +107,11 @@ def diag_values(nmax):
 
 
 def main():
-    data = json.load(open(os.path.join(ROOT, "data", "cand_classes_5.json")))
+    data = json.load(open(os.path.join(ROOT, "data", f"cand_classes_{D}.json")))
     import glob
     reps = {}
     want = {c[0] for c in data["classes"]}
-    for f in glob.glob(os.path.join(ROOT, "checkpoints", "cand", "5", "**", "*.jsonl"),
+    for f in glob.glob(os.path.join(ROOT, "checkpoints", "cand", str(D), "**", "*.jsonl"),
                        recursive=True):
         for line in open(f):
             r = json.loads(line)
@@ -161,7 +163,7 @@ def main():
                                      if r["status"] == "reflective" and not r.get("in_list")]}
     print(json.dumps(summ), flush=True)
     json.dump({"summary": summ, "a": part_a, "b": part_b},
-              open(os.path.join(ROOT, "data", "diagonal_5.json"), "w"), indent=1)
+              open(os.path.join(ROOT, "data", f"diagonal_{D}.json"), "w"), indent=1)
 
 
 if __name__ == "__main__":

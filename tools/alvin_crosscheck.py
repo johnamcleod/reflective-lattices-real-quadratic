@@ -12,7 +12,7 @@ For each of the 149 SSF admissible <-d,1,1> with |N(d)| <= 400 (data/diagonal_5.
 AlVin and CoxIter are built at pinned commits by tools/build_alvin.sh. Exact arithmetic
 throughout; elements of Z[phi] are pairs [a, b] = a + b*phi.
 
-Usage: python3 tools/alvin_crosscheck.py [TIMEOUT_SECONDS] [--rerun-failures]
+Usage: python3 tools/alvin_crosscheck.py [TIMEOUT_SECONDS] [--rerun-failures] [--D=5|13]
   -> data/alvin_crosscheck_5.json. With --rerun-failures, only the cases that failed in
   the existing file are rerun (with the new time limit) and their results replaced.
 """
@@ -24,19 +24,25 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 ALVIN = ROOT / "tools/src/AlVin/build/alvin"
 COXITER = ROOT / "tools/src/CoxIter/build/coxiter"
 TIMEOUT = 60
+D = int(next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--D=")), 5))
+# AlVin's T(d) is the generator w of O = Z[w] in our profiles (phi for d = 5,
+# (1 + sqrt13)/2 for d = 13), so coordinates (a, b) = a + b w carry over unchanged.
+_C0C1 = {5: (1, 1), 13: (3, 1)}
 
 # --- Z[phi] / Q(sqrt5) arithmetic on pairs (phi^2 = 1 + phi) -----------------------------
 def mul(x, y):
+    c0, c1 = _C0C1[D]
     a, b = x; c, d = y
-    return (a * c + b * d, a * d + b * c + b * d)
+    return (a * c + c0 * b * d, a * d + b * c + c1 * b * d)
 
-def conj(x):  # sigma(a + b phi) = a + b(1 - phi) = (a + b) - b phi
+def conj(x):  # sigma(a + b w) = a + b(c1 - w)
     a, b = x
-    return (a + b, -b)
+    return (a + _C0C1[D][1] * b, -b)
 
 def norm(x):
+    c0, c1 = _C0C1[D]
     a, b = x
-    return a * a + a * b - b * b
+    return a * a + c1 * a * b - c0 * b * b
 
 def div(x, y):  # exact quotient in Q(sqrt5), as a pair of Fractions
     n = norm(y)
@@ -71,8 +77,8 @@ def parse_entry(s):
     s = s.replace(" ", "")
     a = b = 0
     for tok in re.findall(r"[+-]?[^+-]+", s):
-        if "T(5)" in tok:
-            c = tok.replace("*T(5)", "").replace("T(5)", "")
+        if f"T({D})" in tok:
+            c = tok.replace(f"*T({D})", "").replace(f"T({D})", "")
             b += 1 if c in ("", "+") else -1 if c == "-" else int(c)
         else:
             a += int(tok)
@@ -122,7 +128,7 @@ def _run_pty(args, cwd, timeout):
 
 def run_alvin(d, timeout):
     neg = (-d[0], -d[1])
-    args = [str(ALVIN), "-k=Q[sqrt 5]", "-qf", ",".join([alvin_coeff(neg), "1", "1"])]
+    args = [str(ALVIN), f"-k=Q[sqrt {D}]", "-qf", ",".join([alvin_coeff(neg), "1", "1"])]
     with tempfile.TemporaryDirectory() as td:
         (pathlib.Path(td) / "output").mkdir()
         out, timed_out = _run_pty(args, td, timeout)
@@ -174,11 +180,12 @@ def check(rec):
 def main():
     global TIMEOUT
     nums = [a for a in sys.argv[1:] if a.isdigit()]
+    _ = D
     if nums:
         TIMEOUT = int(nums[0])
     assert ALVIN.exists() and COXITER.exists(), "run tools/build_alvin.sh first"
-    recs = json.load(open(ROOT / "data/diagonal_5.json"))["b"]
-    outp = ROOT / "data/alvin_crosscheck_5.json"
+    recs = json.load(open(ROOT / f"data/diagonal_{D}.json"))["b"]
+    outp = ROOT / f"data/alvin_crosscheck_{D}.json"
     if "--rerun-failures" in sys.argv:
         prev = json.load(open(outp))["cases"]
         bad = {tuple(r["d"]) for r in prev if not r["ok"]}
