@@ -33,6 +33,9 @@ Each entry gives its status and how it will be resolved. None of these is assume
 ## Q5. Secondhand data to verify against sources
 
 - **Takeuchi's ℚ(√5) triangles and their commensurability classes:** fetch J. Math. Soc. Japan 29 (1977), and also Takeuchi, J. Fac. Sci. Univ. Tokyo 24 (1977) for the commensurability classes.
+  - *2026-11-13:* automatic fetch failed (J-STAGE 404; Project Euclid returns HTML, not the PDF). The user needs to supply the PDF.
+  - Independent exact recomputation (`zphi/triangles.py`, Vinberg's criterion; `tests/test_triangles.py`) reproduces the twelve arithmetic triangles and the three non-arithmetic ones with Vinberg field ℚ(√5) exactly as listed in TASK.md. Over ℚ(√2) it gives 9 arithmetic triangles.
+  - The comparison with the source itself is still open.
 - **Guglielmetti's ⟨−√5,1,1⟩ and ⟨−φ,2+φ,1⟩:** fetch the thesis.
 - **Bugaenko's ⟨−φ,1,1⟩:** primary source probably unavailable; also check by computation.
 - **Mcleod thesis §3.2:** a copy is in the sibling project.
