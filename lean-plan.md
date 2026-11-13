@@ -115,3 +115,21 @@ To try first: formalising the finite linear-algebra part of Vinberg's compactnes
 - At a timelike point x of P with r·x = 0, the majorant M_x(r) = r·r − 2(r·x)²/(x·x) equals r², and r² ranges over a finite set of root norms.
 - An explicit comparison M_x ≤ c·M_v (v the centre) for x in P then reduces the test to finitely many definite enumerations. This is linear algebra and needs no hyperbolic geometry in Lean.
 - The ball cover becomes a list of such (v, c) pairs supplied by the certificate.
+
+## 7. How the approved imports enter Lean (design, 2026-11-13)
+
+**Hypotheses, not axioms.**
+- `allcock_thin_part` and `vinberg_chamber` are stated as named propositions (`def AllcockThinPart : Prop`, `def VinbergChamber : Prop`) in `ReflectZphi/Imported.lean`.
+- The main theorems take them as hypotheses: `theorem classification_zphi (hA : AllcockThinPart) (hV : VinbergChamber) : …`.
+- Consequences:
+  - `#print axioms` stays within {propext, Classical.choice, Quot.sound};
+  - the dependence on the imports is visible in every statement;
+  - the axiom check needs no allow-list at all.
+- §5 is updated accordingly: no `axiom` declarations.
+
+**Faithfulness.**
+- The approved statements are geometric (chambers, compact polygons). They are stated with geometric definitions in the cone model of ℍ²: points are rays of {x ∈ ℝ³ : ι₁-form(x) < 0} in one sheet, mirrors are r^⊥, a chamber is the closure of a connected component of the complement of the mirrors, and a compact polygon is a chamber that is compact.
+- The bridge from the algebraic polygon certificate to "P is a compact chamber" is then **proved in Lean** (cone-model linear algebra over ℝ), not imported.
+- The exact Lean text of the two propositions will be shown to the user before it is used.
+
+**Done so far** (`Lattice/Basic.lean`): `Admissible`, `IsRoot`, `IsReflectionOf` (division-free), `isometryGroup` = O(L), `reflectionGroup` = W(L), and `Reflective` (finite index), together with `Cert/Mat3.lean` and `Cert/Iso.lean` (isometry checker with soundness).
