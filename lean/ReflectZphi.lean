@@ -1,1 +1,4 @@
-import ReflectZphi.Basic
+import ReflectZphi.Ring.Euclid
+import ReflectZphi.Ring.Embed
+import ReflectZphi.Ring.ZPhi
+import ReflectZphi.Ring.ZSqrt2
