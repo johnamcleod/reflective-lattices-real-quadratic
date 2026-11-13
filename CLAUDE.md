@@ -12,6 +12,7 @@ Read these first:
 - `TASK.md`: the brief, the gates and the mandatory stop points.
 - `methods.md`: the technology choices, conventions and pipeline.
 - `lean-plan.md`: the Lean development and its trusted computing base.
+- `ROADMAP.md`: scope extensions beyond TASK.md (more fields; deferred: higher-dimensional extensions, novelty check).
 - `OPEN_QUESTIONS.md`, `DISCREPANCIES.md`: unresolved doubts, which must never be assumed away.
 - `notes/`: the supplied step-1 and step-2 notes.
 - `prototype/`: the supplied Python prototype. It is the test oracle; **do not edit it**.

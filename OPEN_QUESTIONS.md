@@ -69,3 +69,11 @@ Each entry gives its status and how it will be resolved. None of these is assume
 - N = 4/(r′²(G⁻¹)₃₃) equals Mark's (21), N = 4 + 4(CC′+β+A′B′)/(AB−4), in every case over both rings.
 - This settles the "μ′² vs 2μ′²" question in favour of μ′², as the step-2 notes said.
 - **Status:** resolved.
+
+## Q9. Bugaenko's extension result for L ⊕ ⟨1⟩^k (ROADMAP D1)
+
+- **The claim:** non-reflectivity propagates upwards (if L ⊕ ⟨1⟩^k is not reflective, then neither is L ⊕ ⟨1⟩^{k+1}). This would justify stopping the higher-dimensional series at the first failure.
+- **Source:** attributed to Bugaenko, with the user's note that Mark references it.
+- **What we have:** the arXiv text of Mark (1512.01133) cites Bugaenko [6], [7] and [8] (1984, 1990, 1992) only for the modification of Vinberg's algorithm.
+- **To do:** find the precise statement (hypotheses and direction) and its exact location before it is used. Not to be assumed.
+- **Status:** open; deferred with D1.
