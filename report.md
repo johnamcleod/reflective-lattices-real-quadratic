@@ -85,7 +85,42 @@ In every case the chamber found was then checked by the exact polygon certificat
 
 The 432 vs 144 gap is DISCREPANCIES #4 and is still open.
 
-Still to do for gate A.3.4: our own candidates (2373 SSF and locally simple, plus 325 others), whose reflective ones must be compared with these 144 classes. That needs non-reflectivity certificates (not yet written). A hop-search run that simply fails to close is not a proof.
+## Gate A.3.4 (part 2): every candidate decided; 146 classes
+
+Tools: `tools/run_candidates.py` (passes), `tools/verify_all.py` → `data/cand_final_2.json`, `tools/cand_classes.py` → `data/cand_classes_2.json`.
+
+Every one of the 2373 SSF, locally simple candidates (gate A.3.3) is decided by an exact certificate:
+
+| Type | Reflective | Non-reflective | Undetermined |
+|---|---|---|---|
+| short edge (15) | 179 | 184 | 0 |
+| short pair (16)/(22)/(23) | 622 | 744 | 0 |
+| close pair (27) | 479 | 165 | 0 |
+| **Total** | **1280** | **1093** | **0** |
+
+- **Reflective:** a polygon certificate (Prop. *polygon certificate*, §7). It checks the Coxeter angles and that the vertices are strictly inside and in one sheet. It also enumerates every mirror within a cover of the polygon by small balls (balls are convex).
+- **Non-reflective:** a translation certificate (Prop. *translation certificate*, §7). Two corners of the chamber are certified with their mirror counts. The segments from an interior point to both corners are certified mirror-free. Finally, g ∈ GL₃(ℤ[√2]) is an isometry mapping one corner onto the other, with tr g > 3 (so infinite order).
+- **Final re-check:** all 2373 certificates were re-verified with the final code (`verify_all.py`): **1280 + 1093 / 2373 pass**.
+
+**Isometry classes.** The 1280 reflective lattices were classified together with one representative of each of Mark's 144 classes. Each merge has an explicit φ with φᵀG_rep φ = G (1278 φ's, each re-verified). The outcome:
+- **146 classes.** All 144 of Mark's classes occur, each matched to our lattices by explicit isometries.
+- **2 classes do not occur in Mark's appendix** (DISCREPANCIES #5). They differ from every entry in an isometry invariant: the determinant ideal, and the cyclic sequence of (root norm mod unit squares, angle).
+  - **A:** quadrilateral π/8, π/2, π/8, π/2, det 4−5√2.
+  - **B:** hexagon π/4, π/2, π/8 (×2), det −9−7√2.
+
+  Each is the "other prime above 17" twin of a Mark entry (lines 2840 and 5476).
+
+Also as a provable statement: no reflective SSF rank-3 lattice over ℤ[√2] lies outside these 146 classes. This rests on the completeness of the configuration stage (A.3.2), of the lattice stage (A.3.3, a provable superset), and on local simplicity. It also assumes the chamber-alignment isometry search is complete (non-merges); compare DISCREPANCIES #4.
+
+**How the candidates were decided (four passes; the method changed, the certificate did not):**
+
+1. Hop search, 40 hops, 15 min limit: 1277 reflective, 603 non-reflective, 493 unresolved.
+2. Same with 150 hops and 30 min, after replacing the single-ball polygon check (which needed hours on long polygons) by the ball cover: +3 reflective, +312 non-reflective.
+3. Boundary walk (`zphi/walk.py`), passes 3–5. It follows the chamber's boundary corner to corner, each next corner found exactly by covering the wall's ray with small balls. Some walls are extremely long, because crossings repeat with the period of a Pell-type unit of the wall's binary lattice. So the walk uses exact high-precision ray parameters and adaptive-precision bounds. This decided the remaining 178, all non-reflective.
+
+Mark's 522 appendix entries: re-checked with the final `check_polygon` (`tools/verify_mark.py`): **522 / 522 pass**.
+
+**Runtime:** about 12 h for pass 1 on 8 cores; about 8 h for passes 2–5 combined.
 
 ## ℤ[φ] configuration counts so far (regression only; no published values)
 
