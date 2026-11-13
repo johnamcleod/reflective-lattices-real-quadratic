@@ -10,6 +10,10 @@ Contents:
     det, Coxeter polygon (angles pi/m_i in cyclic order and the simple roots), the
     members with an explicit phi (phi^T G_rep phi = G_member), and for D=2 the
     matching classes of Mark's appendix.
+  Triangle data (TASK.md A.2 item 6): "triangle_type" is the sorted (p,q,r) of a
+    triangular chamber (null otherwise); for D=5, "triangle_subgroups" lists the
+    arithmetic triangles (data/triangles_5.json) whose triangle group lies in W(L) for a
+    lattice of the class (W(L) contains the triangle group; equality iff it is the chamber).
 """
 import json
 import os
@@ -40,12 +44,20 @@ def main():
             n = len(rts)
             rec["polygon"] = {"roots": r["roots"],
                               "angles": [coxeter_m(G, rts[i], rts[(i + 1) % n]) for i in range(n)]}
+            rec["polygon"]["triangle_type"] = (sorted(rec["polygon"]["angles"]) if n == 3
+                                               else None)
         elif r["status"] == "nonreflective":
             rec["certificate"] = r["cert"]
         lab = f"{kind}|{key}|{li}"
         by_label[lab] = rec
         cands.append(rec)
     cl = json.load(open(os.path.join(ROOT, "data", f"cand_classes_{D}.json")))
+    tri_path = os.path.join(ROOT, "data", f"triangles_{D}.json")
+    tri_by_class = {}
+    if os.path.exists(tri_path):
+        for t in json.load(open(tri_path)):
+            if t.get("certified") and t.get("class"):
+                tri_by_class.setdefault(t["class"], set()).add(tuple(t["triangle"]))
     classes = []
     for c in cl["classes"]:
         ours = [x for x in c if not x.startswith("mark|")]
@@ -56,6 +68,8 @@ def main():
         classes.append({
             "representative": rep, "gram": r["gram"], "det": r["det"],
             "sides": len(r["polygon"]["angles"]), "polygon": r["polygon"],
+            "triangle_type": r["polygon"]["triangle_type"],
+            "triangle_subgroups": [list(t) for t in sorted(tri_by_class.get(rep, ()))],
             "members": [{"label": x, "phi": cl["certs"].get(x, {}).get("phi"),
                          "phi_from": cl["certs"].get(x, {}).get("rep")} for x in ours[1:]],
             "mark_classes": [x for x in c if x.startswith("mark|")]})
