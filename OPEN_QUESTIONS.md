@@ -76,4 +76,5 @@ Each entry gives its status and how it will be resolved. None of these is assume
 - **Source:** attributed to Bugaenko, with the user's note that Mark references it.
 - **What we have:** the arXiv text of Mark (1512.01133) cites Bugaenko [6], [7] and [8] (1984, 1990, 1992) only for the modification of Vinberg's algorithm.
 - **To do:** find the precise statement (hypotheses and direction) and its exact location before it is used. Not to be assumed.
+- **Pointer from the user (2026-11-13):** Bugaenko, *On reflective unimodular hyperbolic quadratic forms*, Selecta Math. Soviet. 9 (1990), Theorem 2. The statement still has to be read from the paper (not available here). The PDF is needed.
 - **Status:** open; deferred with D1.
