@@ -153,3 +153,50 @@ It reproduces the twelve arithmetic triangles with Vinberg field ℚ(√5) and t
 non-arithmetic ones, exactly as in TASK.md (`tests/test_triangles.py`). Over ℚ(√2) it gives 9.
 Takeuchi's paper could not be fetched (OPEN_QUESTIONS Q5).
 
+
+## ℤ[φ]: every candidate decided; 144 classes; gates A.3.5 and A.3.6 passed
+
+**Reflectivity** (`tools/run_candidates.py 5`, then the boundary walk on whatever was left):
+
+| Type | Candidates | Reflective | Non-reflective | Undetermined |
+|---|---|---|---|---|
+| short edge (15)+(16) | 490 | 221 | 269 | 0 |
+| short pair (22)+(23) | 1376 | 518 | 858 | 0 |
+| close pair (27) | 564 | 401 | 163 | 0 |
+| **total** | **2430** | **1140** | **1290** | **0** |
+
+- Pass 1 (hop search, 15-min limit) left 247 undetermined: 52 short edge, 185 short pair, 10 close pair. The boundary walk decided all 247, all non-reflective (31 min).
+- `tools/verify_all.py 5`: every certificate re-checked with the final checkers, 2430/2430 pass (`data/cand_final_5.json`).
+
+**Isometry classes** (`tools/cand_classes.py 5`): the 1140 reflective candidates form **144 classes**. Each merge has an explicit, verified φ. The count equals Mark's ℤ[√2] figure by coincidence.
+
+| Sides | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 16 | 18 | 24 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| classes | 4 | 19 | 15 | 24 | 6 | 24 | 2 | 16 | 1 | 14 | 1 | 7 | 4 | 6 | 1 |
+
+**Gate A.3.5: calibration lattices, passed** (`tools/calibration.py`, `data/calibration_5.json`). Each is reflective with a certified chamber and matched to one of our classes by an explicit isometry:
+
+| Lattice | Chamber angles (m) |
+|---|---|
+| ⟨−φ,1,1⟩ | (4,2,5) |
+| ⟨−√5,1,1⟩ | (4,2,10) |
+| ⟨−(3+2√5),1,1⟩ | (4,2,2,3) |
+| ⟨−(−3+2√5),1,1⟩ | (4,2,2,3) |
+| ⟨−φ,2+φ,1⟩ | (2,2,3,2) |
+
+**Gate A.3.6: diagonal check, passed** (`tools/diagonal_check.py 400`, `data/diagonal_5.json`).
+- **(a)** All 38 classes with a π/4 corner are isometric to ⟨−d,1,1⟩, d = −det, by an explicit φ. This confirms the B₂ theorem on the data.
+- **(b)** All 149 SSF admissible ⟨−d,1,1⟩ with |N(d)| ≤ 400 were run: 38 reflective, all in our list, and 111 certified non-reflective. The largest |N(d)| among our π/4 classes is 341.
+
+**Triangles** (`tools/triangle_lattices.py`, `data/triangles_5.json`). All twelve arithmetic triangles are realised by SSF lattices, 25 in all:
+- (2,3,10), (2,4,5), (2,4,10) and (2,5,6) are chambers (4 classes);
+- the other eight sit inside them as reflection subgroups: (2,5,5) ⊂ (2,4,5); (3,3,5), (5,5,5), (2,5,10) ⊂ (2,3,10); (2,10,10), (4,4,5), (5,10,10) ⊂ (2,4,10); (3,5,5) ⊂ (2,5,6).
+
+The commensurability grouping differs from the step-1 notes (DISCREPANCIES #6).
+
+**Outputs:** `data/zphi_rank3.json` and `data/zsqrt2_rank3.json` (`tools/export.py`). They contain every candidate with its Gram matrix, determinant, status and certificate (cyclic simple roots, or translation data), and every class with its polygon and member isometries. The certificates are stored inside these files rather than in a separate `certificates/` directory.
+
+**Runtime, ℤ[φ], 8 cores:**
+- configurations 8 min; lattice stage 4 min;
+- reflectivity pass 1: 67 min (short edge and short pair) + 15 min (close pair);
+- walk pass 31 min; re-verification 40 min; classification about 1 min.
