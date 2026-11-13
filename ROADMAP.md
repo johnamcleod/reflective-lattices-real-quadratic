@@ -26,7 +26,12 @@ of hyperbolic lattices of rank 3 + k (ℍ^{2+k}).
   - Reflective L_k must be certified by a chamber.
   - The first non-reflective L_k must be certified by a non-reflectivity witness.
 - **Justification for stopping at the first failure:** a result of Bugaenko, cited by Mark, shows that non-reflectivity propagates upwards in k: if L_k is not reflective, then neither is L_{k+1}.
-  - The user points to Bugaenko 1990, Theorem 2. The paper is needed.
+  - **Located:** Bugaenko 1990, Theorem 2, restated as Mcleod's thesis Theorem 3.0.8 (`papers/mcleod_thesis_2013.txt`). If f = f′ ⊕ ⟨unimodular⟩, the polytope of f′ is a face of that of f; hence L_k non-reflective ⇒ L_{k+1} non-reflective. This holds for any hyperbolic f′, not only diagonal ones. To be checked against Bugaenko's original.
+  - **Known anchors over ℤ[φ]** (Mcleod §3.2; his f_dⁿ has n squares, so n = 2 + k):
+    - ⟨−φ,1,…⟩: reflective for n ≤ 7 (Bugaenko 1984), so k_max = 5;
+    - ⟨−(3+2√5),1,…⟩: reflective at n = 2, not at n = 3 (loxodromic isometry), so k_max = 0;
+    - ⟨−(−3+2√5),1,…⟩: reflective at n = 3 (a cube), higher n open, so k_max ≥ 1.
+  - These are regression anchors for D1, and prior results for D2.
   - The exact statement, its hypotheses (for example whether it needs ⟨1⟩ summands specifically, or uses the face orthogonal to a root), and the precise reference must be confirmed from the source before use. See OPEN_QUESTIONS Q9.
   - Candidate sources:
     - Bugaenko, Moscow Univ. Math. Bull. 39 (1984);

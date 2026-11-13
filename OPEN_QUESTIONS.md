@@ -77,4 +77,7 @@ Each entry gives its status and how it will be resolved. None of these is assume
 - **What we have:** the arXiv text of Mark (1512.01133) cites Bugaenko [6], [7] and [8] (1984, 1990, 1992) only for the modification of Vinberg's algorithm.
 - **To do:** find the precise statement (hypotheses and direction) and its exact location before it is used. Not to be assumed.
 - **Pointer from the user (2026-11-13):** Bugaenko, *On reflective unimodular hyperbolic quadratic forms*, Selecta Math. Soviet. 9 (1990), Theorem 2. The statement still has to be read from the paper (not available here). The PDF is needed.
-- **Status:** open; deferred with D1.
+- **Located (2026-11-13, user pointer):** Mcleod's thesis (2013), Theorem 3.0.8 (`papers/mcleod_thesis_2013.txt`, lines 1453–1460), restates Bugaenko 1990, Theorem 2.
+  - **Statement:** if a hyperbolic form f splits as f′ ⊕ (a one-dimensional unimodular form), then the fundamental polytope P′ of the maximal reflection subgroup of O(f′) is a face of the fundamental polytope P for f.
+  - **Consequence:** f reflective (P of finite volume) ⇒ the face P′ has finite volume ⇒ f′ reflective. Contrapositively, L_k not reflective ⇒ L_{k+1} = L_k ⊕ ⟨1⟩ not reflective. No diagonality of f′ is required.
+- **Status:** statement located through a secondary source (Mcleod's restatement). Still to do: check it against Bugaenko's original when the paper is available, including the ground ring (Mcleod uses it over Q(√5)). Deferred with D1.
