@@ -36,6 +36,12 @@ Each entry gives its status and how it will be resolved. None of these is assume
   - *2026-11-13:* automatic fetch failed (J-STAGE 404; Project Euclid returns HTML, not the PDF). The user needs to supply the PDF.
   - Independent exact recomputation (`zphi/triangles.py`, Vinberg's criterion; `tests/test_triangles.py`) reproduces the twelve arithmetic triangles and the three non-arithmetic ones with Vinberg field ℚ(√5) exactly as listed in TASK.md. Over ℚ(√2) it gives 9 arithmetic triangles.
   - The comparison with the source itself is still open.
+  - **2026-11-13, ℤ[φ] pass 1, short edge:** of the twelve arithmetic triangles, only (2,3,10), (2,4,5), (2,4,10) and (2,5,6) occur as the chamber of a reflective SSF candidate.
+    - The other eight may be finite-index subgroups of these four, for example (2,5,5) and (4,4,5) in (2,4,5). A lattice realising one of them would then have a strictly larger reflection group.
+    - 52 short-edge candidates are still undetermined after pass 1.
+    - Still to settle:
+      - (a) for each of the eight, exhibit a lattice realising it and identify its full reflection group;
+      - (b) decide how TASK.md's calibration item "lattices realising the twelve triangles" is to be read: as lattices whose reflection group is the triangle group, or as lattices whose group contains it.
 - **Guglielmetti's ⟨−√5,1,1⟩ and ⟨−φ,2+φ,1⟩:** fetch the thesis.
 - **Bugaenko's ⟨−φ,1,1⟩:** primary source probably unavailable; also check by computation.
 - **Mcleod thesis §3.2:** a copy is in the sibling project.
