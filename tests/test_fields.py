@@ -21,11 +21,31 @@ def test_known_profiles_and_gammas():
     assert sorted(get_ring(1).gammas) == [2, 3, 4, 6]
 
 
-def test_new_field_sqrt3():
-    # Q(sqrt3): disc 12, norm-Euclidean, eps = 2 + sqrt3; gamma(12) = 2 + sqrt3
-    R = _ring(103, c0=3, c1=0, eps=(2, 1))
-    assert {m: g.coords() for m, g in R.gammas.items()}[12] == (2, 1, 1)
-    assert 5 not in R.gammas and 8 not in R.gammas
+def test_rejects_sqrt3_no_norm_minus_one_unit():
+    # Q(sqrt3): disc 12, norm-Euclidean, but eps = 2 + sqrt3 has norm +1: (N2) fails
+    with pytest.raises(HypothesisError, match="N2"):
+        _ring(103, c0=3, c1=0, eps=(2, 1))
+
+
+def test_sqrt13_profile():
+    from fractions import Fraction as Fr
+    from zphi.ring import factor, ediv
+    R = get_ring(13)
+    assert R.profile.disc == 13
+    assert {m: str(g) for m, g in R.gammas.items()} == {2: "0", 3: "1", 4: "2", 6: "3"}
+    eps = R(*R.profile.eps)
+    assert eps.norm_num() == -1 and eps * eps.conj() == R(-1)
+    # 2 inert, 3 split, 13 ramified
+    assert [e for _, e in factor(R(2))] == [1] and abs(factor(R(2))[0][0].norm_num()) == 4
+    assert sorted(abs(p.norm_num()) for p, _ in factor(R(3))) == [3, 3]
+    assert [e for _, e in factor(R(13))] == [2]
+    # rounding division reduces the norm (bound 13/16)
+    for a in range(-7, 8):
+        for b in range(-7, 8):
+            for c, d in ((3, 1), (2, -1), (5, 2), (1, 3)):
+                if (a, b) != (0, 0):
+                    q, r = ediv(R(a, b), R(c, d))
+                    assert abs(r.norm_num()) < abs(R(c, d).norm_num())
 
 
 def test_rejects_non_euclidean():

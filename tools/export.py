@@ -80,7 +80,8 @@ def main():
            "n_classes": len(classes),
            "classes_by_sides": dict(sorted(Counter(c["sides"] for c in classes).items())),
            "classes": classes, "candidates": cands}
-    name = {5: "zphi_rank3.json", 2: "zsqrt2_rank3.json"}[D]
+    from zphi.fields import OUTPUT_NAMES
+    name = OUTPUT_NAMES[D]
     json.dump(out, open(os.path.join(ROOT, "data", name), "w"))
     print(json.dumps({k: out[k] for k in ("ring", "n_candidates", "status", "n_classes",
                                           "classes_by_sides")}))

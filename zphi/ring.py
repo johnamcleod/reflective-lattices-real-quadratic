@@ -289,8 +289,10 @@ def divides(a: El, b: El) -> bool:
 def round_el(z: El) -> El:
     """A nearest element of O in the (1, w) coordinates: round(a/n) + round(b/n) w.
 
-    For Z, Z[sqrt2], Z[phi] the fractional part f satisfies |N(f)| < 1, so this gives
-    a norm-Euclidean division (|N(f)| <= 1/4 for phi, <= 1/2 for sqrt2)."""
+    For Z, Z[sqrt2], Z[phi], Z[(1+sqrt13)/2] the fractional part f satisfies |N(f)| < 1,
+    so this gives a norm-Euclidean division (|N(f)| <= 1/4 for phi, <= 1/2 for sqrt2,
+    <= 13/16 for (1+sqrt13)/2: max of |x^2 + xy - 3y^2| on |x|, |y| <= 1/2). ediv
+    asserts the decrease, so a profile where rounding fails is caught.)"""
     def rnd(x, n):  # round half up, exact
         return (2 * x + n) // (2 * n)
     return El(z.R, rnd(z.a, z.n), rnd(z.b, z.n), 1)
@@ -298,7 +300,10 @@ def round_el(z: El) -> El:
 
 def ediv(a: El, b: El) -> Tuple[El, El]:
     q = round_el(a / b)
-    return q, a - q * b
+    r = a - q * b
+    if not r.is_zero() and abs(r.norm()) >= abs(b.norm()):
+        raise ArithmeticError(f"ediv: coordinate rounding did not reduce the norm: a={a.coords()} b={b.coords()} r={r.coords()} D={a.R.disc}")
+    return q, r
 
 
 def egcd(a: El, b: El) -> Tuple[El, El, El]:

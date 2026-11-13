@@ -62,7 +62,8 @@ def alignment_failures(G1, r1, G2, r2):
 def main():
     D = int(sys.argv[1])
     R = get_ring(D)
-    name = {5: "zphi_rank3.json", 2: "zsqrt2_rank3.json"}[D]
+    from zphi.fields import OUTPUT_NAMES
+    name = OUTPUT_NAMES[D]
     data = json.load(open(os.path.join(ROOT, "data", name)))
     reps = []
     for c in data["classes"]:

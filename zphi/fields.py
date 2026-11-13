@@ -12,6 +12,7 @@ Standing hypotheses (paper, Section 2), checked by `validate`:
        (Chatland-Davenport 1950; Barnes-Swinnerton-Dyer 1952).
   (H2) [K:Q] = 2 (restriction of scalars to Z^6, a single conjugate sigma), or
        K = Q (degree 1; used only by the oracle tests).
+  (N2) the fundamental unit has norm -1 (equivalently (U2) under (H2)).
   Also checked: Z[w] is the maximal order (fundamental discriminant), and the
   stored unit is a fundamental unit.
 
@@ -66,8 +67,19 @@ ZPHI_PROFILE = FieldProfile(
     pari_poly="y^2-y-1",
     reference={"configs": {"15": 298, "16": 1636, "22": 2946, "23": 36961}})
 
+# Q(sqrt13): w = (1 + sqrt13)/2, w^2 = 3 + w; fundamental unit (3 + sqrt13)/2 = 1 + w, norm -1.
+# (H1): norm-Euclidean (disc 13 is on the Chatland-Davenport list); (N2) holds.
+# 2 is inert (13 = 5 mod 8), 3 splits (13 = 1 mod 3), 13 ramifies. No reference counts.
+ZSQRT13_PROFILE = FieldProfile(
+    key=13, name="Z[(1+sqrt13)/2]", symbol="ω", degree=2, c0=3, c1=1, eps=(1, 1),
+    pari_poly="y^2-y-3", reference={})
+
 PROFILES: Dict[int, FieldProfile] = {p.key: p for p in (ZZ_PROFILE, ZSQRT2_PROFILE,
-                                                         ZPHI_PROFILE)}
+                                                         ZPHI_PROFILE, ZSQRT13_PROFILE)}
+
+# file names of the final outputs, per profile key
+OUTPUT_NAMES: Dict[int, str] = {2: "zsqrt2_rank3.json", 5: "zphi_rank3.json",
+                                13: "zsqrt13_rank3.json"}
 
 
 def register(profile: FieldProfile) -> None:
@@ -129,6 +141,9 @@ def validate(P: FieldProfile, R) -> None:
                 continue
             if (u - 1).sign() > 0 and (eps - u).sign() > 0:
                 raise HypothesisError(f"{P.name}: {u} is a smaller unit than eps")
+    a, b = P.eps
+    if a * a + P.c1 * a * b - P.c0 * b * b != -1:
+        raise HypothesisError(f"{P.name}: (N2) fails: the fundamental unit has norm +1")
 
 
 def compute_gammas(R) -> Dict[int, object]:
