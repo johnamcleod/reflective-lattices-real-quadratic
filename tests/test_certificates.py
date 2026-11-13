@@ -96,3 +96,35 @@ def test_cover_balls_cover_the_simplex():
         w = [Fr(rnd.randint(1, 50)) for _ in range(3)]
         y = [sum((p[j] * wi for p, wi in zip(tri, w)), G[0][0].R.zero) for j in range(3)]
         assert any(((_cosh2(G, c, y) - 1) - G[0][0].R(D)).sign() <= 0 for c, D in balls)
+
+
+@pytest.mark.parametrize("r", S["reflective"])
+def test_boundary_walk_closes_reflective(r):
+    from zphi.walk import boundary_walk
+    from zphi.vinberg import vertex_vector
+    from zphi.linalg import bil
+    G, rts = gram(r), roots(r)
+    n = len(rts)
+    v = vertex_vector(G, rts[0], rts[1])
+    if bil(G, rts[2 % n], v).sign() > 0:
+        v = [-c for c in v]
+    w = boundary_walk(G, rts[0], rts[1], v)
+    assert w["status"] == "closed"
+    assert check_polygon(G, w["roots"])["ok"]
+    assert len(w["roots"]) == n
+
+
+@pytest.mark.parametrize("r", S["nonreflective"])
+def test_boundary_walk_certifies_nonreflective(r):
+    from zphi.walk import boundary_walk
+    from zphi.vinberg import vertex_vector
+    from zphi.linalg import bil
+    G = gram(r)
+    c = r["cert"]
+    a, b, x = ([from_json(R, e) for e in c[k]] for k in "abx")
+    v = vertex_vector(G, a, b)
+    if bil(G, v, x).sign() > 0:
+        v = [-e for e in v]
+    w = boundary_walk(G, a, b, v)
+    assert w["status"] == "translation"
+    assert check_nonreflective(G, w["cert"])["ok"]

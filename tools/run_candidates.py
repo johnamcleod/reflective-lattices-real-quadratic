@@ -40,6 +40,8 @@ MAX_HOPS = _opt("hops", 40)   # hop budget before "undetermined" (non-reflective
 JOB_SECONDS = _opt("limit", 900)
 DELTA_HOP = _opt("delta", 64)  # sinh^2 of the hop radius
 REDO = _opt("redo", "", str)       # pass name: rerun only unresolved (timeout/undetermined) jobs
+AFTER = [x for x in _opt("after", "", str).split(",") if x]  # earlier passes to apply
+WALK = "--walk" in sys.argv   # boundary walk (zphi.walk) instead of the hop search
 SAMPLE = _opt("sample", 0)     # with --redo: only the first N unresolved jobs (experiments)
 # wall-clock limit per candidate; exceeded -> status "timeout" (decides nothing)
 
@@ -92,9 +94,18 @@ def work(args):
     signal.signal(signal.SIGALRM, _alarm)
     signal.alarm(JOB_SECONDS)
     try:
-        cs = chamber_search(GM, start=(rts[i], rts[j]), orient=orient,
-                            max_hops=MAX_HOPS, try_translation=True,
-                            Delta_hop=Fr(DELTA_HOP))
+        if WALK:
+            from zphi.walk import boundary_walk
+            v0 = _vertex(GM, rts[i], rts[j])
+            if orient is not None and bil(GM, orient, v0).sign() > 0:
+                v0 = [-c for c in v0]
+            cs = boundary_walk(GM, rts[i], rts[j], v0)
+            cs["hops"] = cs.get("corners")
+            out["method"] = "walk"
+        else:
+            cs = chamber_search(GM, start=(rts[i], rts[j]), orient=orient,
+                                max_hops=MAX_HOPS, try_translation=True,
+                                Delta_hop=Fr(DELTA_HOP))
         out["hops"] = cs["hops"]
         out["roots"] = [[x.to_json() for x in r] for r in cs["roots"]]
         if cs["status"] == "closed":
@@ -143,6 +154,8 @@ def main():
                     out[(r["kind"], json.dumps(r["key"]), r["li"])] = r["status"]
         return out
     first = read(ck)
+    for prev in AFTER:                       # later passes override earlier statuses
+        first.update(read(os.path.join(ck, prev)))
     if REDO:
         unresolved = {k for k, st in first.items() if st in ("timeout", "undetermined")}
         ck = os.path.join(ck, REDO)
