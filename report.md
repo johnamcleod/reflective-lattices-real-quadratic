@@ -110,7 +110,7 @@ Every one of the 2373 SSF, locally simple candidates (gate A.3.3) is decided by 
 
   Each is the "other prime above 17" twin of a Mark entry (lines 2840 and 5476).
 
-Also as a provable statement: no reflective SSF rank-3 lattice over ℤ[√2] lies outside these 146 classes. This rests on the completeness of the configuration stage (A.3.2), of the lattice stage (A.3.3, a provable superset), and on local simplicity. It also assumes the chamber-alignment isometry search is complete (non-merges); compare DISCREPANCIES #4.
+Also as a provable statement: no reflective SSF rank-3 lattice over ℤ[√2] lies outside these 146 classes. This rests on the completeness of the configuration stage (A.3.2), of the lattice stage (A.3.3, a provable superset), and on local simplicity. The non-merges are now proved without any search: all 146 classes have pairwise different chamber invariants (see *Class counts are exact* below).
 
 **How the candidates were decided (four passes; the method changed, the certificate did not):**
 
@@ -200,3 +200,34 @@ The commensurability grouping differs from the step-1 notes (DISCREPANCIES #6).
 - configurations 8 min; lattice stage 4 min;
 - reflectivity pass 1: 67 min (short edge and short pair) + 15 min (close pair);
 - walk pass 31 min; re-verification 40 min; classification about 1 min.
+
+## Wrap-up checks (2026-11-13)
+
+### Class counts are exact (`tools/nonisometry.py`, `data/nonisometry_{5,2}.json`)
+The chamber invariant (determinant ideal; cyclic sequence of (root-norm ideal, angle) up to dihedral symmetry) is an isometry invariant. The proof uses only the transitivity of W(L) on chambers (`vinberg_chamber`); it is paper Lemma *chamber invariant*, §12.
+- **ℤ[φ]:** the 144 representatives have **144 different invariants**.
+- **ℤ[√2]:** the 146 representatives have **146 different invariants**.
+
+So no two classes are isometric, and no alignment search is needed. Together with the explicit merge isometries, **144 and 146 are exact**, not upper bounds. Scaling identifies nothing further, since a rescaling of an SSF lattice that is again SSF is by a totally positive unit, which is a square (U2).
+
+### Independent cross-check with AlVin and CoxIter (`tools/alvin_crosscheck.py`, `data/alvin_crosscheck_5.json`)
+AlVin and CoxIter are built at pinned commits by `tools/build_alvin.sh`. AlVin was run over Q[√5] on all 149 SSF admissible ⟨−d,1,1⟩ with |N(d)| ≤ 400. AlVin's `T(5)` is φ.
+
+| our status | cases | AlVin agrees | notes |
+|---|---|---|---|
+| non-reflective (certified) | 111 | 111 | AlVin never terminates; no contradiction |
+| reflective | 38 | 29 fully | AlVin terminates, root sets equal up to units, CoxIter: cocompact, finite covolume |
+| reflective | | 9 partly | AlVin had not terminated after 30 min; every root it had printed (10–17) is a root of our certified chamber (12–18 sides) |
+
+**No contradiction.** The 9 partial cases have 12–18 sides. AlVin's termination test is slow on long polygons. Our decisions there rest on our certificates.
+
+Two technical points:
+- AlVin is run under a pseudo-terminal, so that its line-buffered output survives a timeout. With a pipe, the roots printed before the kill were lost.
+- Run directly, AlVin keeps printing roots of our chamber.
+
+### Triangle data in the outputs
+`data/zphi_rank3.json` classes now carry `triangle_type` (triangular chambers) and `triangle_subgroups` (the arithmetic triangle groups contained in W(L), from `data/triangles_5.json`). The four triangle chambers contain, respectively:
+- (2,3,10) ⊃ (2,5,10), (3,3,5), (5,5,5);
+- (2,4,5) ⊃ (2,5,5);
+- (2,4,10) ⊃ (2,10,10), (4,4,5), (5,10,10);
+- (2,5,6) ⊃ (3,5,5).
