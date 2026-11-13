@@ -173,7 +173,7 @@ def _pivots(T):
     return [q[i][i] for i in range(len(T))]
 
 
-def _lll_exact(T, max_rounds: int = 12, U0=None) -> List[List[int]]:
+def _lll_exact(T, max_rounds: int = 400, U0=None) -> List[List[int]]:
     """Unimodular U making the rational PD form T well-conditioned. Repeated exact
     integer LLL on round(S * U^T T U), with S chosen from the smallest exact LDL pivot
     of the current form, until the exact pivots of U^T T U satisfy the Lovasz-type
@@ -606,15 +606,60 @@ def _cosh2(G, p, q):
     return pq * pq / (bil(G, p, p) * bil(G, q, q))
 
 
+def _log2_el(z: El) -> float:
+    """log2 of a positive real element (steering only; no overflow)."""
+    q = _emb_val(z, _sqrt_bounds(z.R.disc, 64)[0]) if z.R.D != 1 else _emb_val(z, Fr(0))
+    if q <= 0:
+        return -1e9
+    return (q.numerator.bit_length() - q.denominator.bit_length())
+
+
+def sqrt_lower(z: El, prec: int = 64) -> Fr:
+    """A rational 0 < q <= sqrt(z) for real z > 0 (at id), relative error ~2^-prec.
+    Exact (no floats), for elements of any size."""
+    lo, hi = _sqrt_bounds(z.R.disc, prec + 8) if z.R.D != 1 else (Fr(0), Fr(0))
+    zl = min(_emb_val(z, lo), _emb_val(z, hi)) if z.R.D != 1 else _emb_val(z, Fr(0))
+    if zl <= 0:
+        zl = _emb_val(z, (lo + hi) / 2)
+    assert zl > 0
+    k = (zl.numerator.bit_length() - zl.denominator.bit_length()) // 2
+    sc = prec + 8 - k
+    if sc >= 0:
+        q = isqrt((zl.numerator << (2 * sc)) // zl.denominator)
+        return Fr(max(q, 1), 1 << sc)
+    return Fr(max(isqrt(zl.numerator // (zl.denominator << (-2 * sc))), 1))
+
+
 def _centre(G: Mat, S) -> Vec:
     """A point of the convex hull of S (positive combination sum w_p p), with
     w_p ~ 1/sqrt|p.p| so that the points are weighted as unit vectors (the weights are
-    rational; any positive weights are valid, they only steer)."""
+    exact positive rationals; any positive weights are valid, they only steer)."""
     R = S[0][0].R
-    ws = [Fr(1 / abs(float(bil(G, p, p))) ** 0.5) for p in S]
-    top = max(ws)
-    ws = [(w / top).limit_denominator(1 << 20) or Fr(1, 1 << 20) for w in ws]
+    ws = [1 / sqrt_lower(-bil(G, p, p), 64) for p in S]
     return [sum((p[j] * w for p, w in zip(S, ws)), R.zero) for j in range(3)]
+
+
+def _small_point(G: Mat, p: Vec) -> Vec:
+    """A point with small integral coordinates (in O) within cosh^2 d < 1.01 of p
+    (else p itself). Only steering: the ball radius is computed exactly from it.
+    Points far out (near the boundary at infinity) need more bits."""
+    R = p[0].R
+    lm = max(_log2_el(c * c) for c in p if not c.is_zero()) / 2   # ~ log2 max |coord|
+    pp = bil(G, p, p)
+    for bits in (48, 96, 160, 256, 400, 800, 1600, 3200):
+        e = bits - int(lm)
+        sc = Fr(1 << e) if e >= 0 else Fr(1, 1 << -e)
+        q = []
+        for c in p:
+            a, b, n = c.coords()
+            q.append(El(R, round(Fr(a, n) * sc), round(Fr(b, n) * sc), 1))
+        qq = bil(G, q, q)
+        if qq.sign() >= 0:
+            continue
+        pq = bil(G, p, q)
+        if pq.sign() < 0 and (pq * pq - R(Fr(101, 100)) * pp * qq).sign() < 0:
+            return q
+    return p
 
 
 def cover_balls(G: Mat, simplices, thresh: Fr = Fr(16), max_depth: int = 24):
@@ -628,8 +673,8 @@ def cover_balls(G: Mat, simplices, thresh: Fr = Fr(16), max_depth: int = 24):
     while stack:
         S, depth = stack.pop()
         k = len(S)
-        c = _centre(G, S)
-        Del = max((_cosh2(G, c, p) - 1 for p in S), key=float)
+        c = _small_point(G, _centre(G, S))
+        Del = max((_cosh2(G, c, p) - 1 for p in S), key=_log2_el)
         for p in S:
             e = _cosh2(G, c, p) - 1
             if (e - Del).sign() > 0:
@@ -640,12 +685,10 @@ def cover_balls(G: Mat, simplices, thresh: Fr = Fr(16), max_depth: int = 24):
             continue
         # split the longest edge (float only steers the choice; the tiling is exact)
         edges = [(i, j) for i in range(k) for j in range(i + 1, k)]
-        i, j = max(edges, key=lambda e: float(_cosh2(G, S[e[0]], S[e[1]])))
+        i, j = max(edges, key=lambda e: _log2_el(_cosh2(G, S[e[0]], S[e[1]])))
         p, q = S[i], S[j]
-        ratio = float(bil(G, q, q) / bil(G, p, p))
-        sc = Fr(ratio ** 0.5).limit_denominator(64)
-        if sc <= 0:
-            sc = Fr(1)
+        # unit-normalised midpoint: p/|p| + q/|q| ~ (|q|/|p|) p + q
+        sc = sqrt_lower(bil(G, q, q) / bil(G, p, p), 64)
         m = [p[t] * sc + q[t] for t in range(3)]
         for a, b in ((i, j), (j, i)):
             T = list(S)

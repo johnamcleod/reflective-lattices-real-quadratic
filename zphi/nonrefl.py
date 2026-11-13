@@ -51,7 +51,7 @@ def _segment_clear(G: Mat, x: Vec, v: Vec, walls_at_v=None) -> Optional[str]:
     reason. The segment [x, v] is covered by small balls (vinberg.cover_balls); a
     mirror meeting it (or through x) is listed by the enumeration of some ball."""
     cache = {}
-    for c, Delta in cover_balls(G, [(x, v)], thresh=Fr(256)):
+    for c, Delta in cover_balls(G, [(x, v)], thresh=Fr(16)):
         for d, m, r in Lattice(G, c, lll_cache=cache).roots_upto(Delta):
             sx = bil(G, list(r), x).sign()
             sv = bil(G, list(r), v).sign()

@@ -27,6 +27,9 @@ from .ring import unit_sqrt
 from .vinberg import Lattice, cover_balls, coxeter_m, vertex_vector
 
 
+_TRACE = []   # debugging: set to [start_time] to print ray progress
+
+
 def _key(r):
     x = next(c for c in r if not c.is_zero())
     return tuple((y / x).coords() for y in r)
@@ -49,8 +52,8 @@ def mirrors_through(G: Mat, w: Vec, cache=None) -> List[Vec]:
     return out
 
 
-def next_corner(G: Mat, a: Vec, b: Vec, v: Vec, cache=None, step: float = 1.5,
-                max_len: float = 40.0) -> Optional[Dict]:
+def next_corner(G: Mat, a: Vec, b: Vec, v: Vec, cache=None, step: float = 4.0,
+                max_len: float = 1000.0) -> Optional[Dict]:
     """The next corner after (a, b) at v, walking along H_b away from H_a.
     None if no mirror meets the ray within hyperbolic length max_len."""
     R = G[0][0].R
@@ -58,7 +61,9 @@ def next_corner(G: Mat, a: Vec, b: Vec, v: Vec, cache=None, step: float = 1.5,
     if bil(G, a, u).sign() > 0:
         u = [-c for c in u]
     uu, vv = bil(G, u, u), bil(G, v, v)
-    S = math.sqrt(-float(vv) / float(uu))            # y(s) timelike iff s < S
+    # y(s) is timelike iff s < S = sqrt(-vv/uu); hyperbolic distance t from v has
+    # s = S tanh t. S_lo <= S to 2^-PREC relative, so s = S_lo (1 - 2/(e^{2t}+1)) < S.
+    S_lo = _sqrt_lower(-vv / uu, int(3 * max_len) + 64)
     best = None
     prev = list(v)
     k = 0
@@ -67,10 +72,15 @@ def next_corner(G: Mat, a: Vec, b: Vec, v: Vec, cache=None, step: float = 1.5,
         t = k * step
         if t > max_len:
             return None
-        s = Fr(S * math.tanh(t)).limit_denominator(1 << 40)
+        E = Fr(2) ** int(2 * t / math.log(2))   # ~ e^{2t}; exact, any E > 0 is valid
+        s = S_lo * (1 - Fr(2) / (E + 1))
+        s = _round_down(s, S_lo, E)
         y = [v[i] + u[i] * s for i in range(3)]
+        if _TRACE and k % 10 == 0:
+            import time as _t
+            print(f"    ray t={t:.0f} {_t.time() - _TRACE[0]:.0f}s", flush=True)
         if bil(G, y, y).sign() >= 0:
-            return None
+            raise RuntimeError("ray parameter not timelike (precision)")
         for c, D in cover_balls(G, [(prev, y)]):
             for d, m, r in Lattice(G, c, lll_cache=cache).roots_upto(D):
                 r = list(r)
@@ -110,6 +120,26 @@ def next_corner(G: Mat, a: Vec, b: Vec, v: Vec, cache=None, step: float = 1.5,
     c = cand[0]
     w = _orient(G, vertex_vector(G, b, c), v)
     return {"a": b, "b": c, "v": w, "m": mw}
+
+
+def _sqrt_lower(z, prec: int) -> Fr:
+    """A rational 0 < q <= sqrt(z) (z > 0 real element) with relative error < 2^-prec/4."""
+    from .vinberg import _sqrt_bounds, _emb_val
+    lo, hi = _sqrt_bounds(z.R.disc, prec + 8) if z.R.D != 1 else (Fr(0), Fr(0))
+    zl = min(_emb_val(z, lo), _emb_val(z, hi)) if z.R.D != 1 else _emb_val(z, Fr(0))
+    assert zl > 0
+    k = (zl.numerator.bit_length() - zl.denominator.bit_length()) // 2
+    sc = prec + 8 - k
+    q = math.isqrt((zl.numerator << (2 * sc)) // zl.denominator) if sc >= 0 else \
+        math.isqrt(zl.numerator // (zl.denominator << (-2 * sc)))
+    return Fr(q, 1 << sc) if sc >= 0 else Fr(q << (-sc))
+
+
+def _round_down(s: Fr, S_lo: Fr, E: Fr) -> Fr:
+    """A smaller rational of modest size: s minus a margin far below S_lo*2/(E+1)."""
+    gap = S_lo * 2 / (E + 1)
+    den = 1 << max(64, 2 * gap.denominator.bit_length() - 2 * gap.numerator.bit_length() + 64)
+    return Fr(math.floor(s * den - 1), den) if s * den > 1 else s
 
 
 def _try_map(G, a, b, v, c, d, w):
@@ -167,7 +197,14 @@ def boundary_walk(G: Mat, a: Vec, b: Vec, sheet: Vec, max_corners: int = 80,
             for (c, d) in ((nxt["a"], nxt["b"]), (nxt["b"], nxt["a"])):
                 g = _try_map(G, p["a"], p["b"], p["v"], c, d, nxt["v"])
                 if g is not None:
-                    pts = [q["v"] for q in corners]
+                    # interior point near the two corners: positive combination of
+                    # three non-collinear vertices of C (C is convex)
+                    i, j = corners.index(p), len(corners) - 1
+                    third = (i + j) // 2 if j - i >= 2 else (i - 1 if i > 0 else None)
+                    pts = [corners[i]["v"], corners[j]["v"]] + \
+                        ([corners[third]["v"]] if third is not None else [])
+                    if len(pts) < 3:
+                        pts = [q["v"] for q in corners]
                     x = _centre(G, pts)
                     return {"status": "translation", "corners": len(corners),
                             "roots": [q["a"] for q in corners] + [nxt["b"]],
