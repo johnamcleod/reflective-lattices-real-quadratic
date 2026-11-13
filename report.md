@@ -127,3 +127,10 @@ Mark's 522 appendix entries: re-checked with the final `check_polygon` (`tools/v
 | Type | (15) | (16) | (22) | (23) | (27) |
 |---|---|---|---|---|---|
 | ℤ[φ] | 298 | 1636 | 2946 | 36961 | not yet run (a configuration count of about 10 min; the lattice stage comes later) |
+
+### Regression after the field-profile refactor (2026-11-13)
+
+Re-run with the refactored code (commit 84f2248): `verify_all.py` 2373/2373 certificates
+pass (1280 reflective, 1093 non-reflective); `verify_mark.py` 522/522; `cand_classes.py`
+146 classes, 0 of Mark's classes missing, the same 2 new classes (DISCREPANCIES #5).
+Logs: `logs/regr_*.log`.
