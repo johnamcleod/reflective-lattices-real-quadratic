@@ -606,22 +606,37 @@ def _cosh2(G, p, q):
     return pq * pq / (bil(G, p, p) * bil(G, q, q))
 
 
+def _pos_lower(z: El, prec: int = 64) -> Fr:
+    """A rational 0 < q <= z (z > 0 at id, exactly), within relative 2^-prec; the
+    precision of sqrt(disc) is raised until the enclosure is positive (cancellation
+    in a + b sqrt(d) with huge a, b)."""
+    if z.R.D == 1:
+        q = _emb_val(z, Fr(0))
+        assert q > 0
+        return q
+    assert z.sign() > 0
+    bits = prec + 8 + max(z.a.bit_length(), z.b.bit_length())
+    while True:
+        lo, hi = _sqrt_bounds(z.R.disc, bits)
+        zl = min(_emb_val(z, lo), _emb_val(z, hi))
+        zh = max(_emb_val(z, lo), _emb_val(z, hi))
+        if zl > 0 and (zh - zl) * (1 << prec) <= zl:
+            return zl
+        bits *= 2
+
+
 def _log2_el(z: El) -> float:
     """log2 of a positive real element (steering only; no overflow)."""
-    q = _emb_val(z, _sqrt_bounds(z.R.disc, 64)[0]) if z.R.D != 1 else _emb_val(z, Fr(0))
-    if q <= 0:
+    if z.sign() <= 0:
         return -1e9
+    q = _pos_lower(z, 16)
     return (q.numerator.bit_length() - q.denominator.bit_length())
 
 
 def sqrt_lower(z: El, prec: int = 64) -> Fr:
     """A rational 0 < q <= sqrt(z) for real z > 0 (at id), relative error ~2^-prec.
     Exact (no floats), for elements of any size."""
-    lo, hi = _sqrt_bounds(z.R.disc, prec + 8) if z.R.D != 1 else (Fr(0), Fr(0))
-    zl = min(_emb_val(z, lo), _emb_val(z, hi)) if z.R.D != 1 else _emb_val(z, Fr(0))
-    if zl <= 0:
-        zl = _emb_val(z, (lo + hi) / 2)
-    assert zl > 0
+    zl = _pos_lower(z, prec)
     k = (zl.numerator.bit_length() - zl.denominator.bit_length()) // 2
     sc = prec + 8 - k
     if sc >= 0:

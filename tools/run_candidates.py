@@ -157,7 +157,7 @@ def main():
     for prev in AFTER:                       # later passes override earlier statuses
         first.update(read(os.path.join(ck, prev)))
     if REDO:
-        unresolved = {k for k, st in first.items() if st in ("timeout", "undetermined")}
+        unresolved = {k for k, st in first.items() if st in ("timeout", "undetermined", "error")}
         ck = os.path.join(ck, REDO)
         os.makedirs(ck, exist_ok=True)
         done = set(read(ck))
