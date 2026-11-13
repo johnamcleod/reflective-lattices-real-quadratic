@@ -125,8 +125,8 @@ def next_corner(G: Mat, a: Vec, b: Vec, v: Vec, cache=None, step: float = 4.0,
 def _sqrt_lower(z, prec: int) -> Fr:
     """A rational 0 < q <= sqrt(z) (z > 0 real element) with relative error < 2^-prec/4."""
     from .vinberg import _sqrt_bounds, _emb_val
-    lo, hi = _sqrt_bounds(z.R.disc, prec + 8) if z.R.D != 1 else (Fr(0), Fr(0))
-    zl = min(_emb_val(z, lo), _emb_val(z, hi)) if z.R.D != 1 else _emb_val(z, Fr(0))
+    lo, hi = _sqrt_bounds(z.R.disc, prec + 8) if z.R.degree != 1 else (Fr(0), Fr(0))
+    zl = min(_emb_val(z, lo), _emb_val(z, hi)) if z.R.degree != 1 else _emb_val(z, Fr(0))
     assert zl > 0
     k = (zl.numerator.bit_length() - zl.denominator.bit_length()) // 2
     sc = prec + 8 - k

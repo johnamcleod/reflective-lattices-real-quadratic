@@ -1,4 +1,4 @@
-"""Exact arithmetic in K = Q, Q(sqrt2), Q(sqrt5) and their rings of integers O.
+"""Exact arithmetic in a field K of degree <= 2 (a field profile, zphi.fields) and its ring of integers O.
 
 Representation
 --------------
@@ -35,21 +35,34 @@ def _sign_xy(x: int, y: int, disc: int) -> int:
 
 
 class Ring:
-    """One of Z, Z[sqrt2], Z[phi]."""
-
-    _DATA = {1: (0, 0, 1, "Z"), 2: (2, 0, 8, "Z[sqrt2]"), 5: (1, 1, 5, "Z[phi]")}
+    """The order O = Z[w] (w^2 = c0 + c1 w) of a field profile (zphi.fields): generic
+    arithmetic composed with per-field data. D is the profile key."""
 
     def __init__(self, D: int):
-        if D not in self._DATA:
-            raise ValueError("D must be 1, 2 or 5")
+        from .fields import PROFILES, validate
+        if D not in PROFILES:
+            raise ValueError(f"no field profile with key {D}")
+        P = PROFILES[D]
+        self.profile = P
         self.D = D
-        self.c0, self.c1, self.disc, self.name = self._DATA[D]
+        self.degree = P.degree
+        self.c0, self.c1, self.disc, self.name = P.c0, P.c1, P.disc, P.name
         self.zero = El(self, 0, 0, 1)
         self.one = El(self, 1, 0, 1)
-        self.w = El(self, 0, 1, 1) if D != 1 else None
-        # fundamental unit (norm -1 for D = 2, 5); for Z there is none beyond -1
-        self.eps = {1: self.one, 2: El(self, 1, 1, 1), 5: El(self, 0, 1, 1)}[D]
+        self.w = El(self, 0, 1, 1) if P.degree == 2 else None
+        # fundamental unit (degree 2); for Z there is none beyond -1
+        self.eps = El(self, *P.eps) if P.degree == 2 else self.one
         self.eta = self.eps * self.eps  # generator of the totally positive units
+        validate(P, self)
+        self._gammas = None
+
+    @property
+    def gammas(self):
+        """{m: 4cos^2(pi/m)} for the m with 4cos^2(pi/m) in O (computed, verified)."""
+        if self._gammas is None:
+            from .fields import compute_gammas
+            self._gammas = compute_gammas(self)
+        return self._gammas
 
     # construction ---------------------------------------------------------
     def __call__(self, a=0, b=0, n=1) -> "El":
@@ -91,7 +104,7 @@ class El:
     __slots__ = ("R", "a", "b", "n")
 
     def __init__(self, R: Ring, a: int, b: int = 0, n: int = 1):
-        if R.D == 1:
+        if R.degree == 1:
             b = 0
         if n < 0:
             a, b, n = -a, -b, -n
@@ -140,27 +153,27 @@ class El:
     __rmul__ = __mul__
 
     def conj(s) -> "El":
-        if s.R.D == 1:
+        if s.R.degree == 1:
             return s
         return El(s.R, s.a + s.R.c1 * s.b, -s.b, s.n)
 
     def norm_num(s) -> int:
         """Numerator of the norm: N(a + b w) (without the n^2)."""
         R = s.R
-        if R.D == 1:
+        if R.degree == 1:
             return s.a          # the norm of K = Q over Q is the identity
         return s.a * s.a + R.c1 * s.a * s.b - R.c0 * s.b * s.b
 
     def norm(s):
         from fractions import Fraction
-        return Fraction(s.norm_num(), s.n if s.R.D == 1 else s.n * s.n)
+        return Fraction(s.norm_num(), s.n if s.R.degree == 1 else s.n * s.n)
 
     def trace(s):
         from fractions import Fraction
         return Fraction(2 * s.a + s.R.c1 * s.b, s.n)
 
     def inv(s) -> "El":
-        if s.R.D == 1:
+        if s.R.degree == 1:
             if s.a == 0:
                 raise ZeroDivisionError
             return El(s.R, s.n, 0, s.a)
@@ -208,19 +221,19 @@ class El:
     def sign(s) -> int:
         """Sign at id (exact)."""
         R = s.R
-        if R.D == 1:
+        if R.degree == 1:
             return (s.a > 0) - (s.a < 0)
         return _sign_xy(2 * s.a + R.c1 * s.b, s.b, R.disc)
 
     def ssign(s) -> int:
         """Sign at sigma (exact)."""
         R = s.R
-        if R.D == 1:
+        if R.degree == 1:
             return s.sign()
         return _sign_xy(2 * s.a + R.c1 * s.b, -s.b, R.disc)
 
     def tpos(s) -> bool:
-        return s.sign() > 0 and (s.R.D == 1 or s.ssign() > 0)
+        return s.sign() > 0 and (s.R.degree == 1 or s.ssign() > 0)
 
     # conversions ------------------------------------------------------------
     def __float__(s):
@@ -228,7 +241,7 @@ class El:
         arithmetic with sqrt(disc) to 2^-80, then one rounding: no overflow or
         cancellation for large coordinates."""
         R = s.R
-        if R.D == 1:
+        if R.degree == 1:
             return float(Fraction(s.a, s.n))
         S = 1 << 80
         sq = Fraction(isqrt(R.disc * S * S), S)
@@ -245,7 +258,7 @@ class El:
 
     def __repr__(s):
         R = s.R
-        w = {1: "", 2: "√2", 5: "φ"}[R.D]
+        w = R.profile.symbol
         if s.b == 0:
             core = f"{s.a}"
         elif s.a == 0:
@@ -326,7 +339,7 @@ def tp_normalise(z: El) -> El:
         return z
     if z.sign() < 0:
         z = -z
-    if R.D == 1:
+    if R.degree == 1:
         return z
     if z.ssign() < 0:
         z = z * R.eps
@@ -360,7 +373,7 @@ def unit_sqrt(w: El):
         return None
     if w == R.one:
         return R.one
-    if R.D == 1:
+    if R.degree == 1:
         return None
     # w = eta^k exactly; find k from the size at id
     e = R.one
@@ -404,7 +417,7 @@ def primes_above(p: int, R: Ring) -> List[El]:
     key = (p, R.D)
     if key in _PRIME_CACHE:
         return _PRIME_CACHE[key]
-    if R.D == 1:
+    if R.degree == 1:
         out = [R(p)]
     else:
         roots = [x for x in range(p) if (x * x - R.c1 * x - R.c0) % p == 0]
@@ -479,7 +492,7 @@ def is_squarefree(z: El) -> bool:
 def residues(d: El) -> List[El]:
     """A complete set of representatives of O/dO (d nonzero in O)."""
     R = d.R
-    if R.D == 1:
+    if R.degree == 1:
         return [R(a) for a in range(abs(d.a))]
     # Z-lattice dO has basis d, d*w; HNF in coordinates (a, b)
     u, v = d, d * R.w

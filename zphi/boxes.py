@@ -31,7 +31,7 @@ def elements_in_box(R: Ring, lo, hi, slo=0, shi=4) -> List[El]:
         return list(_BOX_CACHE[key])
     Lo, Hi = _as_el(R, lo), _as_el(R, hi)
     out: List[El] = []
-    if R.D == 1:
+    if R.degree == 1:
         for a in range(floor(float(Lo)) - 1, ceil(float(Hi)) + 2):
             z = R(a)
             if (z - Lo).sign() > 0 and (Hi - z).sign() > 0:
@@ -70,14 +70,9 @@ def factorisations(z: El) -> List[Tuple[El, El]]:
 
 
 def gammas(R: Ring) -> Dict[int, El]:
-    """gamma(m) = 4cos^2(pi/m) for the m with cos^2(pi/m) in K; m = 2 gives 0."""
-    g = {2: R(0), 3: R(1), 4: R(2), 6: R(3)}
-    if R.D == 2:
-        g[8] = R(2, 1)            # 2 + sqrt2
-    if R.D == 5:
-        g[5] = R(1, 1)            # phi^2 = 1 + phi
-        g[10] = R(2, 1)           # rho = (5+sqrt5)/2 = 2 + phi
-    return g
+    """gamma(m) = 4cos^2(pi/m) for the m with gamma(m) in O; m = 2 gives 0.
+    From the field profile (computed and exactly verified in zphi.fields)."""
+    return dict(R.gammas)
 
 
 # ------------------------------------------------- exact real comparisons
@@ -88,7 +83,7 @@ def _iv_el(z: El, p: int) -> Tuple[int, int]:
     """Interval for id(z) at scale 2^p."""
     R = z.R
     S = 1 << p
-    if R.D == 1 or z.b == 0:
+    if R.degree == 1 or z.b == 0:
         x = z.a * S
         lo = x // z.n
         hi = -((-x) // z.n)

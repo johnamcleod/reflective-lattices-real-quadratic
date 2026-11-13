@@ -170,7 +170,7 @@ def admissible(G: Mat) -> bool:
         return False
     if m[0].sign() < 0 and m[1].sign() > 0:
         return False  # negative definite (Sylvester criterion is exact for definiteness)
-    if R.D == 1:
+    if R.degree == 1:
         # signature (2,1) over R: det < 0 and not negative definite
         return True
     return all(m.ssign() > 0 for m in leading_minors(G))

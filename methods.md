@@ -140,13 +140,17 @@ The PDFs and their text conversions are in `papers/`.
 | Mcleod, thesis (Durham 2013) | copy in `../reflect-z2/papers/`; to be copied here |
 | Bugaenko 1984/1990 | probably unavailable; cited secondhand, flagged |
 
-## Planned refactor: field profiles (after gate A.3.4, before the ℤ[φ] lattice stage)
+## Field profiles (done after gate A.3.4)
 
-All algorithms (configurations, hull, SNF, local enumeration, Vinberg, certificates, isometries) take a ring object and never branch on the field. The refactor makes that object an explicit strategy, composed rather than subclassed:
+The algorithms never branch on the field. A `Ring` (`zphi/ring.py`) is the generic order arithmetic of ℤ[ω] with ω² = c₀ + c₁ω, composed with a `FieldProfile` (`zphi/fields.py`). The profile is plain data: c₀, c₁, the fundamental unit, the printed symbol, the PARI polynomial (cross-checks only), and reference values for the tests.
 
-- **Generic order arithmetic** for ℤ[ω] with ω² = c₁ω + c₀: signs, norms, Euclidean division, unit reduction, restriction of scalars. It is written once from (c₀, c₁, fundamental unit).
-- **A per-field profile** (data): the fundamental unit; the admissible Coxeter orders m with 4cos²(π/m) ∈ O (replacing the `D == 2` / `D == 5` branches in `boxes.gammas`); the residue fields of small primes; the box bounds; and reference values for the tests.
-- **ℤ** becomes a separate degree-1 profile, used only by the oracle tests (replacing the `D == 1` branches).
-- **Hypotheses are checked, not assumed:** (H1) O Euclidean, since HNF, SNF and egcd need a PID; (H2) degree 2, since the restriction of scalars is to ℤ⁶ with one conjugate. A field failing either is rejected with an explicit error. Field-specific lemmas (corner normal forms, glue conditions, (U2)/(N2)) stay out of the generic layer.
+- **Hypotheses are checked when a ring is built, not assumed.** A field failing any check is rejected with `HypothesisError` (tested in `tests/test_fields.py`):
+  - (H2): degree 2, or degree 1 (ℤ, oracle tests only).
+  - ℤ[ω] is the maximal order: the discriminant is fundamental.
+  - (H1): O is norm-Euclidean, checked against the complete list of norm-Euclidean real quadratic fields.
+  - The stored unit is fundamental: an exact search shows no unit between 1 and ε.
+- **Derived data is computed, not typed in.** γ(m) = 4cos²(π/m) ∈ O is found for every m with [ℚ(cos 2π/m):ℚ] ≤ 2, that is m ∈ {2, 3, 4, 5, 6, 8, 10, 12}. Each value is verified exactly through the Chebyshev recursion C_m(γ−2) = 2, primitive. This replaces the old `D == 2` / `D == 5` branches in `boxes.gammas`; for example ℚ(√3) automatically gets γ(12) = 2+√3.
+- The remaining `degree == 1` branches are the ℤ special case.
+- Field-specific lemmas stay out of the generic layer and live in the specialisation part of the paper: corner normal forms, glue conditions, (U2)/(N2).
 
-Afterwards gates A.3.1–A.3.4 are rerun unchanged as the regression test. The manuscript mirrors this split: Part I is the general method, with the hypotheses each result uses; Part II covers ℤ[√2] (validation) and then ℤ[φ].
+Regression after the refactor: gates A.3.1–A.3.3 by the full test suite; gate A.3.4 by re-verifying every stored certificate and re-running the classification (see report.md).

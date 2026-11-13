@@ -54,7 +54,7 @@ def _sqrt_bounds(disc: int, prec: int = PREC) -> Tuple[Fr, Fr]:
 def _emb_val(z: El, s: Fr) -> Fr:
     """Value of z at the embedding w -> (c1 + s)/2 (s ~ +-sqrt(disc))."""
     R = z.R
-    if R.D == 1:
+    if R.degree == 1:
         return Fr(z.a, z.n)
     w = (R.c1 + s) / 2
     return (z.a + z.b * w) / z.n
@@ -91,7 +91,7 @@ def _lower_form(G: Mat, v0: Vec, Ci: Fr, Cs: Fr, prec: int = PREC):
     sum_q e_pq (|y_p y_q| <= (y_p^2 + y_q^2)/2). So subtracting sum_q e_pq from the
     p-th diagonal entry gives a lower bound."""
     R = G[0][0].R
-    if R.D == 1:
+    if R.degree == 1:
         raise NotImplementedError("Z: use a 3-dim enumeration")
     A, B = _forms_exact(G, v0)
     s_lo, s_hi = _sqrt_bounds(R.disc, prec)
@@ -610,7 +610,7 @@ def _pos_lower(z: El, prec: int = 64) -> Fr:
     """A rational 0 < q <= z (z > 0 at id, exactly), within relative 2^-prec; the
     precision of sqrt(disc) is raised until the enclosure is positive (cancellation
     in a + b sqrt(d) with huge a, b)."""
-    if z.R.D == 1:
+    if z.R.degree == 1:
         q = _emb_val(z, Fr(0))
         assert q > 0
         return q
