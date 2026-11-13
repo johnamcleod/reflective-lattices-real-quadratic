@@ -42,6 +42,9 @@ DELTA_HOP = _opt("delta", 64)  # sinh^2 of the hop radius
 REDO = _opt("redo", "", str)       # pass name: rerun only unresolved (timeout/undetermined) jobs
 AFTER = [x for x in _opt("after", "", str).split(",") if x]  # earlier passes to apply
 WALK = "--walk" in sys.argv   # boundary walk (zphi.walk) instead of the hop search
+_K = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--kinds=")), None)
+if _K:                         # e.g. --kinds=short_edge,short_pair
+    KINDS = tuple(k for k in KINDS if k in _K.split(","))
 SAMPLE = _opt("sample", 0)     # with --redo: only the first N unresolved jobs (experiments)
 # wall-clock limit per candidate; exceeded -> status "timeout" (decides nothing)
 
