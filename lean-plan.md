@@ -89,3 +89,29 @@ Each is to be declared as a single `axiom` in `ReflectZphi/Imported.lean` once t
 The earlier proposals `vinberg_finite_index` and `vinberg_algorithm_correct` are withdrawn. The first is contained in `vinberg_chamber`. The second is not needed, because reflectivity decisions rest on certificates that are checked independently of how they were found.
 
 To try first: formalising the finite linear-algebra part of Vinberg's compactness criterion for rank 3 (polygons), which would remove part of `vinberg_finite_index`.
+
+## 6. Feasibility measurements for the certificate checkers (2026-11-13)
+
+**Kernel throughput.** `decide +kernel` on a divide-and-conquer integer loop, with no Mathlib import (spike files, not kept):
+- **Speed:** about 2,300 simple steps per second per core, with CPU time linear in the number of steps (2¹³, 2¹⁴, 2¹⁵ steps: 5 s, 8 s, 16 s).
+- **Memory:** about 60 KB per step inside one declaration (1.0 GB at 2¹³, 1.5 GB at 2¹⁴). A linear recursion of 10⁵ steps did not finish in 600 s.
+- **Consequence:** the work must be split into many small declarations (about 10³–10⁴ steps each), built in parallel.
+
+**Enumeration work in the current certificates.** Fincke–Pohst nodes visited by `check_polygon` and `check_nonreflective` (ball covers), sampled on 25 + 25 ℤ[φ] candidates and extrapolated:
+
+| certificates | nodes | enumerations |
+|---|---|---|
+| 1140 polygon (reflective) | ≈ 1.5·10⁷ | ≈ 5.8·10⁴ |
+| 1290 translation (non-reflective) | ≈ 7.7·10⁷ | ≈ 1.2·10⁵ |
+
+**Estimate.**
+- A node is about 15 big-integer operations if the certificate supplies square roots (the checker then verifies s² ≤ X < (s+1)² rather than computing isqrt). That gives roughly 200–800 nodes per second per core.
+- Total: about 9·10⁷ nodes, i.e. 30–130 core-hours, i.e. 4–16 h on 8 cores. Per-enumeration setup and root tests come on top, perhaps doubling it.
+- So this is **slow but not impractical**. No switch to `native_decide` is needed.
+- The configuration-completeness certificates (§3) have not been measured yet.
+
+**Reformulation to avoid hyperbolic geometry.** The mirror-crossing test can be made purely algebraic.
+- The mirror of r meets the polygon P exactly when r·pᵢ takes both signs over the vertices pᵢ.
+- At a timelike point x of P with r·x = 0, the majorant M_x(r) = r·r − 2(r·x)²/(x·x) equals r², and r² ranges over a finite set of root norms.
+- An explicit comparison M_x ≤ c·M_v (v the centre) for x in P then reduces the test to finitely many definite enumerations. This is linear algebra and needs no hyperbolic geometry in Lean.
+- The ball cover becomes a list of such (v, c) pairs supplied by the certificate.
