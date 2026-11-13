@@ -36,12 +36,21 @@ Each entry gives its status and how it will be resolved. None of these is assume
   - *2026-11-13:* automatic fetch failed (J-STAGE 404; Project Euclid returns HTML, not the PDF). The user needs to supply the PDF.
   - Independent exact recomputation (`zphi/triangles.py`, Vinberg's criterion; `tests/test_triangles.py`) reproduces the twelve arithmetic triangles and the three non-arithmetic ones with Vinberg field ℚ(√5) exactly as listed in TASK.md. Over ℚ(√2) it gives 9 arithmetic triangles.
   - The comparison with the source itself is still open.
-  - **2026-11-13, ℤ[φ] pass 1, short edge:** of the twelve arithmetic triangles, only (2,3,10), (2,4,5), (2,4,10) and (2,5,6) occur as the chamber of a reflective SSF candidate.
-    - The other eight may be finite-index subgroups of these four, for example (2,5,5) and (4,4,5) in (2,4,5). A lattice realising one of them would then have a strictly larger reflection group.
-    - 52 short-edge candidates are still undetermined after pass 1.
-    - Still to settle:
-      - (a) for each of the eight, exhibit a lattice realising it and identify its full reflection group;
-      - (b) decide how TASK.md's calibration item "lattices realising the twelve triangles" is to be read: as lattices whose reflection group is the triangle group, or as lattices whose group contains it.
+  - **RESOLVED 2026-11-13 (`tools/triangle_lattices.py`, `data/triangles_5.json`).** All twelve triangles occur as configurations with SSF lattices in which the three roots are roots (25 lattices in all). Each such lattice is reflective, with a certified chamber matched to one of our 144 classes by explicit isometry:
+    - (2,3,10), (2,4,5), (2,4,10) and (2,5,6): the chamber is the triangle itself (locally simple).
+    - The other eight fail local simplicity, so the full reflection group is strictly larger:
+      - (2,5,5) ⊂ (2,4,5);
+      - (3,3,5), (5,5,5), (2,5,10) ⊂ (2,3,10);
+      - (2,10,10), (4,4,5), (5,10,10) ⊂ (2,4,10);
+      - (3,5,5) ⊂ (2,5,6).
+    - Each containment is a known triangle-group inclusion (Singerman 1972), e.g. (s,s,t) < (2,s,2t) and (2,n,2n) < (2,3,2n).
+    - So the "lattices realising the twelve triangles" all appear in the final list. Only four triangles are chambers of SSF lattices.
+  - **Commensurability classes (from the certified containments):**
+    - {(2,3,10), (3,3,5), (5,5,5), (2,5,10)};
+    - {(2,4,5), (2,5,5), (2,4,10), (2,10,10), (4,4,5), (5,10,10)};
+    - {(2,5,6), (3,5,5)}.
+
+    This differs from the step-1 notes' recollection of Takeuchi in two places, (2,5,5) and (2,5,10); see DISCREPANCIES #6. A check against Takeuchi's paper is still pending (PDF needed).
 - **Guglielmetti's ⟨−√5,1,1⟩ and ⟨−φ,2+φ,1⟩:** fetch the thesis.
 - **Bugaenko's ⟨−φ,1,1⟩:** primary source probably unavailable; also check by computation.
 - **Mcleod thesis §3.2:** a copy is in the sibling project.
