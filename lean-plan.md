@@ -77,12 +77,15 @@ Every checker is a total, computable `Bool` function on concrete data (integer c
 
 `scripts/check_axioms.lean` runs `#print axioms` on every main theorem. CI fails if anything outside (2) ∪ (3) appears.
 
-## 5. Imported theorems (proposed; nothing is added without asking)
+## 5. Imported theorems (approved by the user on 2026-11-13; nothing else is added without asking)
 
 | Name | Statement | Citation | Why not formalised |
 |---|---|---|---|
-| `allcock_thin_part` | every compact Coxeter polygon in ℍ² has a short edge, a short pair or a close pair, with the stated bounds on λ | Allcock, Mem. AMS 220 (2012), Thm 1; arXiv:1010.0486 | hyperbolic plane geometry not available in Mathlib |
-| `vinberg_finite_index` | L is reflective ⇔ its reflection chamber has finitely many sides (equivalently, is compact, in the cocompact case) | Vinberg 1972 | needs hyperbolic geometry and discrete group theory |
-| `vinberg_algorithm_correct` | the roots produced by Vinberg's algorithm (in the stated order) are exactly the simple roots of a chamber | Vinberg 1972; Bugaenko 1984 | same |
+| `allcock_thin_part` | every compact Coxeter polygon in ℍ² has a short edge, a short pair or a close pair, with the stated bounds on λ (paper Thm 5.1) | Allcock, Mem. AMS 220 (2012), Thm 1 and Lemmas 3–5; arXiv:1010.0486 | hyperbolic plane geometry not available in Mathlib |
+| `vinberg_chamber` | W(L) acts simply transitively on its chambers; O′(L) = W(L) ⋊ Stab(C); L is reflective iff a chamber is a compact polygon (paper Appendix A.1) | Vinberg 1972 | needs hyperbolic geometry and discrete group theory |
+
+Each is to be declared as a single `axiom` in `ReflectZphi/Imported.lean` once the lattice layer exists, so that the statement is the approved one verbatim, and `scripts/check_axioms.sh` is to allow exactly these two names.
+
+The earlier proposals `vinberg_finite_index` and `vinberg_algorithm_correct` are withdrawn. The first is contained in `vinberg_chamber`. The second is not needed, because reflectivity decisions rest on certificates that are checked independently of how they were found.
 
 To try first: formalising the finite linear-algebra part of Vinberg's compactness criterion for rank 3 (polygons), which would remove part of `vinberg_finite_index`.

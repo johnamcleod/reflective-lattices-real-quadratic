@@ -1,6 +1,7 @@
 #!/bin/sh
 # Fails if any listed theorem depends on an axiom outside {propext, Classical.choice, Quot.sound}
-# (plus the approved imported theorems in ReflectZphi/Imported.lean, none yet).
+# (plus the approved imported theorems allcock_thin_part and vinberg_chamber, to be declared in
+# ReflectZphi/Imported.lean; none declared yet, so none is allowed yet).
 cd "$(dirname "$0")/.." || exit 1
 out=$(lake env lean scripts/CheckAxioms.lean 2>&1) || { echo "$out"; exit 1; }
 echo "$out"
