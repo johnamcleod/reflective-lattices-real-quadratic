@@ -136,3 +136,26 @@ To try first: formalising the finite linear-algebra part of Vinberg's compactnes
   - Allcock requires signature (2,1), and Vinberg requires b² + 4a to be a non-square (both rule out vacuous falsity).
 
 **Done so far** (`Lattice/Basic.lean`): `Admissible`, `IsRoot`, `IsReflectionOf` (division-free), `isometryGroup` = O(L), `reflectionGroup` = W(L), and `Reflective` (finite index), together with `Cert/Mat3.lean` and `Cert/Iso.lean` (isometry checker with soundness).
+
+## 8. The certificate-to-chamber bridge (design, 2026-11-14)
+
+**Goal.** Prove in Lean: if the polygon checker accepts `(G, r₀ … r_{n−1}, data)`, then the polygon P cut out by the rᵢ is a compact chamber of W(L). Then `VinbergChamber` gives `Reflective`.
+
+**Steps.**
+
+| step | file | statement | kind |
+|---|---|---|---|
+| B1 | `Geometry/Minkowski.lean` | reverse Cauchy–Schwarz, and the reverse triangle inequality √(−q(x+y)) ≥ √(−q x) + √(−q y) for x, y in the same timelike cone | real linear algebra |
+| B2 | `Geometry/Minkowski.lean` | **majorant bound:** if x is timelike, r·x = 0 and v is timelike, then (r·v)² ≤ (r·r)·((v·x)²/(x·x) − v·v) | Cauchy–Schwarz on x^⊥ |
+| B3 | `Geometry/Minkowski.lean` | the ball {x : (v·x)² ≤ C²(v·v)(x·x)} is convex in the timelike cone, by concavity of √(−q) | from B1 |
+| B4 | `Geometry/Polygon.lean` | if consecutive vertices pᵢ = rᵢ^⊥ ∩ r_{i+1}^⊥ are timelike and sign conditions hold, then P is the cone hull of the pᵢ, compact, with nonempty interior, and its edges are exactly the rᵢ | linear algebra |
+| B5 | `Geometry/Polygon.lean` | a root mirror meets the interior of P iff r·pᵢ takes both strict signs | from B4 |
+| B6 | `Geometry/Chamber.lean` | if no root mirror meets int P, then P is a chamber (`IsChamber`) | topology (cone ↔ sheet by normalisation) |
+| B7 | `Cert/RootNorms.lean` | every root is ε^k times a root whose norm m is totally positive, m ∣ 2 det G, and ι₁(m)/ι₂(m) ∈ [1, ε₁⁴). The finite list of such m is checked by `decide` | uses only that ε is a unit (no unit-group theorem); PID for `m ∣ 2 det G` |
+| B8 | `Cert/Enum.lean` | finite enumeration: all y ∈ O³ with M_v(y) ≤ K at ι₁ and y·y = σ(m) at ι₂, with bounds certified by the certificate (squares supplied, as in §6) | kernel computation |
+| B9 | `Cert/Polygon.lean` | `checkPolygon` and `checkPolygon_sound`: the combination of B2–B8 | soundness proof |
+
+**Why this needs no ball cover.**
+- By B2, a root r whose mirror meets P at x has M_v(r) = r² + 2(r·v)²/|v·v| ≤ r²·(2C² − 1), where C = max cosh d(v, pᵢ).
+- By B3, the bound at the vertices holds on all of P.
+- One centre v per polygon therefore suffices. If the single enumeration is too large, P can be split into a fan of triangles (v, pᵢ, p_{i+1}) with one centre each.
