@@ -22,3 +22,14 @@ open ReflectZphi
 #print axioms ReflectZphi.Minkowski.polySet_eq_chamber
 #print axioms ReflectZphi.Transfer.chamber_of_J
 #print axioms ReflectZphi.Bridge.reflective_of_cert
+#print axioms ReflectZphi.RootNorms.root_norm_dvd
+#print axioms ReflectZphi.RootNorms.exists_unit_window
+#print axioms ReflectZphi.RootNorms.mem_windowNorms
+#print axioms ReflectZphi.RootNorms.exists_root_in_window
+#print axioms ReflectZphi.Enum.enum_sound
+#print axioms ReflectZphi.Enum.quadCheck_sound
+#print axioms ReflectZphi.Crossing.crossing_lat
+#print axioms ReflectZphi.Crossing.cs_ι₂
+#print axioms ReflectZphi.PolyEnum.trace_psi_eq
+#print axioms ReflectZphi.PolyEnum.hone_of_enum
+#print axioms ReflectZphi.PolyEnum.reflective_of_enum

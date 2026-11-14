@@ -224,6 +224,24 @@ lemma future_T (hc : PolyCert hd G n f rs Ps Xs) {u : Fin 3 → O a b}
   rw [this] at h
   nlinarith
 
+/-- The polygon data of a certificate, in `J` coordinates. -/
+lemma polyData_of_cert (hc : PolyCert hd G n f rs Ps Xs) :
+    PolyData n (fun i => Tm (hd := hd) (G := G) f *ᵥ realVec hd (rs i))
+      (fun i => Tm (hd := hd) (G := G) f *ᵥ realVec hd (Ps i)) := by
+  have hT := mink_T hc
+  refine ⟨hc.three_le, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩ <;> beta_reduce
+  · intro i hi; rw [hT, hc.on_left i hi, map_zero]
+  · intro i hi; rw [hT, hc.on_right i hi, map_zero]
+  · rw [hT, hc.last_left, map_zero]
+  · rw [hT, hc.last_right, map_zero]
+  · rw [hT]; exact hc.e1_p2
+  · rw [hT]; exact hc.e0_pn2
+  · intro j hj1 hj2; rw [hT]; exact hc.ej_p0 j hj1 hj2
+  · intro i hi1 hi2
+    rw [det3_mulVec, real_det3]
+    apply det_Tm_sign hc
+    rw [Fr_det, ← map_mul]; exact hc.fan_pos i hi1 hi2
+
 /-- **Bridge.** A polygon certificate plus the one-sign property gives a compact chamber. -/
 theorem isChamber_of_cert (hc : PolyCert hd G n f rs Ps Xs)
     (hone : ∀ r, IsRoot hd G r → (∀ i, i < n → ι₁ hd (bil G r (Ps i)) ≤ 0) ∨
