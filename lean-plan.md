@@ -165,7 +165,9 @@ To try first: formalising the finite linear-algebra part of Vinberg's compactnes
   - `nonpos_on_polySet`;
   - `crossing_bound`: if `r^⊥` meets the polygon, then (r·v)² ≤ (r·r)(−v·v)(C² − 1).
 - Proved: B6 (`Geometry/Chamber.lean`, `polySet_eq_chamber`). If the edges are roots, every root has one sign on the vertices, and an interior point is given, then the polygon is the closure of the connected component of sheet \ mirrors through that point. This is for an abstract set of spacelike root vectors in J coordinates.
-- Next: the transfer from G to J (connecting to `IsChamber` in `Imported.lean`), then B7 and B8.
+- Proved: the transfer (`Geometry/Transfer.lean`, `Cert/Bridge.lean`). The certificate supplies a G-orthogonal basis f₀, f₁, f₂ over O with ι₁-signs (+, +, −), giving T = diag(√c)·F⁻¹ with ι₁(G) = Tᵀ J T (no spectral theorem).
+  - `reflective_of_cert (hV : VinbergChamber) …`: from a `PolyCert` and the one-sign hypothesis `hone`, L is `Reflective`. Every PolyCert field is an equation in O or a sign at ι₁. Axioms: propext, Classical.choice, Quot.sound only.
+- Next: B7 and B8, to discharge `hone`: every root has one sign on the vertices. Then computable deciders for the PolyCert fields (via `emb_pos_iff`).
 
 **Why this needs no ball cover.**
 - By B2, a root r whose mirror meets P at x has M_v(r) = r² + 2(r·v)²/|v·v| ≤ r²·(2C² − 1), where C = max cosh d(v, pᵢ).
