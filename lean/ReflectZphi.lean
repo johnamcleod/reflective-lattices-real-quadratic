@@ -10,3 +10,4 @@ import ReflectZphi.Cert.Mat3
 import ReflectZphi.Cert.Iso
 import ReflectZphi.Geometry.Minkowski
 import ReflectZphi.Geometry.Polygon
+import ReflectZphi.Geometry.Chamber

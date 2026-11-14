@@ -164,7 +164,8 @@ To try first: formalising the finite linear-algebra part of Vinberg's compactnes
   - `isCompact_polySet`;
   - `nonpos_on_polySet`;
   - `crossing_bound`: if `r^⊥` meets the polygon, then (r·v)² ≤ (r·r)(−v·v)(C² − 1).
-- Next: B6 (chamber topology), the transfer from G to J, B7 and B8.
+- Proved: B6 (`Geometry/Chamber.lean`, `polySet_eq_chamber`). If the edges are roots, every root has one sign on the vertices, and an interior point is given, then the polygon is the closure of the connected component of sheet \ mirrors through that point. This is for an abstract set of spacelike root vectors in J coordinates.
+- Next: the transfer from G to J (connecting to `IsChamber` in `Imported.lean`), then B7 and B8.
 
 **Why this needs no ball cover.**
 - By B2, a root r whose mirror meets P at x has M_v(r) = r² + 2(r·v)²/|v·v| ≤ r²·(2C² − 1), where C = max cosh d(v, pᵢ).
