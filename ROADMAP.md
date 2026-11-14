@@ -5,11 +5,33 @@ file records the scope extensions requested by the user since then, in order of 
 
 ## Active
 
-### R1. More fields (requested 2026-11-13)
+### R1. More fields (requested 2026-11-13; complete list added 2026-11-14)
 The method is field-generic under (H1), (H2) and (N2) (paper, Part I).
-- **Next field:** ℚ(√13), with profile `(c0, c1) = (3, 1)` and fundamental unit `1 + ω` of norm −1.
-- **Later:** fields without a unit of norm −1, for example ℚ(√3). For these, (N2) must first be removed from Part I.
-- **Paper:** the introduction states that more fields than ℚ(√5) are in scope.
+
+**Complete scope.** There are exactly 16 norm-Euclidean real quadratic fields (Chatland–Davenport 1950; Barnes–Swinnerton-Dyer 1952; survey: Lemmermeyer 1995): ℚ(√d) for d ∈ {2, 3, 5, 6, 7, 11, 13, 17, 19, 21, 29, 33, 37, 41, 57, 73}. Of these, exactly 8 also have a unit of norm −1, so satisfy (N2):
+
+| d | ω | (c0, c1) | fundamental unit (norm −1) | status |
+|---|---|---|---|---|
+| 2 | √2 | (2, 0) | 1 + √2 | done (validation; 146 classes) |
+| 5 | (1+√5)/2 | (1, 1) | φ | done (144 classes) |
+| 13 | (1+√13)/2 | (3, 1) | 1 + ω = (3+√13)/2 | provisional (39 classes; 2 candidates in a 12 h run) |
+| 17 | (1+√17)/2 | (4, 1) | 4 + √17 = 3 + 2ω | to do (needs the prerequisite below) |
+| 29 | (1+√29)/2 | (7, 1) | (5+√29)/2 = 2 + ω | to do (needs the prerequisite below) |
+| 37 | (1+√37)/2 | (9, 1) | 6 + √37 = 5 + 2ω | to do (needs the prerequisite below) |
+| 41 | (1+√41)/2 | (10, 1) | 32 + 5√41 = 27 + 10ω | to do (needs the prerequisite below) |
+| 73 | (1+√73)/2 | (18, 1) | 1068 + 125√73 = 943 + 250ω | to do (needs the prerequisite below) |
+
+**Prerequisite for d = 17, 29, 37, 41, 73.**
+- Division with remainder by rounding coordinates bounds |N(remainder)| by d/16 · |N(divisor)| for ω = (1+√d)/2, and by d/4 for ω = √d. This is below 1 only for d ∈ {2, 3, 5, 13}.
+- **Python:** `zphi/ring.py` `ediv` must search the nearby quotients, keeping one with |N(r)| < |N(b)|. The existing guard already raises if rounding fails.
+- **Lean:** (H1) needs a new proof for these rings, since `BoxBound` fails. Published proofs (d = 73 especially) are delicate. Fallback: prove only that O is a PID, if the formal development needs nothing stronger.
+
+**Later (outside the method as stated).**
+- The 8 norm-Euclidean fields without a unit of norm −1, d ∈ {3, 6, 7, 11, 19, 21, 33, 57}: (N2) must first be removed from Part I.
+- Relaxing (H1) to class number 1 would bring in more fields. Finiteness is then not guaranteed (it is open whether there are infinitely many real quadratic fields of class number 1).
+- Fields of degree > 2 would need (H2) dropped.
+
+**Paper:** the introduction ("The fields in scope") states the list of 16, the 8 in scope, and the prerequisite.
 
 ### R2. Lean certificate checkers (Part B)
 See `lean-plan.md` §§3, 6 and 7. This runs side by side with R1, at low priority.
