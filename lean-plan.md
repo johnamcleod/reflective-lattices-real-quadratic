@@ -130,6 +130,9 @@ To try first: formalising the finite linear-algebra part of Vinberg's compactnes
 **Faithfulness.**
 - The approved statements are geometric (chambers, compact polygons). They are stated with geometric definitions in the cone model of ℍ²: points are rays of {x ∈ ℝ³ : ι₁-form(x) < 0} in one sheet, mirrors are r^⊥, a chamber is the closure of a connected component of the complement of the mirrors, and a compact polygon is a chamber that is compact.
 - The bridge from the algebraic polygon certificate to "P is a compact chamber" is then **proved in Lean** (cone-model linear algebra over ℝ), not imported.
-- The exact Lean text of the two propositions will be shown to the user before it is used.
+- The exact Lean text of the two propositions was shown to the user and **approved on 2026-11-14** (`ReflectZphi/Imported.lean`, commit 3bd79e2). The approval covers these differences from the §5 wording:
+  - O′(L) = W ⋊ Stab(C) is omitted;
+  - Allcock's configuration may be read in either cyclic direction;
+  - Allcock requires signature (2,1), and Vinberg requires b² + 4a to be a non-square (both rule out vacuous falsity).
 
 **Done so far** (`Lattice/Basic.lean`): `Admissible`, `IsRoot`, `IsReflectionOf` (division-free), `isometryGroup` = O(L), `reflectionGroup` = W(L), and `Reflective` (finite index), together with `Cert/Mat3.lean` and `Cert/Iso.lean` (isometry checker with soundness).
