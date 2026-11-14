@@ -3,3 +3,8 @@ import ReflectZphi.Ring.Embed
 import ReflectZphi.Ring.ZPhi
 import ReflectZphi.Ring.ZSqrt2
 import ReflectZphi.Ring.ZSqrt13
+import ReflectZphi.Geometry.Hyperbolic
+import ReflectZphi.Lattice.Basic
+import ReflectZphi.Imported
+import ReflectZphi.Cert.Mat3
+import ReflectZphi.Cert.Iso
