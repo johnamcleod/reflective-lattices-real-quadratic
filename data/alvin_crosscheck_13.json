@@ -1,6 +1,6 @@
 {
  "summary": {
-  "timeout_s": 60,
+  "timeout_s": 1800,
   "cases": 198,
   "ok": 195,
   "reflective_agree": 10,
@@ -29,7 +29,8 @@
      "cocompact": "yes",
      "finite_covolume": "yes"
     },
-    "ok": false
+    "ok": false,
+    "timeout_s": 1800
    },
    {
     "d": [
@@ -50,7 +51,8 @@
     "alvin_roots_in_ours": true,
     "ours_nroots": 10,
     "coxiter": {},
-    "ok": false
+    "ok": false,
+    "timeout_s": 1800
    },
    {
     "d": [
@@ -71,7 +73,8 @@
     "alvin_roots_in_ours": true,
     "ours_nroots": 18,
     "coxiter": {},
-    "ok": false
+    "ok": false,
+    "timeout_s": 1800
    }
   ]
  },
@@ -122,7 +125,8 @@
     "cocompact": "yes",
     "finite_covolume": "yes"
    },
-   "ok": false
+   "ok": false,
+   "timeout_s": 1800
   },
   {
    "d": [
@@ -1076,7 +1080,8 @@
    "alvin_roots_in_ours": true,
    "ours_nroots": 10,
    "coxiter": {},
-   "ok": false
+   "ok": false,
+   "timeout_s": 1800
   },
   {
    "d": [
@@ -2284,7 +2289,8 @@
    "alvin_roots_in_ours": true,
    "ours_nroots": 18,
    "coxiter": {},
-   "ok": false
+   "ok": false,
+   "timeout_s": 1800
   },
   {
    "d": [
