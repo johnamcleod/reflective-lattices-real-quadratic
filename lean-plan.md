@@ -146,7 +146,7 @@ To try first: formalising the finite linear-algebra part of Vinberg's compactnes
 | step | file | statement | kind |
 |---|---|---|---|
 | B1 | `Geometry/Minkowski.lean` | reverse Cauchy–Schwarz, and the reverse triangle inequality √(−q(x+y)) ≥ √(−q x) + √(−q y) for x, y in the same timelike cone | real linear algebra |
-| B2 | `Geometry/Minkowski.lean` | **majorant bound:** if x is timelike, r·x = 0 and v is timelike, then (r·v)² ≤ (r·r)·((v·x)²/(x·x) − v·v) | Cauchy–Schwarz on x^⊥ |
+| B2 | `Geometry/Minkowski.lean` | **majorant bound:** if x is timelike, r·x = 0 and v is timelike, then (r·v)² ≤ (r·r)·(v·v − (v·x)²/(x·x)), where the second factor is ≥ 0 because x·x < 0 | Cauchy–Schwarz on x^⊥ |
 | B3 | `Geometry/Minkowski.lean` | the ball {x : (v·x)² ≤ C²(v·v)(x·x)} is convex in the timelike cone, by concavity of √(−q) | from B1 |
 | B4 | `Geometry/Polygon.lean` | if consecutive vertices pᵢ = rᵢ^⊥ ∩ r_{i+1}^⊥ are timelike and sign conditions hold, then P is the cone hull of the pᵢ, compact, with nonempty interior, and its edges are exactly the rᵢ | linear algebra |
 | B5 | `Geometry/Polygon.lean` | a root mirror meets the interior of P iff r·pᵢ takes both strict signs | from B4 |
@@ -154,6 +154,8 @@ To try first: formalising the finite linear-algebra part of Vinberg's compactnes
 | B7 | `Cert/RootNorms.lean` | every root is ε^k times a root whose norm m is totally positive, m ∣ 2 det G, and ι₁(m)/ι₂(m) ∈ [1, ε₁⁴). The finite list of such m is checked by `decide` | uses only that ε is a unit (no unit-group theorem); PID for `m ∣ 2 det G` |
 | B8 | `Cert/Enum.lean` | finite enumeration: all y ∈ O³ with M_v(y) ≤ K at ι₁ and y·y = σ(m) at ι₂, with bounds certified by the certificate (squares supplied, as in §6) | kernel computation |
 | B9 | `Cert/Polygon.lean` | `checkPolygon` and `checkPolygon_sound`: the combination of B2–B8 | soundness proof |
+
+**Coordinates.** B1–B5 are proved for the standard form J = diag(1, 1, −1). The certificate supplies an exact factorisation G = Lᵀ D L over K, with D = diag(d₁, d₂, d₃) and ι₁(d₁), ι₁(d₂) > 0 > ι₁(d₃), checked by ring arithmetic. Then P = diag(√d₁, √d₂, √−d₃)·L (over ℝ) carries G at ι₁ to J. So no Sylvester law is needed.
 
 **Why this needs no ball cover.**
 - By B2, a root r whose mirror meets P at x has M_v(r) = r² + 2(r·v)²/|v·v| ≤ r²·(2C² − 1), where C = max cosh d(v, pᵢ).
