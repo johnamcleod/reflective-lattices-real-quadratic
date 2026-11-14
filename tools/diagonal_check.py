@@ -22,7 +22,7 @@ from zphi.ring import get_ring, from_json, assoc_key, is_squarefree  # noqa: E40
 from zphi.chamber import chamber_search  # noqa: E402
 from zphi.vinberg import check_polygon  # noqa: E402
 from zphi.isometry import find_isometry, invariant_key  # noqa: E402
-from zphi.linalg import mat_mul, transpose, det  # noqa: E402
+from zphi.linalg import mat_mul, transpose, det, bil  # noqa: E402
 
 _ARGS = [a for a in sys.argv[1:] if not a.startswith("--")]
 D = int(next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--D=")), 5))
@@ -40,7 +40,14 @@ def chamber_of_diag(dd):
     """Certified chamber of <dd,1,1> (dd < 0 < sigma(dd)), or a status string."""
     from zphi.walk import boundary_walk
     G = diag([dd, R(1), R(1)])
-    v0 = [R(1), R(1, 0, 7), R(1, 0, 11)]
+    # generic timelike control vector (1, 1/k, 1/(k+4)); k = 7 reproduces the original
+    # Z[phi] run, larger k is needed when |dd| is small at id (e.g. over Q(sqrt13))
+    k = 7
+    while True:
+        v0 = [R(1), R(1, 0, k), R(1, 0, k + 4)]
+        if bil(G, v0, v0).sign() < 0:
+            break
+        k = 2 * k + 1
     res = chamber_search(G, v0, max_hops=150)
     if res["status"] == "closed":
         roots = res["roots"]
