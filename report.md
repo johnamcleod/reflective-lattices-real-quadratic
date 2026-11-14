@@ -231,3 +231,45 @@ Two technical points:
 - (2,4,5) ⊃ (2,5,5);
 - (2,4,10) ⊃ (2,10,10), (4,4,5), (5,10,10);
 - (2,5,6) ⊃ (3,5,5).
+
+## ℚ(√13): first results (2026-11-14, provisional until the last 2 candidates are decided)
+
+Ring ℤ[ω], where ω = (1+√13)/2 and ω² = 3 + ω. The fundamental unit is ε = 1 + ω, of norm −1, so (N2) holds. The ring is norm-Euclidean (rounding bound 13/16). The prime 2 is inert, 3 splits, and 13 ramifies. Admissible angles are π/m with m ∈ {2, 3, 4, 6}.
+
+**Lattice stage** (locally simple SSF candidates per configuration type):
+
+| type | configurations | SSF | locally simple |
+|---|---|---|---|
+| (15) | 78 | 28 | 26 |
+| (16) | 743 | 122 | 112 |
+| (22) | 1792 | 72 | 55 |
+| (23) | 37671 | 458 | 433 |
+| (27) | 20071 | 216 | 185 |
+
+Total: 811 candidates. The close-pair recount `count_close` gives 20071 configurations with 0 mismatches.
+
+**Reflectivity** (every decided status re-verified by `verify_all.py`):
+
+| pass | reflective | non-reflective | undetermined |
+|---|---|---|---|
+| hop search | 364 | 355 | 92 |
+| + walk, 900 s limit | 365 | 443 | 3 |
+| + walk, 2 h limit | 365 | 444 | 2 |
+| + walk, 12 h limit | running | | |
+
+**Classes.** 39 isometry classes of reflective lattices, with pairwise distinct chamber invariants. So 39 is exact, apart from the 2 undetermined candidates, which could add classes. By number of sides:
+
+| sides | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 12 | 14 | 16 | 18 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| classes | 8 | 2 | 6 | 1 | 7 | 1 | 4 | 4 | 4 | 1 | 1 |
+
+There are **no triangles**. This is yet to be compared with Takeuchi's list of arithmetic triangle groups.
+
+**Diagonal check** (analogue of gate A.3.6; Theorem B₂ applies because 2 is inert):
+- (a) All 13 classes with a π/4 corner are isometric to a diagonal ⟨−d,1,1⟩, each by an explicit isometry.
+- (b) Of the 198 values of d with |N(d)| ≤ 400, 13 give a reflective ⟨−d,1,1⟩ and 185 are certified non-reflective. No reflective one is missing from (a).
+
+**AlVin cross-check** (all 198 diagonal forms):
+- 195 agree completely.
+- 2 are partial: AlVin did not finish in 30 min, but all the roots it printed lie in our chamber.
+- 1 is an AlVin error: for ⟨−ω,1,1⟩ AlVin misses the root (ω−1, ω, 0) and returns an index-3 pentagon. See DISCREPANCIES #7.
