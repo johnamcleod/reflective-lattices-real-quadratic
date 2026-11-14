@@ -33,3 +33,8 @@ open ReflectZphi
 #print axioms ReflectZphi.PolyEnum.trace_psi_eq
 #print axioms ReflectZphi.PolyEnum.hone_of_enum
 #print axioms ReflectZphi.PolyEnum.reflective_of_enum
+#print axioms ReflectZphi.Enum.enumS_sound
+#print axioms ReflectZphi.QuadSolve.mem_sqrtsO
+#print axioms ReflectZphi.QuadSolve.mem_solveQuad
+#print axioms ReflectZphi.PolyEnum.hone_of_enum2
+#print axioms ReflectZphi.PolyEnum.reflective_of_enum2

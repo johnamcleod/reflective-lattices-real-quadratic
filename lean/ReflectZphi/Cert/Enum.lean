@@ -218,4 +218,133 @@ theorem quadCheck_sound {a : ℕ → ℕ → ℤ} {w : ℕ → ℤ} {n : ℕ} {A
         exact Finset.sum_congr rfl fun i _ => by ring
     _ = S * (A j l * z j * z l) := by rw [← this]; ring
 
+
+/-! ### Stopping early -/
+
+/-- The enumerator stopped at level `stop`: the coordinates below `stop` are left at their
+initial values and `leaf` handles them (for instance by solving for them exactly). -/
+def enumAuxS (a : ℕ → ℕ → ℤ) (w : ℕ → ℤ) (n stop : ℕ) (leaf : (ℕ → ℤ) → Bool) :
+    ℕ → (ℕ → ℤ) → ℤ → Bool
+  | 0, z, _ => leaf z
+  | k + 1, z, B =>
+    if k + 1 ≤ stop then leaf z else
+    if B < 0 then true else
+    let c := cent a n k z
+    let akk := a k k
+    let wk := w k
+    let s : ℤ := (isqrt (B.toNat / wk.toNat) : ℕ)
+    if decide (B < wk * (s + 1) ^ 2) && decide (0 < akk) && decide (0 < wk) then
+      let lo := (-s - c) / akk
+      let hi := (s - c) / akk
+      allRange (fun t => enumAuxS a w n stop leaf k (Function.update z k t)
+        (B - wk * (akk * t + c) ^ 2)) lo (hi - lo + 1).toNat
+    else false
+
+/-- `∑_{stop ≤ i < k} wᵢ (Lᵢ z)²`. -/
+def psumR (a : ℕ → ℕ → ℤ) (w : ℕ → ℤ) (n : ℕ) (z : ℕ → ℤ) (stop k : ℕ) : ℤ :=
+  ∑ i ∈ Finset.Ico stop k, w i * Lrow a n i z ^ 2
+
+theorem enumAuxS_sound {a : ℕ → ℕ → ℤ} {w : ℕ → ℤ} {n stop : ℕ} {leaf : (ℕ → ℤ) → Bool}
+    (hw : ∀ i, i < n → 0 ≤ w i) :
+    ∀ k, k ≤ n → stop ≤ k → ∀ z₀ B, enumAuxS a w n stop leaf k z₀ B = true →
+      ∀ z : ℕ → ℤ, (∀ j, k ≤ j → z j = z₀ j) → psumR a w n z stop k ≤ B →
+        leaf (fun j => if stop ≤ j then z j else z₀ j) = true := by
+  intro k
+  induction k with
+  | zero =>
+    intro _ hs z₀ B h z hz _
+    have : (fun j => if stop ≤ j then z j else z₀ j) = z₀ := by
+      funext j; split_ifs <;> first | exact hz j (Nat.zero_le j) | rfl
+    rw [this]; exact h
+  | succ k ih =>
+    intro hkn hsk z₀ B h z hz hB
+    by_cases hstop : k + 1 ≤ stop
+    · have hst : stop = k + 1 := le_antisymm hsk hstop
+      simp only [enumAuxS, hstop, if_true] at h
+      have : (fun j => if stop ≤ j then z j else z₀ j) = z₀ := by
+        funext j; split_ifs with hj
+        · exact hz j (by omega)
+        · rfl
+      rw [this]; exact h
+    have hnonneg : ∀ m, 0 ≤ psumR a w n z stop m := by
+      intro m
+      exact Finset.sum_nonneg fun i hi => by
+        rw [Finset.mem_Ico] at hi
+        by_cases hin : i < n
+        · exact mul_nonneg (hw i hin) (sq_nonneg _)
+        · -- rows beyond `n` vanish
+          have : Lrow a n i z = 0 := by
+            unfold Lrow; rw [lsum_eq]
+            exact Finset.sum_eq_zero fun j hj => by
+              rw [Finset.mem_range] at hj; rw [if_neg (by omega)]
+          rw [this]; simp
+    have hsplit : psumR a w n z stop (k + 1) = psumR a w n z stop k + w k * Lrow a n k z ^ 2 := by
+      unfold psumR; rw [Finset.sum_Ico_succ_top (by omega)]
+    have hBnn : 0 ≤ B := le_trans (hnonneg _) hB
+    simp only [enumAuxS, hstop, if_false, not_lt.mpr hBnn] at h
+    split_ifs at h with hc
+    simp only [Bool.and_eq_true, decide_eq_true_eq] at hc
+    obtain ⟨⟨hs, hakk⟩, hwk⟩ := hc
+    set c := cent a n k z₀
+    set s : ℤ := ((isqrt (B.toNat / (w k).toNat) : ℕ) : ℤ)
+    have hL := Lrow_split a (by omega : k < n) (fun j hj => hz j (by omega) : ∀ j, k < j → z j = z₀ j)
+    set t := z k
+    have hwt : w k * (a k k * t + c) ^ 2 ≤ B := by
+      rw [← hL]; have := hnonneg k; linarith
+    have habs : |a k k * t + c| ≤ s := by
+      by_contra hcon; push Not at hcon
+      have h1 : s + 1 ≤ |a k k * t + c| := hcon
+      have h0 : 0 ≤ s + 1 := by positivity
+      have h2 : (s + 1) ^ 2 ≤ (a k k * t + c) ^ 2 := by
+        rw [← sq_abs (a k k * t + c)]; exact pow_le_pow_left₀ h0 h1 2
+      have := mul_le_mul_of_nonneg_left h2 hwk.le
+      linarith
+    obtain ⟨hab1, hab2⟩ := abs_le.mp habs
+    have hlo : (-s - c) / a k k ≤ t := by
+      have := Int.ediv_mul_le (-s - c) hakk.ne'
+      by_contra hcon; push Not at hcon
+      have : a k k * (t + 1) ≤ a k k * ((-s - c) / a k k) :=
+        mul_le_mul_of_nonneg_left (by omega) hakk.le
+      nlinarith
+    have hhi : t ≤ (s - c) / a k k := by
+      have := Int.lt_ediv_add_one_mul_self (s - c) hakk
+      by_contra hcon; push Not at hcon
+      have : a k k * ((s - c) / a k k + 1) ≤ a k k * t :=
+        mul_le_mul_of_nonneg_left (by omega) hakk.le
+      nlinarith
+    have hrange := allRange_spec h t hlo (by
+      have : (((s - c) / a k k - (-s - c) / a k k + 1).toNat : ℤ) =
+          (s - c) / a k k - (-s - c) / a k k + 1 := Int.toNat_of_nonneg (by omega)
+      rw [this]; omega)
+    have key := ih (by omega) (by omega) _ _ hrange z (by
+      intro j hj
+      rcases eq_or_lt_of_le hj with rfl | hlt
+      · simp [t]
+      · rw [Function.update_of_ne (by omega)]; exact hz j (by omega)) (by
+      rw [hsplit, hL] at hB; linarith)
+    have e : (fun j => if stop ≤ j then z j else Function.update z₀ k t j) =
+        (fun j => if stop ≤ j then z j else z₀ j) := by
+      funext j; split_ifs with hj
+      · rfl
+      · rw [Function.update_of_ne (by omega)]
+    rw [e] at key; exact key
+
+/-- The search stopped at level `stop`, from `z = 0`. -/
+def enumS (a : ℕ → ℕ → ℤ) (w : ℕ → ℤ) (n stop : ℕ) (leaf : (ℕ → ℤ) → Bool) (B : ℤ) : Bool :=
+  enumAuxS a w n stop leaf n (fun _ => 0) B
+
+theorem enumS_sound {a : ℕ → ℕ → ℤ} {w : ℕ → ℤ} {n stop : ℕ} {leaf : (ℕ → ℤ) → Bool}
+    {B : ℤ} (hw : ∀ i, i < n → 0 ≤ w i) (hst : stop ≤ n) (h : enumS a w n stop leaf B = true)
+    (z : ℕ → ℤ) (hz : ∀ j, n ≤ j → z j = 0) (hB : psum a w n z n ≤ B) :
+    leaf (fun j => if stop ≤ j then z j else 0) = true := by
+  have hR : psumR a w n z stop n ≤ psum a w n z n := by
+    unfold psumR psum
+    rw [Finset.range_eq_Ico]
+    apply Finset.sum_le_sum_of_subset_of_nonneg
+    · exact Finset.Ico_subset_Ico_left (Nat.zero_le _)
+    · intro i hi _
+      rw [Finset.mem_Ico] at hi
+      exact mul_nonneg (hw i hi.2) (sq_nonneg _)
+  exact enumAuxS_sound hw n le_rfl hst _ B h z hz (le_trans hR hB)
+
 end ReflectZphi.Enum

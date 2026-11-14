@@ -15,5 +15,6 @@ import ReflectZphi.Geometry.Transfer
 import ReflectZphi.Cert.Bridge
 import ReflectZphi.Cert.RootNorms
 import ReflectZphi.Cert.Enum
+import ReflectZphi.Cert.QuadSolve
 import ReflectZphi.Cert.Crossing
 import ReflectZphi.Cert.PolyEnum
