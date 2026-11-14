@@ -167,7 +167,18 @@ To try first: formalising the finite linear-algebra part of Vinberg's compactnes
 - Proved: B6 (`Geometry/Chamber.lean`, `polySet_eq_chamber`). If the edges are roots, every root has one sign on the vertices, and an interior point is given, then the polygon is the closure of the connected component of sheet \ mirrors through that point. This is for an abstract set of spacelike root vectors in J coordinates.
 - Proved: the transfer (`Geometry/Transfer.lean`, `Cert/Bridge.lean`). The certificate supplies a G-orthogonal basis f₀, f₁, f₂ over O with ι₁-signs (+, +, −), giving T = diag(√c)·F⁻¹ with ι₁(G) = Tᵀ J T (no spectral theorem).
   - `reflective_of_cert (hV : VinbergChamber) …`: from a `PolyCert` and the one-sign hypothesis `hone`, L is `Reflective`. Every PolyCert field is an equation in O or a sign at ι₁. Axioms: propext, Classical.choice, Quot.sound only.
-- Next: B7 and B8, to discharge `hone`: every root has one sign on the vertices. Then computable deciders for the PolyCert fields (via `emb_pos_iff`).
+- Proved: B7 (`Cert/RootNorms.lean`). Root norms divide 2 det G (PID, primitive vector); rescaling by a unit keeps roots and one-sign behaviour; every root has a unit multiple with norm in the window ι₂ m ≤ ι₁ m < ρ ι₂ m (only that u is a unit is used); such norms lie in an integer box and in the kernel-computed list `windowNorms` (box + exact window test + `m ∣ 2 det G`).
+- Proved: B8 (`Cert/Enum.lean`, `Cert/Crossing.lean`, `Cert/QuadSolve.lean`, `Cert/PolyEnum.lean`).
+  - `enum_sound`/`enumS_sound`: a Fincke–Pohst search over ℤⁿ, from a certificate S·A = Σ wᵢ aᵢᵀaᵢ (triangular integer rows). Integer square roots come from Newton's iteration and are checked (s+1)² > B, r² ≤ n < (r+1)²; the iteration itself is never proved.
+  - `crossing_lat`: a root with both signs on the vertices satisfies q (r·V)² ≤ (p − q)(r·r)(−V·V) at ι₁, for a future centre V with q (V·Pᵢ)² ≤ p (V·V)(Pᵢ·Pᵢ). Plus Cauchy–Schwarz at ι₂.
+  - The majorant ψ = 2q(x·V)(y·V) + (μ − qV·V)(x·y); Tr ψ is an integer form on ℤ⁶ (`trace_psi_eq`), bounded by K for crossing window roots.
+  - **Stopped search** (`hone_of_enum2`): the search stops two levels early and solves the last O-coordinate exactly (`solveQuad`, via N and Tr square roots). The two innermost levels held about 95% of the nodes.
+  - `reflective_of_enum2 (hV : VinbergChamber) …`: Reflective from PolyCert + centre + window + enumeration certificate. Axioms: propext, Classical.choice, Quot.sound only.
+- Measured (2026-11-14, `tools/emit_polyenum.py`): ℤ[φ] classes 2 and 0 (triangles), stopped search 155 and 841 nodes; `decide +kernel` accepts both in 5 s and 13 s CPU. Negative control: the class-0 triangle enlarged by its reflection in one wall is rejected (the kernel proves the search returns `false`).
+- Size (`tools/b8_size.py`, `tools/b8_split.py`): one centre per polygon is too large for long polygons (up to 5·10⁷ full-search nodes, class 58). Subdivision of the fan triangles (split point kA + lB) helps 2–3× on the full search; with the stopped search the per-piece cost falls ~30×.
+- Next:
+  1. B8′: several centres per polygon. Cover the fan triangles by a split tree (x = αA + βB + γC lies in (A, kA+lB, C) or (kA+lB, B, C)); one centre and enumeration per leaf.
+  2. B9: computable deciders for every remaining hypothesis (PolyCert fields, hvert, hC, hK, Admissible, the window conditions on u) via `posCode`, with `Mat3` for det; then emit certificates for all classes and time them.
 
 **Why this needs no ball cover.**
 - By B2, a root r whose mirror meets P at x has M_v(r) = r² + 2(r·v)²/|v·v| ≤ r²·(2C² − 1), where C = max cosh d(v, pᵢ).

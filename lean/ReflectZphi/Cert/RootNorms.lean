@@ -306,6 +306,11 @@ theorem window_box [IsDomain (O a b)] (hd0 : 0 < (b : ℝ) ^ 2 + 4 * a) {m D : O
         _ ≤ 4 * p * ((|Nm D| : ℤ) : ℝ) := by nlinarith
     exact_mod_cast this
 
+/-- `q ι₁ m < p ι₂ m`, decided exactly (`ι₁` of `p σ(m) − q m`). -/
+def winCode (p q : ℤ) (m : O a b) : Bool :=
+  posCode (2 * (p * (m.re + b * m.im) - q * m.re) + b * (-(p + q) * m.im)) (-(p + q) * m.im)
+    (b ^ 2 + 4 * a)
+
 /-- The candidate norms: all `m = ((s - b y)/2) + y ω` with `y < Y`, `0 < s < S` in the box,
 `ι₂ m > 0` (by `posCode`) and `dvdCode m D`. Computed by the kernel. -/
 def windowNorms (a b : ℤ) (D : O a b) (p q : ℤ) (Y S : ℕ) : List (O a b) :=
@@ -316,7 +321,8 @@ def windowNorms (a b : ℤ) (D : O a b) (p q : ℤ) (Y S : ℕ) : List (O a b) :
     if (si - b * yi) % 2 == 0 && 0 < si &&
         decide (q * (b ^ 2 + 4 * a) * yi ^ 2 < p * |Nm D|) &&
         decide (q * si ^ 2 < 4 * p * |Nm D|) &&
-        posCode si (-yi) (b ^ 2 + 4 * a) && dvdCode m D
+        posCode si (-yi) (b ^ 2 + 4 * a) &&
+        winCode p q m && dvdCode m D
     then some m else none
 
 theorem mem_windowNorms [IsDomain (O a b)] (hd0 : 0 < (b : ℝ) ^ 2 + 4 * a) {m D : O a b}
@@ -347,6 +353,21 @@ theorem mem_windowNorms [IsDomain (O a b)] (hd0 : 0 < (b : ℝ) ^ 2 + 4 * a) {m 
   have hNm : Nm m ≠ 0 := by
     intro h; have := (nm_eq_zero_iff m).mp h; rw [this, map_zero] at h2; exact lt_irrefl _ h2
   have hdc := dvdCode_of_dvd hNm hdvd
+  have hwc : winCode p q m = true := by
+    have hz : 0 < ι₁ hd0.le ((p : O a b) * star m - (q : O a b) * m) := by
+      rw [map_sub, map_mul, map_mul, ← ι₂_eq_ι₁_star, map_intCast, map_intCast]; linarith
+    have h := (emb_pos_iff hd0 (by norm_num : (1 : ℤ) * 1 = 1) _).mp hz
+    have e1 : 2 * ((p : O a b) * star m - (q : O a b) * m).re +
+        b * ((p : O a b) * star m - (q : O a b) * m).im =
+        2 * (p * (m.re + b * m.im) - q * m.re) + b * (-(p + q) * m.im) := by
+      simp only [re_sub, im_sub, re_mul, im_mul, re_intCast, im_intCast, re_star, im_star,
+        Int.cast_id]
+      ring
+    have e2 : 1 * ((p : O a b) * star m - (q : O a b) * m).im = -(p + q) * m.im := by
+      simp only [re_sub, im_sub, re_mul, im_mul, re_intCast, im_intCast, re_star, im_star,
+        Int.cast_id]
+      ring
+    rw [e1, e2] at h; exact h
   unfold windowNorms
   rw [List.mem_flatMap]
   have ey : ((y.toNat : ℕ) : ℤ) = y := Int.toNat_of_nonneg hy
@@ -363,7 +384,7 @@ theorem mem_windowNorms [IsDomain (O a b)] (hd0 : 0 < (b : ℝ) ^ 2 + 4 * a) {m 
     · show (2 * m.re + b * m.im - b * m.im) / 2 = m.re; omega
     · rfl
   simp only [ey, es, em, hdc, hpos, hyb, hsb, hs, decide_true, Bool.and_true, Bool.true_and,
-    beq_iff_eq]
+    beq_iff_eq, hwc]
   have : (s - b * y) % 2 = 0 := by show (2 * m.re + b * m.im - b * m.im) % 2 = 0; omega
   simp [this]
 
