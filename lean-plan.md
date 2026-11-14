@@ -157,6 +157,15 @@ To try first: formalising the finite linear-algebra part of Vinberg's compactnes
 
 **Coordinates.** B1–B5 are proved for the standard form J = diag(1, 1, −1). The certificate supplies an exact factorisation G = Lᵀ D L over K, with D = diag(d₁, d₂, d₃) and ι₁(d₁), ι₁(d₂) > 0 > ι₁(d₃), checked by ring arithmetic. Then P = diag(√d₁, √d₂, √−d₃)·L (over ℝ) carries G at ι₁ to J. So no Sylvester law is needed.
 
+**Progress (2026-11-14).**
+- Proved: B1–B3 (`Geometry/Minkowski.lean`).
+- Proved: B4 and B5 in Minkowski coordinates (`Geometry/Polygon.lean`):
+  - `hull`: every point of the half-planes is a nonnegative combination of three fan vertices;
+  - `isCompact_polySet`;
+  - `nonpos_on_polySet`;
+  - `crossing_bound`: if `r^⊥` meets the polygon, then (r·v)² ≤ (r·r)(−v·v)(C² − 1).
+- Next: B6 (chamber topology), the transfer from G to J, B7 and B8.
+
 **Why this needs no ball cover.**
 - By B2, a root r whose mirror meets P at x has M_v(r) = r² + 2(r·v)²/|v·v| ≤ r²·(2C² − 1), where C = max cosh d(v, pᵢ).
 - By B3, the bound at the vertices holds on all of P.
