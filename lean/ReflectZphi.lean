@@ -18,3 +18,5 @@ import ReflectZphi.Cert.Enum
 import ReflectZphi.Cert.QuadSolve
 import ReflectZphi.Cert.Crossing
 import ReflectZphi.Cert.PolyEnum
+import ReflectZphi.Cert.Cells
+import ReflectZphi.Cert.Check

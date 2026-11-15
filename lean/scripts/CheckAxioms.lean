@@ -38,3 +38,10 @@ open ReflectZphi
 #print axioms ReflectZphi.QuadSolve.mem_solveQuad
 #print axioms ReflectZphi.PolyEnum.hone_of_enum2
 #print axioms ReflectZphi.PolyEnum.reflective_of_enum2
+#print axioms ReflectZphi.Cells.segment_lat
+#print axioms ReflectZphi.Cells.exists_switch
+#print axioms ReflectZphi.Cells.cell_oneSign
+#print axioms ReflectZphi.Cells.hone_of_cells
+#print axioms ReflectZphi.Check.polyCheck_sound
+#print axioms ReflectZphi.Check.admCheck_sound
+#print axioms ReflectZphi.Check.reflective_of_check
