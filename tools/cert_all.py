@@ -6,7 +6,7 @@ declaration each, which keeps the kernel's memory small), the aggregator lean/Re
 lean/scripts/CertAxioms{D}.lean (`#print axioms` of every `reflective` theorem).
 Per-class statistics go to logs/cert_{D}.jsonl. Existing modules are kept unless --force.
 
-Usage: python tools/cert_all.py D [first last] [--cap=N] [--chunk=N] [--force]
+Usage: python tools/cert_all.py D [first last] [--cap=N] [--chunk=N] [--maxcell=N] [--force]
 """
 from __future__ import annotations
 
@@ -30,6 +30,7 @@ def main():
     last = int(args[2]) if len(args) > 2 else ncls - 1
     cap = int(opts.get("cap", 3000))
     chunk = int(opts.get("chunk", 300))
+    maxcell = int(opts["maxcell"]) if "maxcell" in opts else None
     outdir = f"lean/ReflectZphi/Data/Cert{D}"
     os.makedirs(outdir, exist_ok=True)
     log = open(f"logs/cert_{D}.jsonl", "a")
@@ -39,7 +40,7 @@ def main():
             continue
         t0 = time.time()
         try:
-            C = emit_cert.build(D, ci, cap)
+            C = emit_cert.build(D, ci, cap, maxcell)
         except Exception as e:  # recorded, not hidden
             rec = dict(cls=ci, error=repr(e))
             print(json.dumps(rec), flush=True)

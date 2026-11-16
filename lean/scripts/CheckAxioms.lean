@@ -47,3 +47,6 @@ open ReflectZphi
 #print axioms ReflectZphi.Check.reflective_of_check
 #print axioms ReflectZphi.Split.enumS_of_cover
 #print axioms ReflectZphi.Split.cellCheck_of
+#print axioms ReflectZphi.FastLeaf.leaf3_sound
+#print axioms ReflectZphi.FastLeaf.leaf4_sound
+#print axioms ReflectZphi.FastLeaf.cellCheck_fast4
