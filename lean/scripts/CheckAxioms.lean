@@ -45,3 +45,5 @@ open ReflectZphi
 #print axioms ReflectZphi.Check.polyCheck_sound
 #print axioms ReflectZphi.Check.admCheck_sound
 #print axioms ReflectZphi.Check.reflective_of_check
+#print axioms ReflectZphi.Split.enumS_of_cover
+#print axioms ReflectZphi.Split.cellCheck_of

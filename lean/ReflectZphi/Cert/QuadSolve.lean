@@ -44,21 +44,50 @@ lemma eq_isqrt_of_sqrtOK {n : ℕ} (h : sqrtOK n = true) {k : ℕ} (hk : k * k =
     have : (isqrt n + 1) * (isqrt n + 1) ≤ k * k := Nat.mul_le_mul hgt hgt
     omega
 
+/-! The residue filter: a square is a square modulo 64, 63, 65 and 11. Each test reads one
+bit of a mask of the squares modulo `M` (a few native operations in the kernel). -/
+
+/-- Bit `n % M` of `mask`. -/
+def maskBit (mask M n : ℕ) : Bool := (mask >>> (n % M)) % 2 == 1
+
+/-- `n` passes the four residue tests. -/
+def sqFilter (n : ℕ) : Bool :=
+  maskBit 144680414395695635 64 n && maskBit 288872697407275667 63 n &&
+  maskBit 20863489977805260307 65 n && maskBit 571 11 n
+
+lemma maskBit_sq {mask M : ℕ} (hM : 0 < M)
+    (h : (List.range M).all (fun r => maskBit mask M (r * r)) = true) (k : ℕ) :
+    maskBit mask M (k * k) = true := by
+  have hk : k % M < M := Nat.mod_lt _ hM
+  simp only [List.all_eq_true, List.mem_range] at h
+  have := h (k % M) hk
+  unfold maskBit at this ⊢
+  rw [Nat.mul_mod]; exact this
+
+lemma sqFilter_sq (k : ℕ) : sqFilter (k * k) = true := by
+  unfold sqFilter
+  rw [maskBit_sq (by norm_num) (by decide) k, maskBit_sq (by norm_num) (by decide) k,
+    maskBit_sq (by norm_num) (by decide) k, maskBit_sq (by norm_num) (by decide) k]
+  rfl
+
 /-- The candidate square roots `±r` of an integer `n` (empty unless `n` is a square), and
 whether the check passed. -/
 def sqrtsZ (n : ℤ) : Bool × List ℤ :=
   if n < 0 then (true, []) else
+  if !sqFilter n.toNat then (true, []) else
   let r : ℤ := (isqrt n.toNat : ℕ)
   (sqrtOK n.toNat, if r * r = n then [r, -r] else [])
 
 lemma mem_sqrtsZ {n : ℤ} (hok : (sqrtsZ n).1 = true) {k : ℤ} (hk : k * k = n) :
     k ∈ (sqrtsZ n).2 := by
   have hn : 0 ≤ n := by rw [← hk]; exact mul_self_nonneg k
-  simp only [sqrtsZ, not_lt.mpr hn, if_false] at hok ⊢
   have hkk : k.natAbs * k.natAbs = n.toNat := by
     have : ((k.natAbs * k.natAbs : ℕ) : ℤ) = n := by
       push_cast; rw [abs_mul_abs_self]; exact hk
     omega
+  have hf : sqFilter n.toNat = true := by rw [← hkk]; exact sqFilter_sq _
+  simp only [sqrtsZ, not_lt.mpr hn, if_false, hf, Bool.not_true, Bool.false_eq_true]
+    at hok ⊢
   have he := eq_isqrt_of_sqrtOK hok hkk
   have hrk : ((isqrt n.toNat : ℕ) : ℤ) = |k| := by rw [← he]; simp
   rw [hrk]

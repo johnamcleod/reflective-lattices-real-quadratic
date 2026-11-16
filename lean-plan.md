@@ -188,7 +188,16 @@ To try first: formalising the finite linear-algebra part of Vinberg's compactnes
   - `chainCheck` and `cellCheck`.
   - `reflective_of_check (hV : VinbergChamber)`: Reflective from these Booleans and `windowNorms … = norms`. Axioms: propext, Classical.choice, Quot.sound only.
 - Emitter `tools/emit_cert.py`: the full certificate for one class as a Lean file. Its theorem `reflective (hV : VinbergChamber) : Reflective hd.le G` has every check proved by `decide +kernel`. The polygon chain is split recursively (halving a run of segments, or subdividing one segment at kA + lB) until each cell's stopped search has at most `cap` nodes.
-- Next: emit and time every class. Timing note: compare user CPU time, not wall clock. The machine runs the jobs at nice 19 under load, so wall clock is several times larger.
+- Timing note: compare user CPU time, not wall clock. The machine runs the jobs at nice 19 under load, so wall clock is several times larger.
+- Memory (2026-11-16): one `decide +kernel` over a whole cell's search is not feasible. The kernel keeps every intermediate value until the declaration ends. The class-58 certificate (7 cells, 82,577 nodes, largest cell 24,887) reached a 19 GB footprint and swapped without finishing; a single 3,447-node cell reached 10 GB.
+- Proved (2026-11-16): `Cert/Split.lean`, which splits the search into subtrees. Axioms: propext, Classical.choice, Quot.sound only.
+  - `coverAux` walks the top of the search tree and stops at a list of prefixes, the values of the top coordinates.
+  - `sub` evaluates the subtree below one prefix, each in its own declaration.
+  - `enumS_of_cover` glues the subtrees back into the full search.
+  - `cellCheck_of` recombines with the rest of `cellCheck`.
+- Emitter: subtrees of at most `chunk` nodes (default 300), prefix lists in blocks of 32 glued with `List.forall_mem_append`, so the elaborator's recursion stays shallow.
+- Measured on class 0: 136 MB peak footprint. Class 58: about 1,260 subtree theorems, footprint 2.4–3.8 GB with Lean's parallel elaboration, about 1,400 s user CPU (about 60 nodes/s).
+- Next: check every class, one module at a time so that memory stays bounded.
 
 **Why this needs no ball cover.**
 - By B2, a root r whose mirror meets P at x has M_v(r) = r² + 2(r·v)²/|v·v| ≤ r²·(2C² − 1), where C = max cosh d(v, pᵢ).

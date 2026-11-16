@@ -38,7 +38,18 @@ def isqrtAux : ℕ → ℕ → ℕ → ℕ
     let y := (x + n / x) / 2
     if y < x then isqrtAux fuel n y else x
 
-def isqrt (n : ℕ) : ℕ := if n = 0 then 0 else isqrtAux 256 n n
+/-- Bisection for the bit length: the smallest `h ∈ (lo, hi]` with `n >>> h = 0`, provided
+`n >>> hi = 0` (with fuel). Only a starting point for Newton; its correctness is never used.
+(`Nat.log2` is not evaluated natively by the kernel; `>>>` is.) -/
+def blen : ℕ → ℕ → ℕ → ℕ → ℕ
+  | 0, _, _, hi => hi
+  | fuel + 1, n, lo, hi =>
+    if hi ≤ lo + 1 then hi else
+    let m := (lo + hi) / 2
+    if n >>> m = 0 then blen fuel n lo m else blen fuel n m hi
+
+/-- `⌊√n⌋` for `n < 2^4096`, by Newton from `2^(bitlen/2 + 1) ≥ √n`. -/
+def isqrt (n : ℕ) : ℕ := if n = 0 then 0 else isqrtAux 256 n (1 <<< (blen 16 n 0 4096 / 2 + 1))
 
 /-- `f t` for `t = lo, lo+1, …, lo+len-1`. -/
 def allRange (f : ℤ → Bool) : ℤ → ℕ → Bool
