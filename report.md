@@ -255,13 +255,15 @@ Total: 811 candidates. The close-pair recount `count_close` gives 20071 configur
 | hop search | 364 | 355 | 92 |
 | + walk, 900 s limit | 365 | 443 | 3 |
 | + walk, 2 h limit | 365 | 444 | 2 |
-| + walk, 12 h limit | running | | |
+| + walk, 12 h limit (2026-11-14) | 365 | 444 | 2 |
 
 **Classes.** 39 isometry classes of reflective lattices, with pairwise distinct chamber invariants. So 39 is exact, apart from the 2 undetermined candidates, which could add classes. By number of sides:
 
 | sides | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 12 | 14 | 16 | 18 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | classes | 8 | 2 | 6 | 1 | 7 | 1 | 4 | 4 | 4 | 1 | 1 |
+
+The 12-hour pass decided neither remaining candidate. Both are still undetermined after 12 h of hop search and walking: the short-pair `[[1,0],[2,1],[0,0],[0,0],[1,0],[31,22],[2,0]]` and the short-edge `[[1,0],[1,0],[0,0],[0,0],[1,0],[23,17]]`. After that pass, `verify_all.py` re-confirmed all 809 decided statuses, and `cand_classes.py` reproduced the 39 classes. The ℚ(√13) count stays provisional, and the two candidates are listed in OPEN_QUESTIONS.
 
 There are **no triangles**. This is yet to be compared with Takeuchi's list of arithmetic triangle groups.
 

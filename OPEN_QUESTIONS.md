@@ -81,3 +81,17 @@ Each entry gives its status and how it will be resolved. None of these is assume
   - **Statement:** if a hyperbolic form f splits as f′ ⊕ (a one-dimensional unimodular form), then the fundamental polytope P′ of the maximal reflection subgroup of O(f′) is a face of the fundamental polytope P for f.
   - **Consequence:** f reflective (P of finite volume) ⇒ the face P′ has finite volume ⇒ f′ reflective. Contrapositively, L_k not reflective ⇒ L_{k+1} = L_k ⊕ ⟨1⟩ not reflective. No diagonality of f′ is required.
 - **Status:** statement located through a secondary source (Mcleod's restatement). Still to do: check it against Bugaenko's original when the paper is available, including the ground ring (Mcleod uses it over Q(√5)). Deferred with D1.
+
+## Q10. Two undetermined ℚ(√13) candidates (2026-11-15)
+
+Neither of these was decided after 12 h of hop search plus walking (`logs/cand_13_pass4.log`):
+- the short-pair `[[1,0],[2,1],[0,0],[0,0],[1,0],[31,22],[2,0]]`;
+- the short-edge `[[1,0],[1,0],[0,0],[0,0],[1,0],[23,17]]`.
+
+The ℚ(√13) classification (39 classes) is therefore provisional: each candidate could be reflective and add a class.
+
+Next steps:
+- test whether either is isometric to an already decided lattice;
+- otherwise try a different decision method (a certificate of non-reflectivity from a loxodromic in the stabiliser, or a longer Vinberg run with a different start vector).
+
+Do not assume either way.

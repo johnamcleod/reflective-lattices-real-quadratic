@@ -176,9 +176,19 @@ To try first: formalising the finite linear-algebra part of Vinberg's compactnes
   - `reflective_of_enum2 (hV : VinbergChamber) …`: Reflective from PolyCert + centre + window + enumeration certificate. Axioms: propext, Classical.choice, Quot.sound only.
 - Measured (2026-11-14, `tools/emit_polyenum.py`): ℤ[φ] classes 2 and 0 (triangles), stopped search 155 and 841 nodes; `decide +kernel` accepts both in 5 s and 13 s CPU. Negative control: the class-0 triangle enlarged by its reflection in one wall is rejected (the kernel proves the search returns `false`).
 - Size (`tools/b8_size.py`, `tools/b8_split.py`): one centre per polygon is too large for long polygons (up to 5·10⁷ full-search nodes, class 58). Subdivision of the fan triangles (split point kA + lB) helps 2–3× on the full search; with the stopped search the per-piece cost falls ~30×.
-- Next:
-  1. B8′: several centres per polygon. Cover the fan triangles by a split tree (x = αA + βB + γC lies in (A, kA+lB, C) or (kA+lB, B, C)); one centre and enumeration per leaf.
-  2. B9: computable deciders for every remaining hypothesis (PolyCert fields, hvert, hC, hK, Admissible, the window conditions on u) via `posCode`, with `Mat3` for det; then emit certificates for all classes and time them.
+- Proved (2026-11-15): B8′ (`Cert/Cells.lean`). The crossing point is located on a chain `Bs` of future vectors containing every vertex.
+  - `exists_switch`: a root with both strict signs on the vertices changes sign (> 0 to ≤ 0, or back) between consecutive chain points.
+  - `segment_bound` / `segment_lat`: r^⊥ meets [B_j, B_{j+1}] at a future vector, and the cosh bound at the two endpoints gives the crossing bound for the centre of that segment's cell. No polygon membership and no `hvert` are needed: soundness holds for any future chain points.
+  - `cell_oneSign`: one cell's enumeration (stopped search) gives the one-sign property.
+  - `hone_of_cells`: all cells together give `hone`.
+- Proved (2026-11-15): B9 (`Cert/Check.lean`). Boolean deciders, each with a soundness proof:
+  - `polyCheck`: every PolyCert field. Primitivity uses Bezout coefficients; divisibility uses `dvdCode` on the columns, via `dvd_of_dvdCode`.
+  - `admCheck`: Admissible. Positive definiteness at ι₂ follows from the orthogonal basis (`posDef_of_orth`).
+  - `winCheck`: the window. The unit comes with an explicit inverse.
+  - `chainCheck` and `cellCheck`.
+  - `reflective_of_check (hV : VinbergChamber)`: Reflective from these Booleans and `windowNorms … = norms`. Axioms: propext, Classical.choice, Quot.sound only.
+- Emitter `tools/emit_cert.py`: the full certificate for one class as a Lean file. Its theorem `reflective (hV : VinbergChamber) : Reflective hd.le G` has every check proved by `decide +kernel`. The polygon chain is split recursively (halving a run of segments, or subdividing one segment at kA + lB) until each cell's stopped search has at most `cap` nodes.
+- Next: emit and time every class. Timing note: compare user CPU time, not wall clock. The machine runs the jobs at nice 19 under load, so wall clock is several times larger.
 
 **Why this needs no ball cover.**
 - By B2, a root r whose mirror meets P at x has M_v(r) = r² + 2(r·v)²/|v·v| ≤ r²·(2C² − 1), where C = max cosh d(v, pᵢ).
