@@ -147,6 +147,11 @@ def main():
         d = os.path.join(LEAN_DIR, f"ReflectZphi/Data/Cert{D}")
         classes = sorted(int(f[1:4]) for f in os.listdir(d) if f.endswith(".lean"))
     classes = [c for c in classes if c not in done]
+    d = os.path.join(LEAN_DIR, f"ReflectZphi/Data/Cert{D}")
+    missing = [c for c in classes if not os.path.exists(os.path.join(d, f"C{c:03d}.lean"))]
+    if missing:
+        print(json.dumps(dict(skipped_not_emitted=missing)), flush=True)
+    classes = [c for c in classes if c not in missing]
     lean, env = lean_env()
     log = open(logp, "a")
     with tempfile.TemporaryDirectory() as tmpdir:

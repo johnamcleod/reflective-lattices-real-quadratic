@@ -557,11 +557,18 @@ def lean_files(D, ci, C, ns, chunk=300, budget=15000):
                 f"def blk{k}_{bi} : List (List ℤ) := [" + ", ".join(lst(pre[i]) for i in blk) + "]",
             ]
 
+        # balanced: nesting depth log2(#blocks), not #blocks (the elaborator's recursion limit)
         def app(xs):
-            return xs[0] if len(xs) == 1 else f"{xs[0]} ++ ({app(xs[1:])})"
+            if len(xs) == 1:
+                return xs[0]
+            h = len(xs) // 2
+            return f"({app(xs[:h])}) ++ ({app(xs[h:])})"
 
         def glue(hs):
-            return hs[0] if len(hs) == 1 else f"List.forall_mem_append.2 ⟨{hs[0]}, {glue(hs[1:])}⟩"
+            if len(hs) == 1:
+                return hs[0]
+            h = len(hs) // 2
+            return f"List.forall_mem_append.2 ⟨{glue(hs[:h])}, {glue(hs[h:])}⟩"
 
         base += [
             f"def preL{k} : List (List ℤ) := " + app([f"blk{k}_{bi}" for bi in range(len(blocks))]),
