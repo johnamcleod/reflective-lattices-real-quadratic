@@ -29,7 +29,7 @@ from tools import emit_polyenum as E  # noqa: E402
 sys.setrecursionlimit(10000)
 
 
-MAX_PREFIXES = 5000  # bounds the emitter's memory and the file size
+MAX_PREFIXES = 40000  # bounds the emitter's memory and the file size
 
 
 class Cap(Exception):
@@ -67,7 +67,7 @@ def count_capped(a, w, B, cap):
     return cnt
 
 
-def prefixes(a, w, B, chunk):
+def prefixes(a, w, B, chunk, with_sizes=False):
     """Cut the stopped search (as `enumAuxS`, n = 6, stop = 2) into subtrees of at most
     `chunk` nodes: the list of prefixes (top coordinate first) at which `coverAux` stops."""
     n = 6
@@ -91,8 +91,10 @@ def prefixes(a, w, B, chunk):
     out = []
 
     def rec(k, B, p):
-        if k <= 2 or size(k, B) <= chunk:
+        sz = 1 if k <= 2 else size(k, B)
+        if sz <= chunk:
             out.append(list(p))
+            sizes.append(sz)
             if len(out) > MAX_PREFIXES:
                 raise RuntimeError(f"more than {MAX_PREFIXES} subtrees in one cell")
             return
@@ -106,7 +108,10 @@ def prefixes(a, w, B, chunk):
             rec(i, B - w[i] * (a[i][i] * t + c) ** 2, p + [t])
         z[i] = 0
 
+    sizes = []
     rec(n, B, [])
+    if with_sizes:
+        return out, sizes
     return out
 
 
@@ -339,7 +344,7 @@ def build(D, ci, cap, maxcell=None):
                 Sp=Sp, Dd=Dd, norms=norms, Bs=Bs, seg=seg, cells=cells, idx=idx)
 
 
-def lean_file(D, ci, C, ns, chunk=300):
+def lean_file(D, ci, C, ns, chunk=300, header_only=False):
     R = C["R"]
     a, b = R.c0, R.c1
     el, vec, lmat = E.el, E.vec, E.lmat
@@ -417,7 +422,7 @@ def lean_file(D, ci, C, ns, chunk=300):
         "  decide +kernel",
         "theorem chain_ok : chainCheck G f n Ps N Bs idx nc cells seg = true := by decide +kernel",
     ]
-    for k, c in enumerate(C["cells"]):
+    for k, c in enumerate([] if header_only else C["cells"]):
         pre = prefixes(c["a"], c["w"], c["S"] * c["K"], chunk)
         c["npre"] = len(pre)
         lst = lambda p: "[" + ", ".join(map(str, p)) + "]"
@@ -499,6 +504,103 @@ def lean_file(D, ci, C, ns, chunk=300):
         "",
     ]
     return "\n".join(L)
+
+
+def lean_files(D, ci, C, ns, chunk=300, budget=15000):
+    """Split form of `lean_file`: {module suffix: text}. "" is the main module (cover
+    theorems, gluing, `reflective`); "Base" holds the data, the cheap checks and each
+    cell's table; "P###" hold the subtree theorems, at most `budget` search nodes each.
+    Each module is checked in its own process, so the kernel's memory is per module."""
+    mono = lean_file(D, ci, C, ns, chunk, header_only=True)  # header and tail only
+    lines = mono.split("\n")
+    head_end = lines.index("theorem poly_ok : polyCheck G n f rs Ps Xs cf = true := by decide +kernel")
+    header = lines[:head_end]           # imports, namespace, open, data defs, cells
+    imports = [l for l in header if l.startswith("import ")]
+    body = header[len(imports):]
+    base_ns = f"{ns}"
+    lst = lambda p: "[" + ", ".join(map(str, p)) + "]"
+    R = C["R"]
+    a, b = R.c0, R.c1
+    el = E.el
+    nc = len(C["cells"])
+    # pieces of the monolithic file, regrouped
+    base_tail = lines[head_end:head_end + 7]   # poly_ok .. chain_ok
+    base = imports + body + base_tail
+    main = [f"import {ns}.Base"]
+    parts = []        # list of line lists
+    cur, cur_nodes, cur_names = [], 0, []
+    part_of = {}
+    for k, c in enumerate(C["cells"]):
+        pre, sizes = prefixes(c["a"], c["w"], c["S"] * c["K"], chunk, with_sizes=True)
+        U = c["U"]
+        col = [[R(U[2 * i][j], U[2 * i + 1][j]) for i in range(3)] for j in range(6)]
+        A_ = bil(C["G"], col[0], col[0])
+        Bc = [R(0, 0)] * 2 + [bil(C["G"], col[0], col[j]) for j in range(2, 6)]
+        Q = [[R(0, 0)] * 6 for _ in range(2)] + [
+            [R(0, 0)] * 2 + [bil(C["G"], col[j], col[l]) for l in range(2, 6)]
+            for j in range(2, 6)]
+        base += [
+            f"def ld{k} : LeafData {a} {b} where",
+            f"  A := {el(A_)}",
+            "  Bc j := ([" + ", ".join(el(x) for x in Bc) + "] : List OK).getD j 0",
+            "  Q j l := ((" + "[" + ", ".join(
+                "[" + ", ".join(el(x) for x in row) + "]" for row in Q) +
+            "] : List (List OK)).getD j []).getD l 0",
+            "  Am := [" + ", ".join(el(A_ * m) for m in C["norms"]) + "]",
+            f"theorem ld_ok{k} : ldCheck G cell{k}.U normsL ld{k} = true := by decide +kernel",
+            "",
+        ]
+        blocks = [list(range(i0, min(i0 + 32, len(pre)))) for i0 in range(0, len(pre), 32)]
+        for bi, blk in enumerate(blocks):
+            base += [
+                "set_option maxHeartbeats 0 in",
+                f"def blk{k}_{bi} : List (List ℤ) := [" + ", ".join(lst(pre[i]) for i in blk) + "]",
+            ]
+
+        def app(xs):
+            return xs[0] if len(xs) == 1 else f"{xs[0]} ++ ({app(xs[1:])})"
+
+        def glue(hs):
+            return hs[0] if len(hs) == 1 else f"List.forall_mem_append.2 ⟨{hs[0]}, {glue(hs[1:])}⟩"
+
+        base += [
+            f"def preL{k} : List (List ℤ) := " + app([f"blk{k}_{bi}" for bi in range(len(blocks))]),
+            f"def sub{k} : List ℤ → Bool := sub cell{k}.aL cell{k}.w 6 2 "
+            f"(leaf4 G n Ps normsL cell{k}.U ld{k}) (6, fun _ => 0, cell{k}.S * cell{k}.K)",
+            "",
+        ]
+        for bi, blk in enumerate(blocks):
+            nodes = sum(sizes[i] for i in blk)
+            if cur and cur_nodes + nodes > budget:
+                parts.append(cur); cur, cur_nodes = [], 0
+            cur += [f"theorem sub{k}_{i} : sub{k} {lst(pre[i])} = true := by decide +kernel" for i in blk]
+            cur += [
+                f"theorem sb{k}_{bi} : ∀ q ∈ blk{k}_{bi}, sub{k} q = true := by",
+                f"  unfold blk{k}_{bi}",
+                "  exact " + "".join(f"List.forall_mem_cons.2 ⟨sub{k}_{i}, " for i in blk)
+                + "List.forall_mem_nil _" + "⟩" * len(blk),
+            ]
+            cur_nodes += nodes
+        main += [
+            f"theorem cover{k} : (coverL cell{k}.aL cell{k}.w 6 2 6 (fun _ => 0) "
+            f"(cell{k}.S * cell{k}.K) [] preL{k}).isSome = true := by decide +kernel",
+            f"theorem subs{k} : ∀ q ∈ preL{k}, sub{k} q = true := by",
+            f"  unfold preL{k}",
+            "  exact " + glue([f"sb{k}_{bi}" for bi in range(len(blocks))]),
+            f"theorem cell_ok{k} : cellCheck G f n Ps normsL cell{k} = true :=",
+            f"  cellCheck_fast4 (by decide +kernel) ld_ok{k} (enumS_of_coverL cover{k} subs{k})",
+        ]
+        c["npre"] = len(pre)
+    if cur:
+        parts.append(cur)
+    tail_start = lines.index("theorem cells_ok : ∀ k, k < nc → cellCheck G f n Ps normsL (cells k) = true := by")
+    opener = [l for l in body if l.startswith("namespace ") or l.startswith("open ") or l.startswith("  ReflectZphi.Enum")]
+    main_hdr = ["import ReflectZphi.Cert.Cover"] + main[:1] + [f"import {ns}.P{j:03d}" for j in range(len(parts))] + ["", *opener, ""]
+    main = main_hdr + main[1:] + lines[tail_start:]
+    out = {"Base": "\n".join(base + ["", f"end {ns}", ""]), "": "\n".join(main)}
+    for j, pl in enumerate(parts):
+        out[f"P{j:03d}"] = "\n".join([f"import {ns}.Base", "", *opener, "", *pl, "", f"end {ns}", ""])
+    return out
 
 
 def main():

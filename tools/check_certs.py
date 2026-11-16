@@ -30,7 +30,7 @@ def check(D, mod, mem, threads, tmpdir):
     open(tmp, "w").write(text.replace(f"end {ns}\n", f"#print axioms reflective\nend {ns}\n"))
     cmd = ["/usr/bin/time", "-p", "caffeinate", "-i", "nice", "-n", "19",
            os.path.abspath("tools/memcap.sh"), str(mem),
-           "lake", "env", "lean", f"-M{mem - 500}", f"-j{threads}", tmp]
+           "lake", "env", "lean", f"-M{mem + 3000}", f"-j{threads}", tmp]
     t0 = time.time()
     p = subprocess.run(cmd, cwd="lean", capture_output=True, text=True)
     out = p.stdout + p.stderr

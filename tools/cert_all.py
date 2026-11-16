@@ -7,6 +7,7 @@ lean/scripts/CertAxioms{D}.lean (`#print axioms` of every `reflective` theorem).
 Per-class statistics go to logs/cert_{D}.jsonl. Existing modules are kept unless --force.
 
 Usage: python tools/cert_all.py D [first last] [--cap=N] [--chunk=N] [--maxcell=N] [--force]
+       [--split [--budget=NODES]]  (one main module C###.lean + C###/Base.lean + C###/P###.lean)
 """
 from __future__ import annotations
 
@@ -47,11 +48,28 @@ def main():
             log.write(json.dumps(rec) + "\n"); log.flush()
             continue
         ns = f"ReflectZphi.Data.Cert{D}.C{ci:03d}"
-        open(path, "w").write(emit_cert.lean_file(D, ci, C, ns, chunk))
+        try:
+            if "split" in opts:
+                texts = emit_cert.lean_files(D, ci, C, ns, chunk, int(opts.get("budget", 15000)))
+            else:
+                texts = {"": emit_cert.lean_file(D, ci, C, ns, chunk)}  # build first: a failure leaves no empty module
+        except Exception as e:
+            rec = dict(cls=ci, error=repr(e))
+            print(json.dumps(rec), flush=True)
+            log.write(json.dumps(rec) + "\n"); log.flush()
+            continue
+        sub = f"{outdir}/C{ci:03d}"
+        if os.path.isdir(sub):
+            for f in os.listdir(sub):
+                os.remove(os.path.join(sub, f))
+        for suf, text in texts.items():
+            if suf:
+                os.makedirs(sub, exist_ok=True)
+            open(path if not suf else f"{sub}/{suf}.lean", "w").write(text)
         nodes = [c["nodes"] for c in C["cells"]]
         rec = dict(cls=ci, sides=len(C["P"]), chain=len(C["Bs"]), cells=len(nodes),
                    nodes=sum(nodes), max_nodes=max(nodes), subtrees=sum(c["npre"] for c in C["cells"]), secs=round(time.time() - t0, 1),
-                   bytes=os.path.getsize(path))
+                   bytes=sum(len(t) for t in texts.values()), modules=len(texts))
         print(json.dumps(rec), flush=True)
         log.write(json.dumps(rec) + "\n"); log.flush()
     mods = sorted(f[:-5] for f in os.listdir(outdir) if f.endswith(".lean"))

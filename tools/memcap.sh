@@ -4,6 +4,7 @@
 # exit 137 with a message on stderr. macOS does not enforce RLIMIT_AS, hence the watchdog.
 #
 # Usage: tools/memcap.sh LIMIT_MB command [args...]
+# With MEMCAP_REPORT=1 set, the peak sampled footprint is printed on stderr at the end.
 # Wrap it the usual way: caffeinate -i nice -n 19 tools/memcap.sh 4000 lake env lean F.lean
 limit_mb=$1; shift
 "$@" &
@@ -29,9 +30,11 @@ footprint_mb() {  # summed phys_footprint (MB) of the given PIDs
   echo $tot
 }
 
+peak=0
 while kill -0 $root 2>/dev/null; do
   pids=($(tree $root))
   mb=$(footprint_mb $pids)
+  (( mb > peak )) && peak=$mb
   if (( mb > limit_mb )); then
     echo "memcap: footprint ${mb} MB > ${limit_mb} MB; killing PIDs ${pids}" >&2
     kill ${pids} 2>/dev/null
@@ -42,3 +45,6 @@ while kill -0 $root 2>/dev/null; do
   sleep 3
 done
 wait $root
+rc=$?
+[[ -n $MEMCAP_REPORT ]] && echo "memcap: peak footprint ${peak} MB" >&2
+exit $rc
