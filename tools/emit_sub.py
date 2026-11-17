@@ -42,6 +42,81 @@ def bndK(R, G, c, m):
     return E.floor_el((2 * pC - qC) * m * (-VV) + mu * m + (qC * m * VV + mu * m).conj()) + 1
 
 
+def group_basis(R, bases, g):
+    """O-basis (columns) of the sum of the L_m, m in the group g (indices into bases)."""
+    from zphi.linalg import hnf_basis
+    gens = [[bases[i][0][r][j] for r in range(3)] for i in g for j in range(3)]
+    return hnf_basis(gens)
+
+
+def psi_of(G, c):
+    V, qC, mu = c["V"], c["qC"], c["mu"]
+    VV = bil(G, V, V)
+    GV = mat_vec(G, V)
+    return [[2 * qC * GV[i] * GV[j] + (mu - qC * VV) * G[i][j] for j in range(3)] for i in range(3)]
+
+
+def group_count(R, G, c, norms, bases, g, cap):
+    B = group_basis(R, bases, g)
+    Psi = psi_of(G, c)
+    K = max(bndK(R, G, c, norms[i]) for i in g)
+    return enum_psi(R, mat_mul(transpose(B), mat_mul(Psi, B)), K, cap)[0]
+
+
+def subcell_group(R, G, c, norms, bases, g, cap=10 ** 9):
+    """The search data of the norm group g (indices) in cell c: lattice = sum of the L_m."""
+    from zphi.linalg import inv
+    Bg = group_basis(R, bases, g) if len(g) > 1 else bases[g[0]][0]
+    Bgi = inv(Bg)
+    Psi = psi_of(G, c)
+    Psi2 = mat_mul(transpose(Bg), mat_mul(Psi, Bg))
+    K = max(bndK(R, G, c, norms[i]) for i in g)
+    nodes, a, w, S, Uo, Uoi, _ = enum_psi(R, Psi2, K, cap)
+    U = E.matmul(zmat(R, Bg), Uo)
+    Pzs, Qzs = [], []
+    for i in g:
+        m = norms[i]
+        B, P, Q = bases[i]
+        T = mat_mul(Bgi, B)  # L_m in L_g: integral
+        Pz = E.matmul(Uoi, zmat(R, mat_mul(T, P)))
+        Qz = E.matmul(Uoi, zmat(R, mat_mul(T, Q)))
+        Nm = m.norm_num()
+        assert m.n == 1 and Nm != 0
+        Tp = zmat(R, [[m.conj() * 2 * G[r][j] for j in range(3)] for r in range(3)])
+        UP = E.matmul(U, Pz)
+        UQT = E.matmul(U, E.matmul(Qz, Tp))
+        for r in range(6):
+            for j in range(6):
+                assert Nm * (UP[r][j] - int(r == j)) + UQT[r][j] == 0
+        Pzs.append(Pz)
+        Qzs.append(Qz)
+    col = lambda j: [R(U[2 * i][j], U[2 * i + 1][j]) for i in range(3)]
+    for x, y in zip(col(1), [R.w * e for e in col(0)]):
+        assert (x - y).is_zero()
+    return dict(ms=[norms[i] for i in g], g=list(g), K=K, a=a, w=w, S=S, U=U, Pz=Pzs, Qz=Qzs,
+                nodes=nodes)
+
+
+def choose_groups(R, G, c, norms, bases):
+    """Greedy merging of norm groups (start: singletons) while a merge lowers the total."""
+    groups = [[i] for i in range(len(norms))]
+    cnt = {(i,): group_count(R, G, c, norms, bases, [i], 10 ** 9) for i in range(len(norms))}
+    while True:
+        best = None
+        for x in range(len(groups)):
+            for y in range(x + 1, len(groups)):
+                gk = tuple(sorted(groups[x] + groups[y]))
+                sm = cnt[tuple(groups[x])] + cnt[tuple(groups[y])]
+                if gk not in cnt:
+                    cnt[gk] = group_count(R, G, c, norms, bases, list(gk), sm)
+                if cnt[gk] < sm and (best is None or sm - cnt[gk] > best[0]):
+                    best = (sm - cnt[gk], x, y, gk)
+        if best is None:
+            return groups
+        _, x, y, gk = best
+        groups = [gg for k, gg in enumerate(groups) if k not in (x, y)] + [list(gk)]
+
+
 def subcell(R, G, c, m, basis, cap=10 ** 9):
     """The per-norm search data of norm m in cell c."""
     B, P, Q = basis
@@ -122,16 +197,29 @@ def cover_sub(R, G, pts, norms, bases, cap, maxcell, depth=0):
     A, B = pts
     M, _ = split_point(G, A, B)
     M = primitive_future(R, G, M, A)
-    if cell is not None and all(d["nodes"] < maxcell for d in cell["subs"]):  # exact counts
-        cA = make_cell_sub(R, G, [A, M], norms, bases, maxcell)
-        cB = make_cell_sub(R, G, [M, B], norms, bases, maxcell)
-        if (depth >= 30 or cA is None or cB is None
-                or cA["nodes"] + cB["nodes"] >= 0.8 * nodes):
+    exact = cell is not None and all(d["nodes"] < maxcell for d in cell["subs"])
+    if depth >= 24 or M == A or M == B:
+        if exact:
             return [(pts, cell)]
-    elif depth >= 30:
         raise RuntimeError("cover_sub: depth limit without an acceptable cell")
-    return (cover_sub(R, G, [A, M], norms, bases, cap, maxcell, depth + 1)
-            + cover_sub(R, G, [M, B], norms, bases, cap, maxcell, depth + 1))
+    split = []
+    for seg in ([A, M], [M, B]):
+        ch = make_cell_sub(R, G, seg, norms, bases, maxcell)
+        ch_exact = ch is not None and all(d["nodes"] < maxcell for d in ch["subs"])
+        if ch_exact and (ch["nodes"] <= cap or (exact and ch["nodes"] >= 0.95 * nodes)):
+            split.append((seg, ch))  # small enough, or no progress (a vertex floor)
+            continue
+        try:
+            split += cover_sub(R, G, seg, norms, bases, cap, maxcell, depth + 1)
+        except RuntimeError:
+            if not ch_exact:
+                if exact:
+                    return [(pts, cell)]
+                raise
+            split.append((seg, ch))
+    if exact and sum(cl["nodes"] for _, cl in split) >= nodes:
+        return [(pts, cell)]
+    return split
 
 
 def build_sub(D, ci, cap=5000, maxcell=2000000):
@@ -161,7 +249,20 @@ def build_sub(D, ci, cap=5000, maxcell=2000000):
         seg += [k] * (len(pts) - 1)
         cells.append(cell)
     idx = [next(j for j, b in enumerate(Bs) if b == p_) for p_ in P]
-    return dict(R=R, G=G, rs=rs, P=P, f=f, Xs=Xs, cf=cf, u=u, uinv=uinv, p=p, q=q, Y=Y,
+    # groups chosen on a small cell (exact counts in Python are slow on large ones); the
+    # groups found on different cells of one class are nearly the same
+    import time as _t
+    t0 = _t.time()
+    rep = min((cl for cl in cells if cl["nodes"] >= 500), key=lambda cl: cl["nodes"],
+              default=max(cells, key=lambda cl: cl["nodes"]))
+    groups = choose_groups(R, G, rep, norms, bases)
+    print(f"groups {groups} (on a cell of {rep['nodes']} nodes, {_t.time() - t0:.0f} s)",
+          file=sys.stderr, flush=True)
+    for cl in cells:
+        cl["groups"] = [subcell_group(R, G, cl, norms, bases, g) for g in groups]
+        cl["nodes_single"] = cl["nodes"]
+        cl["nodes"] = sum(d["nodes"] for d in cl["groups"])
+    return dict(groups=groups, R=R, G=G, rs=rs, P=P, f=f, Xs=Xs, cf=cf, u=u, uinv=uinv, p=p, q=q, Y=Y,
                 Sp=Sp, Dd=Dd, norms=norms, Bs=Bs, seg=seg, cells=cells, idx=idx, bases=bases)
 
 
@@ -251,8 +352,9 @@ def lean_files_sub(D, ci, C, ns, chunk=300, budget=15000):
     stats = []
     for k, c in enumerate(C["cells"]):
         names = []
-        for i, m in enumerate(norms):
-            d = c["subs"][i] if "subs" in c else subcell(R, G, c, m, bases[i])
+        groups = c.get("groups") or [subcell_group(R, G, c, norms, bases, [i])
+                                     for i in range(len(norms))]
+        for i, d in enumerate(groups):
             nm = f"d{k}_{i}"
             names.append(nm)
             stats.append(d["nodes"])
@@ -264,22 +366,24 @@ def lean_files_sub(D, ci, C, ns, chunk=300, budget=15000):
                 [R(0, 0)] * 2 + [bil(G, col[j], col[l]) for l in range(2, 6)] for j in range(2, 6)]
             base += [
                 f"def {nm} : SubCell {a_} {b_} where",
-                f"  m := {el(m)}",
+                "  ms := [" + ", ".join(el(m) for m in d["ms"]) + "]",
                 f"  K := {d['K']}",
                 f"  aL i j := ({lmat(d['a'])} : List (List ℤ)).getD i [] |>.getD j 0",
                 f"  w i := ({lst(d['w'])} : List ℤ).getD i 0",
                 f"  S := {d['S']}",
                 f"  U i j := ({lmat(U)} : List (List ℤ)).getD i [] |>.getD j 0",
-                f"  Pz i j := ({lmat(d['Pz'])} : List (List ℤ)).getD i [] |>.getD j 0",
-                f"  Qz i j := ({lmat(d['Qz'])} : List (List ℤ)).getD i [] |>.getD j 0",
+                "  Pz g i j := ([" + ", ".join(lmat(M) for M in d["Pz"]) +
+                "] : List (List (List ℤ))).getD g [] |>.getD i [] |>.getD j 0",
+                "  Qz g i j := ([" + ", ".join(lmat(M) for M in d["Qz"]) +
+                "] : List (List (List ℤ))).getD g [] |>.getD i [] |>.getD j 0",
                 f"def ld{nm} : LeafData {a_} {b_} where",
                 f"  A := {el(A_)}",
                 "  Bc j := ([" + ", ".join(el(x) for x in Bc) + "] : List OK).getD j 0",
                 "  Q j l := ((" + "[" + ", ".join(
                     "[" + ", ".join(el(x) for x in row) + "]" for row in Q) +
                 "] : List (List OK)).getD j []).getD l 0",
-                f"  Am := [{el(A_ * m)}]",
-                f"theorem ld_ok{nm} : ldCheck G {nm}.U [{nm}.m] ld{nm} = true := by decide +kernel",
+                "  Am := [" + ", ".join(el(A_ * m) for m in d["ms"]) + "]",
+                f"theorem ld_ok{nm} : ldCheck G {nm}.U {nm}.ms ld{nm} = true := by decide +kernel",
                 f"theorem pre_ok{nm} : subPre G cell{k} {nm} = true := by decide +kernel",
             ]
             pre, sizes = prefixes(d["a"], d["w"], d["S"] * d["K"], chunk, with_sizes=True)
@@ -305,7 +409,7 @@ def lean_files_sub(D, ci, C, ns, chunk=300, budget=15000):
             base += [
                 f"def preL{nm} : List (List ℤ) := " + app([f"blk{nm}_{bi}" for bi in range(len(blocks))]),
                 f"def sub{nm} : List ℤ → Bool := sub {nm}.aL {nm}.w 6 2 "
-                f"(leaf4 G n Ps [{nm}.m] {nm}.U ld{nm}) (6, fun _ => 0, {nm}.S * {nm}.K)",
+                f"(leaf4 G n Ps {nm}.ms {nm}.U ld{nm}) (6, fun _ => 0, {nm}.S * {nm}.K)",
                 "",
             ]
             for bi, blk in enumerate(blocks):

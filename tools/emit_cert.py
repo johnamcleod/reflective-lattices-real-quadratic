@@ -36,7 +36,46 @@ class Cap(Exception):
     pass
 
 
+_CLIB = None
+
+
+def _clib():
+    """tools/csrc/libcountnodes (built on first use); None if unavailable."""
+    global _CLIB
+    if _CLIB is None:
+        import ctypes
+        import os
+        import subprocess
+        d = os.path.join(os.path.dirname(os.path.abspath(__file__)), "csrc")
+        so, src = os.path.join(d, "libcountnodes.dylib"), os.path.join(d, "countnodes.c")
+        try:
+            if not os.path.exists(so) or os.path.getmtime(so) < os.path.getmtime(src):
+                subprocess.run(["clang", "-O2", "-shared", "-fPIC", "-I/opt/homebrew/include",
+                                "-L/opt/homebrew/lib", "-lgmp", "-o", so, src], check=True)
+            lib = ctypes.CDLL(so)
+            lib.count_nodes.restype = ctypes.c_int64
+            lib.count_nodes.argtypes = [ctypes.c_char_p, ctypes.c_int64]
+            _CLIB = lib
+        except Exception:
+            _CLIB = False
+    return _CLIB or None
+
+
 def count_capped(a, w, B, cap):
+    """Node count of the stopped search, capped at cap + 1. Only chooses layouts (Lean
+    re-walks every node). Uses the GMP counter tools/csrc/countnodes.c when available,
+    otherwise the exact Python counter below."""
+    lib = _clib()
+    if lib and cap < 2 ** 62:
+        data = " ".join(format(x, "x") for x in [a[i][j] for i in range(6) for j in range(6)]
+                        + list(w) + [B])
+        r = lib.count_nodes(data.encode(), cap)
+        if r >= 0:
+            return r
+    return count_capped_py(a, w, B, cap)
+
+
+def count_capped_py(a, w, B, cap):
     n = 6
     z = [0] * n
     cnt = 0

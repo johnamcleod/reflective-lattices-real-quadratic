@@ -8,3 +8,4 @@ lean/.lake/
 .DS_Store
 .venv/
 logs/
+tools/csrc/*.dylib
