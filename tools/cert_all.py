@@ -7,7 +7,9 @@ lean/scripts/CertAxioms{D}.lean (`#print axioms` of every `reflective` theorem).
 Per-class statistics go to logs/cert_{D}.jsonl. Existing modules are kept unless --force.
 
 Usage: python tools/cert_all.py D [first last] [--cap=N] [--chunk=N] [--maxcell=N] [--force]
-       [--split [--budget=NODES]]  (one main module C###.lean + C###/Base.lean + C###/P###.lean)
+       [--split [--budget=NODES]] [--sub [--subcap=N] [--submax=N] [--budget=NODES]]
+  --split: one main module C###.lean + C###/Base.lean + C###/P###.lean
+  --sub:   split, with per-norm sublattice searches (tools/emit_sub.py, Lean Cert/Sublat.lean)
 """
 from __future__ import annotations
 
@@ -19,6 +21,7 @@ import time
 sys.path.insert(0, ".")
 from tools.b8_size import FILES  # noqa: E402
 from tools import emit_cert  # noqa: E402
+from tools import emit_sub  # noqa: E402
 
 
 def main():
@@ -41,7 +44,11 @@ def main():
             continue
         t0 = time.time()
         try:
-            C = emit_cert.build(D, ci, cap, maxcell)
+            if "sub" in opts:
+                C = emit_sub.build_sub(D, ci, int(opts.get("subcap", 5000)),
+                                       int(opts.get("submax", 2000000)))
+            else:
+                C = emit_cert.build(D, ci, cap, maxcell)
         except Exception as e:  # recorded, not hidden
             rec = dict(cls=ci, error=repr(e))
             print(json.dumps(rec), flush=True)
@@ -49,7 +56,9 @@ def main():
             continue
         ns = f"ReflectZphi.Data.Cert{D}.C{ci:03d}"
         try:
-            if "split" in opts:
+            if "sub" in opts:
+                texts, _ = emit_sub.lean_files_sub(D, ci, C, ns, chunk, int(opts.get("budget", 15000)))
+            elif "split" in opts:
                 texts = emit_cert.lean_files(D, ci, C, ns, chunk, int(opts.get("budget", 15000)))
             else:
                 texts = {"": emit_cert.lean_file(D, ci, C, ns, chunk)}  # build first: a failure leaves no empty module
@@ -68,7 +77,7 @@ def main():
             open(path if not suf else f"{sub}/{suf}.lean", "w").write(text)
         nodes = [c["nodes"] for c in C["cells"]]
         rec = dict(cls=ci, sides=len(C["P"]), chain=len(C["Bs"]), cells=len(nodes),
-                   nodes=sum(nodes), max_nodes=max(nodes), subtrees=sum(c["npre"] for c in C["cells"]), secs=round(time.time() - t0, 1),
+                   nodes=sum(nodes), max_nodes=max(nodes), subtrees=sum(c.get("npre", 0) for c in C["cells"]), form="sub" if "sub" in opts else "split" if "split" in opts else "mono", secs=round(time.time() - t0, 1),
                    bytes=sum(len(t) for t in texts.values()), modules=len(texts))
         print(json.dumps(rec), flush=True)
         log.write(json.dumps(rec) + "\n"); log.flush()

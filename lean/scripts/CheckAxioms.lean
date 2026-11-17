@@ -51,3 +51,6 @@ open ReflectZphi
 #print axioms ReflectZphi.FastLeaf.leaf4_sound
 #print axioms ReflectZphi.FastLeaf.cellCheck_fast4
 #print axioms ReflectZphi.Split.enumS_of_coverL
+#print axioms ReflectZphi.Sublat.reflective_of_checkM
+#print axioms ReflectZphi.Sublat.cellOK_of
+#print axioms ReflectZphi.Sublat.subEnum_fast
