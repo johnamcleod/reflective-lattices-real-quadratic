@@ -155,31 +155,34 @@ lemma mv_ge (U : ℕ → ℕ → ℤ) (z : ℕ → ℤ) (j : ℕ) (hj : 6 ≤ j)
 
 /-! ### One norm of one cell -/
 
-/-- The search of one window norm `m` in one cell, in the sublattice `L_m`. -/
+/-- One search of one cell, for a group `ms` of window norms, in a lattice containing every
+`L_m` (`m ∈ ms`), with a bound `K` valid for every `m ∈ ms`; `(Pz i, Qz i)` is the
+coordinate certificate of the `i`-th norm. -/
 structure SubCell (a b : ℤ) where
-  m : O a b
+  ms : List (O a b)
   K : ℤ
   aL : ℕ → ℕ → ℤ
   w : ℕ → ℤ
   S : ℤ
   U : ℕ → ℕ → ℤ
-  Pz : ℕ → ℕ → ℤ
-  Qz : ℕ → ℕ → ℤ
+  Pz : ℕ → ℕ → ℕ → ℤ
+  Qz : ℕ → ℕ → ℕ → ℤ
 
 open ReflectZphi.Cells ReflectZphi.Bridge ReflectZphi.RootNorms ReflectZphi.Minkowski ReflectZphi.Geometry ReflectZphi.Transfer ReflectZphi.Crossing in
-/-- **One norm of one cell.** As `Cells.cell_oneSign`, for the roots of the one norm `d.m`,
-searched in `L_m` with the bound of `d.m` alone. -/
+/-- **One search of one cell.** As `Cells.cell_oneSign`, for the roots of the norms `d.ms`,
+searched in a lattice containing their `L_m`, with a bound valid for these norms. -/
 theorem sub_oneSign [IsDomain (O a b)] (hd0 : 0 < (b : ℝ) ^ 2 + 4 * a)
     {G : Matrix (Fin 3) (Fin 3) (O a b)}
     (hadm : Admissible hd0.le G) {n : ℕ} {Ps : ℕ → Fin 3 → O a b}
     (c : CellData a b) (d : SubCell a b) (hqC : 0 < c.qC)
-    (hK : ι₁ hd0.le (bndElt G c.V c.μ c.pC c.qC d.m) ≤ d.K)
+    (hK : ∀ m ∈ d.ms, ι₁ hd0.le (bndElt G c.V c.μ c.pC c.qC m) ≤ d.K)
     (hw : ∀ i, i < 6 → 0 ≤ d.w i) (hS : 0 < d.S)
     (hquad : quadCheck d.aL d.w 6 (gramU d.U (traceGram G c.V c.μ c.qC)) d.S = true)
-    (hsub : subCheck G d.m d.U d.Pz d.Qz = true) (hm0 : d.m ≠ 0)
+    (hsub : ∀ i, i < d.ms.length → subCheck G (d.ms.getD i 0) d.U (d.Pz i) (d.Qz i) = true)
+    (hm0 : ∀ m ∈ d.ms, m ≠ 0)
     (hcol : colCheck (a := a) (b := b) d.U = true)
-    (henum : enumS d.aL d.w 6 2 (leaf2 G n Ps [d.m] d.U) (d.S * d.K) = true)
-    {r : Fin 3 → O a b} (hr : IsRoot hd0.le G r) (hm : bil G r r = d.m)
+    (henum : enumS d.aL d.w 6 2 (leaf2 G n Ps d.ms d.U) (d.S * d.K) = true)
+    {r : Fin 3 → O a b} (hr : IsRoot hd0.le G r) (hm' : bil G r r ∈ d.ms)
     (hb1 : (c.qC : ℝ) * ι₁ hd0.le (bil G r c.V) ^ 2 ≤
       (c.pC - c.qC) * ι₁ hd0.le (bil G r r) * (-ι₁ hd0.le (bil G c.V c.V))) :
     OneSign hd0.le G n Ps r := by
@@ -194,8 +197,7 @@ theorem sub_oneSign [IsDomain (O a b)] (hd0 : 0 < (b : ℝ) ^ 2 + 4 * a)
   have htr : ((trace (psiB G c.V c.μ c.qC r r) : ℤ) : ℝ) ≤ d.K := by
     have e := ι₁_add_ι₂ hd0.le (psiB G c.V c.μ c.qC r r)
     rw [trace_def, ← e]
-    have hK' := hK
-    rw [← hm] at hK'
+    have hK' := hK _ hm'
     have hX : ι₁ hd0.le (bndElt G c.V c.μ c.pC c.qC (bil G r r)) =
         (2 * c.pC - c.qC) * ι₁ hd0.le (bil G r r) * (-ι₁ hd0.le (bil G c.V c.V)) +
           ι₁ hd0.le c.μ * ι₁ hd0.le (bil G r r) +
@@ -215,9 +217,13 @@ theorem sub_oneSign [IsDomain (O a b)] (hd0 : 0 < (b : ℝ) ^ 2 + 4 * a)
     linarith
   -- the coordinates in L_m
   obtain ⟨s, hs⟩ := exists_s hadm.symm hr
-  rw [hm] at hs
-  set z' : ℕ → ℤ := mv d.Pz (coords r) + mv d.Qz (coords s)
-  have hsc : vecOf (mv d.U z') = r := sub_coords hsub hm0 hs
+  obtain ⟨i, hi, hgi⟩ : ∃ i, i < d.ms.length ∧ d.ms.getD i 0 = bil G r r := by
+    obtain ⟨i, hi, e⟩ := List.mem_iff_getElem.1 hm'
+    exact ⟨i, hi, by rw [List.getD_eq_getElem _ _ hi, e]⟩
+  have hsub' := hsub i hi
+  rw [hgi] at hsub'
+  set z' : ℕ → ℤ := mv (d.Pz i) (coords r) + mv (d.Qz i) (coords s)
+  have hsc : vecOf (mv d.U z') = r := sub_coords hsub' (hm0 _ hm') hs
   have hzU : mv d.U z' = coords r := by
     rw [← coords_vecOf (a := a) (b := b) (mv_ge d.U z'), hsc]
   have hpsum : psum d.aL d.w 6 z' 6 ≤ d.S * d.K := by
@@ -233,14 +239,13 @@ theorem sub_oneSign [IsDomain (O a b)] (hd0 : 0 < (b : ℝ) ^ 2 + 4 * a)
   set t : O a b := ⟨z' 0, z' 1⟩
   have hreq : r = rf + t • u0 := by
     rw [← hsc]; exact vecOf_mv_split hcol z'
-  have hm' : bil G r r ∈ [d.m] := by simp [hm]
   simp only [leaf2, List.all_eq_true, Bool.and_eq_true] at hleaf
-  obtain ⟨hok, hall⟩ := hleaf _ (List.mem_singleton_self _)
+  obtain ⟨hok, hall⟩ := hleaf _ hm'
   have hdZ : b ^ 2 + 4 * a ≠ 0 := by
     have : (0 : ℤ) < b ^ 2 + 4 * a := by exact_mod_cast hd0
     omega
-  have heq : bilE G u0 u0 * t * t + 2 * bilE G u0 rf * t + (bilE G rf rf - d.m) = 0 := by
-    rw [← hm, hreq]
+  have heq : bilE G u0 u0 * t * t + 2 * bilE G u0 rf * t + (bilE G rf rf - bil G r r) = 0 := by
+    rw [hreq]
     simp only [bilE_eq, bil_add_left, bil_add_right, bil_smul_left, bil_smul_right]
     rw [bil_comm hadm.symm rf u0]
     ring
@@ -251,23 +256,24 @@ theorem sub_oneSign [IsDomain (O a b)] (hd0 : 0 < (b : ℝ) ^ 2 + 4 * a)
 
 /-! ### The cells and the theorem -/
 
-/-- The cheap conditions of one norm of one cell (everything but the search). -/
+/-- The cheap conditions of one search of one cell (everything but the search). -/
 def subPre (G : Matrix (Fin 3) (Fin 3) (O a b)) (c : CellData a b) (d : SubCell a b) : Bool :=
-  nonneg1 ((d.K : O a b) - bndElt G c.V c.μ c.pC c.qC d.m) &&
+  (d.ms.all fun m => nonneg1 ((d.K : O a b) - bndElt G c.V c.μ c.pC c.qC m) && decide (m ≠ 0)) &&
   ((List.range 6).all fun i => decide (0 ≤ d.w i)) && decide (0 < d.S) &&
   quadCheck d.aL d.w 6 (gramU d.U (traceGram G c.V c.μ c.qC)) d.S &&
-  subCheck G d.m d.U d.Pz d.Qz && colCheck (a := a) (b := b) d.U && decide (d.m ≠ 0)
+  ((List.range d.ms.length).all fun i => subCheck G (d.ms.getD i 0) d.U (d.Pz i) (d.Qz i)) &&
+  colCheck (a := a) (b := b) d.U
 
 /-- The search of one norm of one cell. -/
 def subEnum (G : Matrix (Fin 3) (Fin 3) (O a b)) (n : ℕ) (Ps : ℕ → Fin 3 → O a b)
     (d : SubCell a b) : Bool :=
-  enumS d.aL d.w 6 2 (leaf2 G n Ps [d.m] d.U) (d.S * d.K)
+  enumS d.aL d.w 6 2 (leaf2 G n Ps d.ms d.U) (d.S * d.K)
 
 open ReflectZphi.FastLeaf in
 /-- A per-norm search through the fast leaf (`leaf4`, table checked by `ldCheck`). -/
 theorem subEnum_fast {G : Matrix (Fin 3) (Fin 3) (O a b)} {n : ℕ} {Ps : ℕ → Fin 3 → O a b}
-    {d : SubCell a b} {ld : LeafData a b} (hld : ldCheck G d.U [d.m] ld = true)
-    (he : enumS d.aL d.w 6 2 (leaf4 G n Ps [d.m] d.U ld) (d.S * d.K) = true) :
+    {d : SubCell a b} {ld : LeafData a b} (hld : ldCheck G d.U d.ms ld = true)
+    (he : enumS d.aL d.w 6 2 (leaf4 G n Ps d.ms d.U ld) (d.S * d.K) = true) :
     subEnum G n Ps d = true :=
   enumAuxS_mono (fun z hz => leaf3_sound hld z (leaf4_sound z hz)) 6 _ _ he
 
@@ -278,7 +284,7 @@ def cenCheck (G : Matrix (Fin 3) (Fin 3) (O a b)) (f : Fin 3 → Fin 3 → O a b
 
 /-- Every window norm has a search. -/
 def normsCovered (norms : List (O a b)) (ds : List (SubCell a b)) : Bool :=
-  norms.all fun m => ds.any fun d => decide (d.m = m)
+  norms.all fun m => ds.any fun d => decide (m ∈ d.ms)
 
 open ReflectZphi.Cells ReflectZphi.Bridge ReflectZphi.RootNorms in
 /-- What a cell gives: every root of a window norm satisfying the cell's crossing bound has
@@ -303,10 +309,13 @@ theorem cellOK_of [IsDomain (O a b)] (hd0 : 0 < (b : ℝ) ^ 2 + 4 * a)
   obtain ⟨hpre, hen⟩ := hds d hd
   simp only [subPre, Bool.and_eq_true, List.all_eq_true, List.mem_range, decide_eq_true_eq]
     at hpre
-  obtain ⟨⟨⟨⟨⟨⟨hK, hw⟩, hS⟩, hquad⟩, hsub⟩, hcol⟩, hm0⟩ := hpre
-  have hK' := (nonneg1_iff hd0 _).mp hK
-  rw [map_sub, map_intCast] at hK'
-  exact sub_oneSign hd0 hadm c d hqC (by linarith) hw hS hquad hsub hm0 hcol hen hr hdm.symm hb1
+  obtain ⟨⟨⟨⟨⟨hKm, hw⟩, hS⟩, hquad⟩, hsub⟩, hcol⟩ := hpre
+  have hK : ∀ m ∈ d.ms, ι₁ hd0.le (bndElt G c.V c.μ c.pC c.qC m) ≤ d.K := fun m hm => by
+    have := (nonneg1_iff hd0 _).mp (hKm m hm).1
+    rw [map_sub, map_intCast] at this
+    linarith
+  exact sub_oneSign hd0 hadm c d hqC hK hw hS hquad hsub (fun m hm => (hKm m hm).2) hcol hen
+    hr hdm hb1
 
 open ReflectZphi.Cells ReflectZphi.Bridge ReflectZphi.RootNorms ReflectZphi.Minkowski
   ReflectZphi.Geometry ReflectZphi.Transfer ReflectZphi.Crossing in
