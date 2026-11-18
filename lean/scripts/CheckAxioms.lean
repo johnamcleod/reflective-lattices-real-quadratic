@@ -54,3 +54,4 @@ open ReflectZphi
 #print axioms ReflectZphi.Sublat.reflective_of_checkM
 #print axioms ReflectZphi.Sublat.cellOK_of
 #print axioms ReflectZphi.Sublat.subEnum_fast
+#print axioms ReflectZphi.RootNorms.windowNorms_of_chunks
