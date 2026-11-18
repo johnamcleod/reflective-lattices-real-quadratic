@@ -38,7 +38,9 @@ See `lean-plan.md` §§3, 6 and 7. This runs side by side with R1, at low priori
 
 ## Deferred (start only when R1, R2 and the rest of TASK.md are complete)
 
-### D1. Higher-dimensional extensions (requested 2026-11-13)
+### D1. Higher-dimensional extensions (requested 2026-11-13; started 2026-11-18 at the user's request, alongside the Lean checks)
+- **Stage 1 (running):** diagonal classes by AlVin, `tools/d1_diagonal.py` -> `data/d1_diag_{D}.jsonl`.
+  A k where AlVin does not end within the time limit is recorded as "open", never as non-reflective.
 Each reflective rank-3 lattice L found here is the root of a series
 
     L_k = L ⊕ ⟨1⟩^k   (append x_{3}², …, x_{2+k}²),   k = 0, 1, 2, …,
@@ -66,6 +68,7 @@ of hyperbolic lattices of rank 3 + k (ℍ^{2+k}).
   - Non-diagonal L ⊕ ⟨1⟩^k needs a Vinberg implementation for a general Gram matrix in rank ≥ 4 (Bugaenko's version for totally real fields), plus non-reflectivity certificates in higher rank. Neither exists yet: our Vinberg code is rank 3 only.
   - Vinberg's bound (no reflective arithmetic forms in dimension ≥ 30) caps k.
 - **Paper:** a new Part or section, "Higher-dimensional extensions", with a table of k_max per class (stub added 2026-11-13).
+  - **Diagrams (user, 2026-11-18):** "all the reflective groups for n>3 should have diagrams in the manuscript". Read as: every reflective L_k of rank n = 3 + k > 3 (k ≥ 1) gets its Coxeter diagram in the manuscript. The diagrams are drawn from the Coxeter graphs that AlVin writes (CoxIter format), which `tools/d1_diagonal.py` keeps in `data/d1_graphs_{D}/`.
 
 ### D2. Novelty check against the literature (requested 2026-11-13)
 For every reflective form found (rank 3, and the higher-dimensional ones from D1), determine whether it is new.
