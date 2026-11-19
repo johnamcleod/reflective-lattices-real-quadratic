@@ -165,7 +165,10 @@ def main():
            "gives the dimensions $n$ in which (padded with zeros) it is a wall of the chamber;",
            "``$n\\ge a$'' means every $a\\le n\\le n_{\\max}$, with $n_{\\max}$ the largest",
            "dimension in which $L$ is known to be reflective. In a root, $a^{(m)}$ stands for",
-           "$m$ consecutive coordinates equal to~$a$.", ""]
+           "$m$ consecutive coordinates equal to~$a$. A root is determined by its mirror only up",
+           "to multiplication by a unit; we list the representatives of the program that computed",
+           "the chamber (``AlVin'' or ``ours'' in the table header), and the norm column refers to",
+           "that representative.", ""]
     for D in (5, 13):
         ring = r"\ZZ[\varphi]" if D == 5 else r"\ZZ[\omega]"
         out.append(rf"\subsubsection*{{Over ${ring}$}}")
