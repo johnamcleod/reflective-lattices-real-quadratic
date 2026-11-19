@@ -1,0 +1,15 @@
+{"D": 13, "d": [-1, 1], "k": 0, "ended": true, "nroots": 4, "signature": [2, 1], "roots_match_ours": true}
+{"D": 13, "d": [-6, 3], "k": 0, "ended": true, "nroots": 4, "signature": [2, 1], "roots_match_ours": true}
+{"D": 13, "d": [0, 1], "k": 0, "ended": true, "nroots": 5, "signature": [2, 1], "roots_match_ours": false}
+{"D": 13, "d": [0, 1], "k": 1, "ended": true, "nroots": 15, "signature": [3, 1], "graph_file": "data/d1_graphs_13/d0_1_k1.coxiter"}
+{"D": 13, "d": [-2, 1], "k": 0, "ended": true, "nroots": 4, "signature": [2, 1], "roots_match_ours": true}
+{"D": 13, "d": [-2, 1], "k": 1, "ended": true, "nroots": 9, "signature": [3, 1], "graph_file": "data/d1_graphs_13/d-2_1_k1.coxiter"}
+{"D": 13, "d": [-2, 1], "k": 2, "ended": true, "nroots": 40, "signature": [4, 1], "graph_file": "data/d1_graphs_13/d-2_1_k2.coxiter"}
+{"D": 13, "d": [-2, 2], "k": 0, "ended": true, "nroots": 6, "signature": [2, 1], "roots_match_ours": true}
+{"D": 13, "d": [-4, 2], "k": 0, "ended": true, "nroots": 8, "signature": [2, 1], "roots_match_ours": true}
+{"D": 13, "d": [0, 2], "k": 0, "ended": true, "nroots": 8, "signature": [2, 1], "roots_match_ours": true}
+{"D": 13, "d": [-12, 6], "k": 0, "ended": true, "nroots": 6, "signature": [2, 1], "roots_match_ours": true}
+{"D": 13, "d": [-15, 9], "k": 0, "ended": true, "nroots": 8, "signature": [2, 1], "roots_match_ours": true}
+{"D": 13, "d": [6, 9], "k": 0, "ended": true, "nroots": 8, "signature": [2, 1], "roots_match_ours": true}
+{"D": 13, "d": [-9, 5], "k": 0, "ended": true, "nroots": 14, "signature": [2, 1], "roots_match_ours": true}
+{"D": 13, "d": [-3, 6], "k": 0, "ended": true, "nroots": 10, "signature": [2, 1], "roots_match_ours": true}

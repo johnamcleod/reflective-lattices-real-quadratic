@@ -18,7 +18,9 @@ final record are skipped). Run the script itself under caffeinate, nice and tool
 (the cap covers the whole process tree: AlVin and CoxIter are its children).
 
 Usage: caffeinate -i nice -n 19 tools/memcap.sh 4000 .venv/bin/python tools/d1_diagonal.py D
-         [--timeout=600] [--procs=4] [--anchor]
+         [--timeout=600] [--procs=4] [--anchor] [--graphs]
+  --graphs: rerun the reflective records, saving the Coxeter graphs (k >= 1) and checking
+  AlVin's rank-3 roots against our chamber (k = 0).
   --anchor: only Bugaenko's <-phi, 1^n> (reflective for n <= 7), as a regression check.
 """
 from __future__ import annotations
@@ -58,10 +60,12 @@ def run_alvin(d, k):
         secs = time.time() - t0
         graphs = list((pathlib.Path(td) / "output").glob("*.coxiter"))
         graph = graphs[0].read_text() if graphs else None
-    nroots = sum(1 for line in out.splitlines() if re.match(r"\s*e\d+\s*=\s*\(", line))
+    root_lines = [m.group(1).split(",") for m in
+                  (re.match(r"\s*e\d+\s*=\s*\((.*)\)\s*$", line) for line in out.splitlines()) if m]
+    nroots = len(root_lines)
     header = re.search(r"Quadratic form \((\d+),(\d+)\)", out)
     return dict(ended=("Algorithm ended" in out) and not timed_out, timed_out=timed_out,
-                nroots=nroots, secs=round(secs, 1),
+                nroots=nroots, secs=round(secs, 1), root_lines=root_lines,
                 signature=[int(header.group(1)), int(header.group(2))] if header else None,
                 says_nonreflective=bool(re.search(r"not reflective", out, re.I)),
                 graph=graph)
@@ -82,7 +86,7 @@ def series(d):
     for k in range(KMAX + 1):
         al = run_alvin(d, k)
         rec = dict(D=D, d=list(d), k=k, rank=3 + k, timeout_s=TIMEOUT,
-                   **{x: al[x] for x in al if x != "graph"})
+                   **{x: al[x] for x in al if x not in ("graph", "root_lines")})
         if al["ended"] and al["graph"]:
             gdir = ROOT / f"data/d1_graphs_{D}"
             gdir.mkdir(exist_ok=True)
@@ -105,8 +109,44 @@ def series(d):
     return recs + [final]
 
 
+def graphs_pass():
+    """Rerun AlVin on the reflective records: save the Coxeter graph of every reflective
+    L_k with k >= 1 (for the manuscript's diagrams), and at k = 0 compare AlVin's roots
+    with our chamber (data/diagonal_{D}.json), up to units. Appends one record per run to
+    data/d1_graphs_{D}.jsonl."""
+    import alvin_crosscheck as AC
+    AC.D = D
+    ours = {tuple(r["d"]): [[tuple(x) for x in rt] for rt in r["roots"]]
+            for r in json.load(open(ROOT / f"data/diagonal_{D}.json"))["b"]
+            if r["status"] == "reflective"}
+    recs = [json.loads(l) for l in open(ROOT / f"data/d1_diag_{D}.jsonl")]
+    todo = [(tuple(r["d"]), r["k"]) for r in recs
+            if not r.get("final") and r["status"] == "reflective"]
+    gdir = ROOT / f"data/d1_graphs_{D}"
+    gdir.mkdir(exist_ok=True)
+    with open(ROOT / f"data/d1_graphs_{D}.jsonl", "w") as f:
+        for d, k in todo:
+            al = run_alvin(d, k)
+            rec = dict(D=D, d=list(d), k=k, ended=al["ended"], nroots=al["nroots"],
+                       signature=al["signature"])
+            if al["ended"] and al["graph"] and k >= 1:
+                gname = f"d{d[0]}_{d[1]}_k{k}.coxiter"
+                (gdir / gname).write_text(al["graph"])
+                rec["graph_file"] = f"data/d1_graphs_{D}/{gname}"
+            if k == 0:
+                roots = [[AC.parse_entry(t) for t in line] for line in al.get("root_lines", [])]
+                mine = ours.get(d, [])
+                rec["roots_match_ours"] = (len(roots) == len(mine) and all(
+                    any(AC.same_up_to_unit(list(a), o) for a in roots) for o in mine))
+            f.write(json.dumps(rec) + "\n")
+            f.flush()
+            print(json.dumps(rec), flush=True)
+
+
 def main():
     assert ALVIN.exists() and COXITER.exists(), "run tools/build_alvin.sh first"
+    if "graphs" in opts:
+        return graphs_pass()
     if "anchor" in opts:
         forms = [(0, 1)]  # -phi (Bugaenko 1984: reflective for n <= 7, i.e. k <= 5)
         outp = ROOT / f"data/d1_diag_{D}_anchor.jsonl"
