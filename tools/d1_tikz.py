@@ -95,8 +95,12 @@ def layout(n, edges):
     return P * (width / span)
 
 
-def tikz(n, edges):
-    P = layout(n, edges)
+def tikz(n, edges, P=None):
+    if P is None:
+        P = layout(n, edges)
+    else:
+        span = max(np.ptp(P[:, 0]), np.ptp(P[:, 1]), 1e-9)
+        P = P * ((4.5 if n <= 12 else 6.5) / span)
     out = [r"\begin{tikzpicture}[v/.style={circle,draw,fill=white,inner sep=0pt,minimum size=5pt}]"]
     for i in range(n):
         out.append(rf"\node[v] (n{i}) at ({P[i,0]:.2f},{P[i,1]:.2f}) {{}};")
@@ -108,10 +112,101 @@ def tikz(n, edges):
             out.append(rf"\draw[line width=1.6pt] (n{i}) -- (n{j});")
         elif w == 3:
             out.append(rf"\draw (n{i}) -- (n{j});")
-        elif w >= 4:
+        elif w >= 4 or w == 2:
             out.append(rf"\draw (n{i}) -- node[fill=white,inner sep=0.5pt,font=\scriptsize] {{{w}}} (n{j});")
     out.append(r"\end{tikzpicture}")
     return "\n".join(out)
+
+
+def alt_edges(n, edges):
+    """The alternative convention: draw pi/2 pairs as edges labelled 2, omit ultraparallel
+    pairs (no edge = ultraparallel; no pair is parallel in a compact polytope)."""
+    nonorth = {(i, j) for i, j, w in edges}
+    out = [(i, j, w) for i, j, w in edges if w != 1]
+    out += [(i, j, 2) for i in range(n) for j in range(i + 1, n) if (i, j) not in nonorth]
+    return out
+
+
+def polyhedron_layout(n, edges):
+    """Rank 4 (compact acute-angled 3-polytope P): the graph with an edge for each pair of
+    intersecting facets is the 1-skeleton of the dual of P, a planar triangulation whose
+    faces are the vertices of P (triples at angles pi/p, pi/q, pi/r with
+    1/p + 1/q + 1/r > 1; P is simple). Tutte's barycentric embedding with a vertex of P
+    as the outer face is then crossing-free. Returns positions, or None if the data do
+    not form a triangulated sphere (V - E + F = 2 with every edge in two faces)."""
+    from fractions import Fraction as Fr
+    W = {}
+    for i, j, w in edges:
+        W[(i, j)] = W[(j, i)] = w
+    ang = lambda i, j: W.get((i, j), 2)
+    meet = lambda i, j: ang(i, j) >= 2 and ang(i, j) not in (0, 1)
+    E = [(i, j) for i in range(n) for j in range(i + 1, n) if meet(i, j)]
+    F = [(i, j, k) for i in range(n) for j in range(i + 1, n) for k in range(j + 1, n)
+         if meet(i, j) and meet(j, k) and meet(i, k)
+         and Fr(1, ang(i, j)) + Fr(1, ang(j, k)) + Fr(1, ang(i, k)) > 1]
+    cnt = {e: 0 for e in E}
+    for i, j, k in F:
+        for e in ((i, j), (j, k), (i, k)):
+            cnt[e] += 1
+    if n - len(E) + len(F) != 2 or any(c != 2 for c in cnt.values()):
+        return None
+    best = None
+    for outer in F:
+        P = np.zeros((n, 2))
+        for t, v in enumerate(outer):
+            P[v] = [np.cos(2 * np.pi * t / 3 + np.pi / 2), np.sin(2 * np.pi * t / 3 + np.pi / 2)]
+        inner = [v for v in range(n) if v not in outer]
+        idx = {v: t for t, v in enumerate(inner)}
+        A = np.zeros((len(inner), len(inner)))
+        B = np.zeros((len(inner), 2))
+        for v in inner:
+            nb = [u for u in range(n) if u != v and meet(min(u, v), max(u, v))]
+            A[idx[v], idx[v]] = len(nb)
+            for u in nb:
+                if u in idx:
+                    A[idx[v], idx[u]] -= 1
+                else:
+                    B[idx[v]] += P[u]
+        if inner:
+            P[inner] = np.linalg.solve(A, B)
+        P = _untangle_refine(P, n, [(i, j, 3) for i, j in E])
+        dmin = min(np.linalg.norm(P[a] - P[b]) for a in range(n) for b in range(a + 1, n))
+        if best is None or dmin > best[0]:
+            best = (dmin, P)
+    return best[1]
+
+
+def _untangle_refine(P, n, edges, rounds=200):
+    """Move the crossing-free drawing P toward the stress-majorization optimum, accepting
+    only steps that keep it crossing-free (shrinking the step otherwise)."""
+    INF = 10 ** 9
+    Dm = np.full((n, n), float(INF))
+    np.fill_diagonal(Dm, 0)
+    for i, j, _ in edges:
+        Dm[i, j] = Dm[j, i] = 1.0
+    for k in range(n):
+        Dm = np.minimum(Dm, Dm[:, k:k + 1] + Dm[k:k + 1, :])
+    Wt = np.divide(1.0, Dm ** 2, out=np.zeros_like(Dm), where=Dm > 0)
+    V = -Wt.copy()
+    np.fill_diagonal(V, Wt.sum(axis=1))
+    Vp = np.linalg.pinv(V)
+    X = P / max(np.ptp(P[:, 0]), 1e-9) * Dm.max()
+    for _ in range(rounds):
+        E_ = np.linalg.norm(X[:, None] - X[None], axis=2)
+        Bm = np.where(E_ > 1e-9, -Wt * Dm / np.maximum(E_, 1e-9), 0)
+        np.fill_diagonal(Bm, 0)
+        np.fill_diagonal(Bm, -Bm.sum(axis=1))
+        Y = Vp @ Bm @ X
+        t = 1.0
+        while t > 1e-3:
+            Z = X + t * (Y - X)
+            if crossings(Z, edges) == 0:
+                X = Z
+                break
+            t /= 2
+        else:
+            break
+    return X
 
 
 def fmt_d(D, a, b):
@@ -163,7 +258,8 @@ def main():
             nv = sum(1 for x in group if x["src"] == "ours")
             out.append(
                 "These diagrams are those of the chambers found by our own implementation "
-                "(stage~2) where it has finished" + (f" ({nv} of {len(group)})" if nv < len(group) else "")
+                "(stage~2) where it has finished" + (f" ({nv} of {len(group)}; the diagram marked [AlVin] is "
+                "\\textbf{unverified})" if nv < len(group) else "")
                 + "; AlVin's polytopes over this ring may belong to a reflection subgroup "
                 "(DISCREPANCIES~\\#7)." if nv else
                 "\\textbf{Unverified:} these are AlVin's polytopes, which over this ring may "
