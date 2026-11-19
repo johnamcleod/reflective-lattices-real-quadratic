@@ -32,6 +32,24 @@ def el(x, D):
     return s if den == 1 else rf"\tfrac{{{s}}}{{{den}}}"
 
 
+def runs(entries):
+    """Runs of >= 3 equal entries a written a^{(m)}."""
+    out, i = [], 0
+    while i < len(entries):
+        j = i
+        while j + 1 < len(entries) and entries[j + 1] == entries[i]:
+            j += 1
+        m = j - i + 1
+        if m >= 3:
+            e = entries[i]
+            base = e if all(c.isalnum() or c == "\\" for c in e) else f"({e})"
+            out.append(f"{base}^{{({m})}}")
+        else:
+            out += entries[i:j + 1]
+        i = j + 1
+    return ", ".join(out)
+
+
 def strip(r):
     r = [tuple(x) for x in r]
     while len(r) > 1 and r[-1][0] == 0 and r[-1][1] == 0:
@@ -61,6 +79,8 @@ def ranges(S, ntop):
             j += 1
         parts.append(f"{S[i]}" if i == j else f"{S[i]}\\text{{--}}{S[j]}")
         i = j + 1
+    if len(parts) == 1 and "--" not in parts[0]:
+        return f"$n={parts[0]}$"
     return "$n\\in\\{" + ",".join(parts) + "\\}$"
 
 
@@ -83,9 +103,19 @@ def load():
     return forms
 
 
+def kmax_alvin(D, d):
+    for line in open(ROOT / f"data/d1_diag_{D}.jsonl"):
+        r = json.loads(line)
+        if r.get("final") and tuple(r["d"]) == tuple(d):
+            return r["k_reflective_max"]
+    return None
+
+
 def table(D, d, ch):
     ks = sorted(ch)
     ntop = 2 + ks[-1]
+    ka = kmax_alvin(D, d)
+    missing = [] if ka is None else [k for k in range(ka + 1) if k not in ch]
     rows = {}
     for k in ks:
         for r, m in zip(ch[k]["roots"], ch[k]["norms"]):
@@ -98,16 +128,22 @@ def table(D, d, ch):
         return (min(S), len(r), [abs(x[0]) + abs(x[1]) for x in r])
     srcs = sorted({ch[k]["src"] for k in ks})
     g = r"\varphi" if D == 5 else r"\omega"
-    out = [r"\begin{center}\small",
-           rf"$d={el(list(d), D)}$ \quad (reflective for $2\le n\le{ntop}$; chambers: {', '.join(srcs)})"
-           + r"\\[2pt]",
-           r"\begin{tabular}{lll}", r"\toprule", r"root $(x_0;x_1,\dots)$ & $(r,r)$ & $n$ \\", r"\midrule",
+    out = [r"\begin{center}\footnotesize",
+           r"\begin{tabular}{@{}lll@{}}",
+           rf"\multicolumn{{3}}{{@{{}}l}}{{\normalsize $d={el(list(d), D)}$}}\\",
+           rf"\multicolumn{{3}}{{@{{}}l}}{{reflective for $2\le n\le{ntop}$; chambers: {', '.join(srcs)}}}\\[2pt]",
+           r"\toprule", r"root $(x_0;x_1,\dots)$ & $(r,r)$ & $n$ \\", r"\midrule",
            r"$-e_i+e_{i+1}$, $1\le i<n$ & $2$ & all \\",
            r"$-e_n$ & $1$ & all \\"]
     for r, (m, S) in sorted(rows.items(), key=sortkey):
-        coords = "; ".join([el(list(r[0]), D), ", ".join(el(list(x), D) for x in r[1:])]) if len(r) > 1 else el(list(r[0]), D)
+        coords = "; ".join([el(list(r[0]), D), runs([el(list(x), D) for x in r[1:]])]) if len(r) > 1 else el(list(r[0]), D)
         out.append(rf"$({coords})$ & ${el(m, D)}$ & {ranges(S, ntop)} \\")
-    out += [r"\bottomrule", r"\end{tabular}", r"\end{center}", ""]
+    out += [r"\bottomrule", r"\end{tabular}"]
+    if missing:
+        out.append(r"\\[2pt]Also reflective for $n\in\{"
+                   + ",".join(str(2 + k) for k in missing)
+                   + r"\}$ (AlVin); chamber not verified, roots not listed.")
+    out += [r"\end{center}", r"\medskip", ""]
     bad = [k for k in ks if not ch[k]["normalised"]]
     if bad:
         out.insert(0, f"% WARNING: chambers for k in {bad} could not be normalised")
@@ -126,7 +162,8 @@ def main():
            "$L_{k+1}$. A root is written with its trailing zeros dropped, and the last column",
            "gives the dimensions $n$ in which (padded with zeros) it is a wall of the chamber;",
            "``$n\\ge a$'' means every $a\\le n\\le n_{\\max}$, with $n_{\\max}$ the largest",
-           "dimension in which $L$ is known to be reflective.", ""]
+           "dimension in which $L$ is known to be reflective. In a root, $a^{(m)}$ stands for",
+           "$m$ consecutive coordinates equal to~$a$.", ""]
     for D in (5, 13):
         ring = r"\ZZ[\varphi]" if D == 5 else r"\ZZ[\omega]"
         out.append(rf"\subsubsection*{{Over ${ring}$}}")

@@ -28,6 +28,8 @@ from zphi.definite import is_root  # noqa: E402
 from zphi.vinbergn import vinberg_n  # noqa: E402
 
 OUT = ROOT / "data/d1_roots_ours.jsonl"
+# Cases our implementation does not finish in reasonable time (stopped, not refuted).
+SKIP = {(13, (-2, 1), 2): "stage-2 run stopped after 2.5 h in one enumeration batch (2026-11-19)"}
 
 
 def standard_stab(R, n):
@@ -101,6 +103,12 @@ def main():
                 v = vn13[(d, k)]
                 roots = [[R(*x) for x in r] for r in v["roots"]]
                 status, src = v["status"], "logs/vn13.jsonl"
+            elif (D, d, k) in SKIP:
+                rec = dict(D=D, d=list(d), k=k, status="skipped", src=SKIP[(D, d, k)])
+                f.write(json.dumps(rec) + "\n")
+                f.flush()
+                print(json.dumps(rec), flush=True)
+                continue
             else:
                 res = vinberg_n(G, [R.one] + [R.zero] * (n - 1), time_limit=3600)
                 roots, status, src = res["roots"], res["status"], "vinbergn"
