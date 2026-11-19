@@ -12,7 +12,12 @@ per-module peak RSS and user time; classes recorded ok are skipped (restartable)
 
 Monolithic classes (no C### directory) are checked the same way, as a single module.
 
-Usage: python tools/check_split.py D [--jobs=2] [--mem=4000] [--threads=1] [--only=a,b,...]
+--recheck: check every class again against the files now on disk, logging to
+logs/recheck_{D}.jsonl (restartable on that log). Parts whose stamp matches their current source
+(and Base) are reused; main modules and monolithic classes are recompiled, with their axioms.
+Each record gets "reused" = the number of parts taken from matching stamps.
+
+Usage: python tools/check_split.py D [--jobs=2] [--mem=4000] [--threads=1] [--only=a,b,...] [--recheck]
 """
 from __future__ import annotations
 
@@ -126,15 +131,16 @@ def check_class(D, ci, lean, env, mem, threads, jobs, tmpdir):
                 wall=round(time.time() - t0, 1), max_rss_mb=max(rss) if rss else None, max_fp_mb=max(fps) if fps else None,
                 axioms=main.get("axioms") if main else None,
                 failed=[m for m in mods if m["rc"] != 0 or m["errors"]][:3],
+                reused=sum(1 for m in mods if m.get("reused")),
                 per_module=[(m["mod"].split("/")[-1], m["user"], m["rss_mb"], m.get("fp_mb")) for m in mods])
 
 
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
-    opts = dict(a[2:].split("=", 1) for a in sys.argv[1:] if a.startswith("--"))
+    opts = dict((a[2:].split("=", 1) + [""])[:2] for a in sys.argv[1:] if a.startswith("--"))
     D = int(args[0])
     jobs, mem, threads = int(opts.get("jobs", 2)), int(opts.get("mem", 4000)), int(opts.get("threads", 1))
-    logp = os.path.join(ROOT, f"logs/check_split_{D}.jsonl")
+    logp = os.path.join(ROOT, f"logs/{'recheck' if 'recheck' in opts else 'check_split'}_{D}.jsonl")
     done = set()
     if os.path.exists(logp):
         for l in open(logp):

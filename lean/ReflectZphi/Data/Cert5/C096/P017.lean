@@ -1,0 +1,500 @@
+import ReflectZphi.Data.Cert5.C096.Base
+
+namespace ReflectZphi.Data.Cert5.C096
+
+open ReflectZphi ReflectZphi.Lattice ReflectZphi.PolyEnum ReflectZphi.RootNorms
+  ReflectZphi.Enum ReflectZphi.Cells ReflectZphi.Check ReflectZphi.Split
+  ReflectZphi.FastLeaf ReflectZphi.Sublat
+
+theorem subd7_3_768 : subd7_3 [0, 0, 4] = true := by decide +kernel
+theorem subd7_3_769 : subd7_3 [0, 0, 5] = true := by decide +kernel
+theorem subd7_3_770 : subd7_3 [0, 0, 6] = true := by decide +kernel
+theorem subd7_3_771 : subd7_3 [0, 0, 7] = true := by decide +kernel
+theorem subd7_3_772 : subd7_3 [0, 0, 8] = true := by decide +kernel
+theorem subd7_3_773 : subd7_3 [0, 1, -9] = true := by decide +kernel
+theorem subd7_3_774 : subd7_3 [0, 1, -8] = true := by decide +kernel
+theorem subd7_3_775 : subd7_3 [0, 1, -7] = true := by decide +kernel
+theorem subd7_3_776 : subd7_3 [0, 1, -6] = true := by decide +kernel
+theorem subd7_3_777 : subd7_3 [0, 1, -5] = true := by decide +kernel
+theorem subd7_3_778 : subd7_3 [0, 1, -4] = true := by decide +kernel
+theorem subd7_3_779 : subd7_3 [0, 1, -3] = true := by decide +kernel
+theorem subd7_3_780 : subd7_3 [0, 1, -2] = true := by decide +kernel
+theorem subd7_3_781 : subd7_3 [0, 1, -1] = true := by decide +kernel
+theorem subd7_3_782 : subd7_3 [0, 1, 0] = true := by decide +kernel
+theorem subd7_3_783 : subd7_3 [0, 1, 1] = true := by decide +kernel
+theorem subd7_3_784 : subd7_3 [0, 1, 2] = true := by decide +kernel
+theorem subd7_3_785 : subd7_3 [0, 1, 3] = true := by decide +kernel
+theorem subd7_3_786 : subd7_3 [0, 1, 4] = true := by decide +kernel
+theorem subd7_3_787 : subd7_3 [0, 1, 5] = true := by decide +kernel
+theorem subd7_3_788 : subd7_3 [0, 1, 6] = true := by decide +kernel
+theorem subd7_3_789 : subd7_3 [0, 1, 7] = true := by decide +kernel
+theorem subd7_3_790 : subd7_3 [0, 2, -9] = true := by decide +kernel
+theorem subd7_3_791 : subd7_3 [0, 2, -8] = true := by decide +kernel
+theorem subd7_3_792 : subd7_3 [0, 2, -7] = true := by decide +kernel
+theorem subd7_3_793 : subd7_3 [0, 2, -6] = true := by decide +kernel
+theorem subd7_3_794 : subd7_3 [0, 2, -5] = true := by decide +kernel
+theorem subd7_3_795 : subd7_3 [0, 2, -4] = true := by decide +kernel
+theorem subd7_3_796 : subd7_3 [0, 2, -3] = true := by decide +kernel
+theorem subd7_3_797 : subd7_3 [0, 2, -2] = true := by decide +kernel
+theorem subd7_3_798 : subd7_3 [0, 2, -1] = true := by decide +kernel
+theorem subd7_3_799 : subd7_3 [0, 2, 0] = true := by decide +kernel
+theorem sbd7_3_24 : ∀ q ∈ blkd7_3_24, subd7_3 q = true := by
+  unfold blkd7_3_24
+  exact List.forall_mem_cons.2 ⟨subd7_3_768, List.forall_mem_cons.2 ⟨subd7_3_769, List.forall_mem_cons.2 ⟨subd7_3_770, List.forall_mem_cons.2 ⟨subd7_3_771, List.forall_mem_cons.2 ⟨subd7_3_772, List.forall_mem_cons.2 ⟨subd7_3_773, List.forall_mem_cons.2 ⟨subd7_3_774, List.forall_mem_cons.2 ⟨subd7_3_775, List.forall_mem_cons.2 ⟨subd7_3_776, List.forall_mem_cons.2 ⟨subd7_3_777, List.forall_mem_cons.2 ⟨subd7_3_778, List.forall_mem_cons.2 ⟨subd7_3_779, List.forall_mem_cons.2 ⟨subd7_3_780, List.forall_mem_cons.2 ⟨subd7_3_781, List.forall_mem_cons.2 ⟨subd7_3_782, List.forall_mem_cons.2 ⟨subd7_3_783, List.forall_mem_cons.2 ⟨subd7_3_784, List.forall_mem_cons.2 ⟨subd7_3_785, List.forall_mem_cons.2 ⟨subd7_3_786, List.forall_mem_cons.2 ⟨subd7_3_787, List.forall_mem_cons.2 ⟨subd7_3_788, List.forall_mem_cons.2 ⟨subd7_3_789, List.forall_mem_cons.2 ⟨subd7_3_790, List.forall_mem_cons.2 ⟨subd7_3_791, List.forall_mem_cons.2 ⟨subd7_3_792, List.forall_mem_cons.2 ⟨subd7_3_793, List.forall_mem_cons.2 ⟨subd7_3_794, List.forall_mem_cons.2 ⟨subd7_3_795, List.forall_mem_cons.2 ⟨subd7_3_796, List.forall_mem_cons.2 ⟨subd7_3_797, List.forall_mem_cons.2 ⟨subd7_3_798, List.forall_mem_cons.2 ⟨subd7_3_799, List.forall_mem_nil _⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩
+theorem subd7_3_800 : subd7_3 [0, 2, 1] = true := by decide +kernel
+theorem subd7_3_801 : subd7_3 [0, 2, 2] = true := by decide +kernel
+theorem subd7_3_802 : subd7_3 [0, 2, 3] = true := by decide +kernel
+theorem subd7_3_803 : subd7_3 [0, 2, 4] = true := by decide +kernel
+theorem subd7_3_804 : subd7_3 [0, 2, 5] = true := by decide +kernel
+theorem subd7_3_805 : subd7_3 [0, 2, 6] = true := by decide +kernel
+theorem subd7_3_806 : subd7_3 [0, 2, 7] = true := by decide +kernel
+theorem subd7_3_807 : subd7_3 [0, 3, -8] = true := by decide +kernel
+theorem subd7_3_808 : subd7_3 [0, 3, -7] = true := by decide +kernel
+theorem subd7_3_809 : subd7_3 [0, 3, -6] = true := by decide +kernel
+theorem subd7_3_810 : subd7_3 [0, 3, -5] = true := by decide +kernel
+theorem subd7_3_811 : subd7_3 [0, 3, -4] = true := by decide +kernel
+theorem subd7_3_812 : subd7_3 [0, 3, -3] = true := by decide +kernel
+theorem subd7_3_813 : subd7_3 [0, 3, -2] = true := by decide +kernel
+theorem subd7_3_814 : subd7_3 [0, 3, -1] = true := by decide +kernel
+theorem subd7_3_815 : subd7_3 [0, 3, 0] = true := by decide +kernel
+theorem subd7_3_816 : subd7_3 [0, 3, 1] = true := by decide +kernel
+theorem subd7_3_817 : subd7_3 [0, 3, 2] = true := by decide +kernel
+theorem subd7_3_818 : subd7_3 [0, 3, 3] = true := by decide +kernel
+theorem subd7_3_819 : subd7_3 [0, 3, 4] = true := by decide +kernel
+theorem subd7_3_820 : subd7_3 [0, 3, 5] = true := by decide +kernel
+theorem subd7_3_821 : subd7_3 [0, 3, 6] = true := by decide +kernel
+theorem subd7_3_822 : subd7_3 [0, 3, 7] = true := by decide +kernel
+theorem subd7_3_823 : subd7_3 [0, 4, -8] = true := by decide +kernel
+theorem subd7_3_824 : subd7_3 [0, 4, -7] = true := by decide +kernel
+theorem subd7_3_825 : subd7_3 [0, 4, -6] = true := by decide +kernel
+theorem subd7_3_826 : subd7_3 [0, 4, -5] = true := by decide +kernel
+theorem subd7_3_827 : subd7_3 [0, 4, -4] = true := by decide +kernel
+theorem subd7_3_828 : subd7_3 [0, 4, -3] = true := by decide +kernel
+theorem subd7_3_829 : subd7_3 [0, 4, -2] = true := by decide +kernel
+theorem subd7_3_830 : subd7_3 [0, 4, -1] = true := by decide +kernel
+theorem subd7_3_831 : subd7_3 [0, 4, 0] = true := by decide +kernel
+theorem sbd7_3_25 : ∀ q ∈ blkd7_3_25, subd7_3 q = true := by
+  unfold blkd7_3_25
+  exact List.forall_mem_cons.2 ⟨subd7_3_800, List.forall_mem_cons.2 ⟨subd7_3_801, List.forall_mem_cons.2 ⟨subd7_3_802, List.forall_mem_cons.2 ⟨subd7_3_803, List.forall_mem_cons.2 ⟨subd7_3_804, List.forall_mem_cons.2 ⟨subd7_3_805, List.forall_mem_cons.2 ⟨subd7_3_806, List.forall_mem_cons.2 ⟨subd7_3_807, List.forall_mem_cons.2 ⟨subd7_3_808, List.forall_mem_cons.2 ⟨subd7_3_809, List.forall_mem_cons.2 ⟨subd7_3_810, List.forall_mem_cons.2 ⟨subd7_3_811, List.forall_mem_cons.2 ⟨subd7_3_812, List.forall_mem_cons.2 ⟨subd7_3_813, List.forall_mem_cons.2 ⟨subd7_3_814, List.forall_mem_cons.2 ⟨subd7_3_815, List.forall_mem_cons.2 ⟨subd7_3_816, List.forall_mem_cons.2 ⟨subd7_3_817, List.forall_mem_cons.2 ⟨subd7_3_818, List.forall_mem_cons.2 ⟨subd7_3_819, List.forall_mem_cons.2 ⟨subd7_3_820, List.forall_mem_cons.2 ⟨subd7_3_821, List.forall_mem_cons.2 ⟨subd7_3_822, List.forall_mem_cons.2 ⟨subd7_3_823, List.forall_mem_cons.2 ⟨subd7_3_824, List.forall_mem_cons.2 ⟨subd7_3_825, List.forall_mem_cons.2 ⟨subd7_3_826, List.forall_mem_cons.2 ⟨subd7_3_827, List.forall_mem_cons.2 ⟨subd7_3_828, List.forall_mem_cons.2 ⟨subd7_3_829, List.forall_mem_cons.2 ⟨subd7_3_830, List.forall_mem_cons.2 ⟨subd7_3_831, List.forall_mem_nil _⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩
+theorem subd7_3_832 : subd7_3 [0, 4, 1] = true := by decide +kernel
+theorem subd7_3_833 : subd7_3 [0, 4, 2] = true := by decide +kernel
+theorem subd7_3_834 : subd7_3 [0, 4, 3] = true := by decide +kernel
+theorem subd7_3_835 : subd7_3 [0, 4, 4] = true := by decide +kernel
+theorem subd7_3_836 : subd7_3 [0, 4, 5] = true := by decide +kernel
+theorem subd7_3_837 : subd7_3 [0, 4, 6] = true := by decide +kernel
+theorem subd7_3_838 : subd7_3 [0, 5, -8] = true := by decide +kernel
+theorem subd7_3_839 : subd7_3 [0, 5, -7] = true := by decide +kernel
+theorem subd7_3_840 : subd7_3 [0, 5, -6] = true := by decide +kernel
+theorem subd7_3_841 : subd7_3 [0, 5, -5] = true := by decide +kernel
+theorem subd7_3_842 : subd7_3 [0, 5, -4] = true := by decide +kernel
+theorem subd7_3_843 : subd7_3 [0, 5, -3] = true := by decide +kernel
+theorem subd7_3_844 : subd7_3 [0, 5, -2] = true := by decide +kernel
+theorem subd7_3_845 : subd7_3 [0, 5, -1] = true := by decide +kernel
+theorem subd7_3_846 : subd7_3 [0, 5, 0] = true := by decide +kernel
+theorem subd7_3_847 : subd7_3 [0, 5, 1] = true := by decide +kernel
+theorem subd7_3_848 : subd7_3 [0, 5, 2] = true := by decide +kernel
+theorem subd7_3_849 : subd7_3 [0, 5, 3] = true := by decide +kernel
+theorem subd7_3_850 : subd7_3 [0, 5, 4] = true := by decide +kernel
+theorem subd7_3_851 : subd7_3 [0, 5, 5] = true := by decide +kernel
+theorem subd7_3_852 : subd7_3 [0, 5, 6] = true := by decide +kernel
+theorem subd7_3_853 : subd7_3 [0, 6, -7] = true := by decide +kernel
+theorem subd7_3_854 : subd7_3 [0, 6, -6] = true := by decide +kernel
+theorem subd7_3_855 : subd7_3 [0, 6, -5] = true := by decide +kernel
+theorem subd7_3_856 : subd7_3 [0, 6, -4] = true := by decide +kernel
+theorem subd7_3_857 : subd7_3 [0, 6, -3] = true := by decide +kernel
+theorem subd7_3_858 : subd7_3 [0, 6, -2] = true := by decide +kernel
+theorem subd7_3_859 : subd7_3 [0, 6, -1] = true := by decide +kernel
+theorem subd7_3_860 : subd7_3 [0, 6, 0] = true := by decide +kernel
+theorem subd7_3_861 : subd7_3 [0, 6, 1] = true := by decide +kernel
+theorem subd7_3_862 : subd7_3 [0, 6, 2] = true := by decide +kernel
+theorem subd7_3_863 : subd7_3 [0, 6, 3] = true := by decide +kernel
+theorem sbd7_3_26 : ∀ q ∈ blkd7_3_26, subd7_3 q = true := by
+  unfold blkd7_3_26
+  exact List.forall_mem_cons.2 ⟨subd7_3_832, List.forall_mem_cons.2 ⟨subd7_3_833, List.forall_mem_cons.2 ⟨subd7_3_834, List.forall_mem_cons.2 ⟨subd7_3_835, List.forall_mem_cons.2 ⟨subd7_3_836, List.forall_mem_cons.2 ⟨subd7_3_837, List.forall_mem_cons.2 ⟨subd7_3_838, List.forall_mem_cons.2 ⟨subd7_3_839, List.forall_mem_cons.2 ⟨subd7_3_840, List.forall_mem_cons.2 ⟨subd7_3_841, List.forall_mem_cons.2 ⟨subd7_3_842, List.forall_mem_cons.2 ⟨subd7_3_843, List.forall_mem_cons.2 ⟨subd7_3_844, List.forall_mem_cons.2 ⟨subd7_3_845, List.forall_mem_cons.2 ⟨subd7_3_846, List.forall_mem_cons.2 ⟨subd7_3_847, List.forall_mem_cons.2 ⟨subd7_3_848, List.forall_mem_cons.2 ⟨subd7_3_849, List.forall_mem_cons.2 ⟨subd7_3_850, List.forall_mem_cons.2 ⟨subd7_3_851, List.forall_mem_cons.2 ⟨subd7_3_852, List.forall_mem_cons.2 ⟨subd7_3_853, List.forall_mem_cons.2 ⟨subd7_3_854, List.forall_mem_cons.2 ⟨subd7_3_855, List.forall_mem_cons.2 ⟨subd7_3_856, List.forall_mem_cons.2 ⟨subd7_3_857, List.forall_mem_cons.2 ⟨subd7_3_858, List.forall_mem_cons.2 ⟨subd7_3_859, List.forall_mem_cons.2 ⟨subd7_3_860, List.forall_mem_cons.2 ⟨subd7_3_861, List.forall_mem_cons.2 ⟨subd7_3_862, List.forall_mem_cons.2 ⟨subd7_3_863, List.forall_mem_nil _⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩
+theorem subd7_3_864 : subd7_3 [0, 6, 4] = true := by decide +kernel
+theorem subd7_3_865 : subd7_3 [0, 6, 5] = true := by decide +kernel
+theorem subd7_3_866 : subd7_3 [0, 7] = true := by decide +kernel
+theorem subd7_3_867 : subd7_3 [0, 8] = true := by decide +kernel
+theorem subd7_3_868 : subd7_3 [0, 9] = true := by decide +kernel
+theorem subd7_3_869 : subd7_3 [1, -9] = true := by decide +kernel
+theorem subd7_3_870 : subd7_3 [1, -8] = true := by decide +kernel
+theorem subd7_3_871 : subd7_3 [1, -7] = true := by decide +kernel
+theorem subd7_3_872 : subd7_3 [1, -6] = true := by decide +kernel
+theorem subd7_3_873 : subd7_3 [1, -5, -6] = true := by decide +kernel
+theorem subd7_3_874 : subd7_3 [1, -5, -5] = true := by decide +kernel
+theorem subd7_3_875 : subd7_3 [1, -5, -4] = true := by decide +kernel
+theorem subd7_3_876 : subd7_3 [1, -5, -3] = true := by decide +kernel
+theorem subd7_3_877 : subd7_3 [1, -5, -2] = true := by decide +kernel
+theorem subd7_3_878 : subd7_3 [1, -5, -1] = true := by decide +kernel
+theorem subd7_3_879 : subd7_3 [1, -5, 0] = true := by decide +kernel
+theorem subd7_3_880 : subd7_3 [1, -5, 1] = true := by decide +kernel
+theorem subd7_3_881 : subd7_3 [1, -5, 2] = true := by decide +kernel
+theorem subd7_3_882 : subd7_3 [1, -5, 3] = true := by decide +kernel
+theorem subd7_3_883 : subd7_3 [1, -5, 4] = true := by decide +kernel
+theorem subd7_3_884 : subd7_3 [1, -5, 5] = true := by decide +kernel
+theorem subd7_3_885 : subd7_3 [1, -5, 6] = true := by decide +kernel
+theorem subd7_3_886 : subd7_3 [1, -5, 7] = true := by decide +kernel
+theorem subd7_3_887 : subd7_3 [1, -4, -7] = true := by decide +kernel
+theorem subd7_3_888 : subd7_3 [1, -4, -6] = true := by decide +kernel
+theorem subd7_3_889 : subd7_3 [1, -4, -5] = true := by decide +kernel
+theorem subd7_3_890 : subd7_3 [1, -4, -4] = true := by decide +kernel
+theorem subd7_3_891 : subd7_3 [1, -4, -3] = true := by decide +kernel
+theorem subd7_3_892 : subd7_3 [1, -4, -2] = true := by decide +kernel
+theorem subd7_3_893 : subd7_3 [1, -4, -1] = true := by decide +kernel
+theorem subd7_3_894 : subd7_3 [1, -4, 0] = true := by decide +kernel
+theorem subd7_3_895 : subd7_3 [1, -4, 1] = true := by decide +kernel
+theorem sbd7_3_27 : ∀ q ∈ blkd7_3_27, subd7_3 q = true := by
+  unfold blkd7_3_27
+  exact List.forall_mem_cons.2 ⟨subd7_3_864, List.forall_mem_cons.2 ⟨subd7_3_865, List.forall_mem_cons.2 ⟨subd7_3_866, List.forall_mem_cons.2 ⟨subd7_3_867, List.forall_mem_cons.2 ⟨subd7_3_868, List.forall_mem_cons.2 ⟨subd7_3_869, List.forall_mem_cons.2 ⟨subd7_3_870, List.forall_mem_cons.2 ⟨subd7_3_871, List.forall_mem_cons.2 ⟨subd7_3_872, List.forall_mem_cons.2 ⟨subd7_3_873, List.forall_mem_cons.2 ⟨subd7_3_874, List.forall_mem_cons.2 ⟨subd7_3_875, List.forall_mem_cons.2 ⟨subd7_3_876, List.forall_mem_cons.2 ⟨subd7_3_877, List.forall_mem_cons.2 ⟨subd7_3_878, List.forall_mem_cons.2 ⟨subd7_3_879, List.forall_mem_cons.2 ⟨subd7_3_880, List.forall_mem_cons.2 ⟨subd7_3_881, List.forall_mem_cons.2 ⟨subd7_3_882, List.forall_mem_cons.2 ⟨subd7_3_883, List.forall_mem_cons.2 ⟨subd7_3_884, List.forall_mem_cons.2 ⟨subd7_3_885, List.forall_mem_cons.2 ⟨subd7_3_886, List.forall_mem_cons.2 ⟨subd7_3_887, List.forall_mem_cons.2 ⟨subd7_3_888, List.forall_mem_cons.2 ⟨subd7_3_889, List.forall_mem_cons.2 ⟨subd7_3_890, List.forall_mem_cons.2 ⟨subd7_3_891, List.forall_mem_cons.2 ⟨subd7_3_892, List.forall_mem_cons.2 ⟨subd7_3_893, List.forall_mem_cons.2 ⟨subd7_3_894, List.forall_mem_cons.2 ⟨subd7_3_895, List.forall_mem_nil _⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩
+theorem subd7_3_896 : subd7_3 [1, -4, 2] = true := by decide +kernel
+theorem subd7_3_897 : subd7_3 [1, -4, 3] = true := by decide +kernel
+theorem subd7_3_898 : subd7_3 [1, -4, 4] = true := by decide +kernel
+theorem subd7_3_899 : subd7_3 [1, -4, 5] = true := by decide +kernel
+theorem subd7_3_900 : subd7_3 [1, -4, 6] = true := by decide +kernel
+theorem subd7_3_901 : subd7_3 [1, -4, 7] = true := by decide +kernel
+theorem subd7_3_902 : subd7_3 [1, -4, 8] = true := by decide +kernel
+theorem subd7_3_903 : subd7_3 [1, -3, -7] = true := by decide +kernel
+theorem subd7_3_904 : subd7_3 [1, -3, -6] = true := by decide +kernel
+theorem subd7_3_905 : subd7_3 [1, -3, -5] = true := by decide +kernel
+theorem subd7_3_906 : subd7_3 [1, -3, -4] = true := by decide +kernel
+theorem subd7_3_907 : subd7_3 [1, -3, -3] = true := by decide +kernel
+theorem subd7_3_908 : subd7_3 [1, -3, -2] = true := by decide +kernel
+theorem subd7_3_909 : subd7_3 [1, -3, -1] = true := by decide +kernel
+theorem subd7_3_910 : subd7_3 [1, -3, 0] = true := by decide +kernel
+theorem subd7_3_911 : subd7_3 [1, -3, 1] = true := by decide +kernel
+theorem subd7_3_912 : subd7_3 [1, -3, 2] = true := by decide +kernel
+theorem subd7_3_913 : subd7_3 [1, -3, 3] = true := by decide +kernel
+theorem subd7_3_914 : subd7_3 [1, -3, 4] = true := by decide +kernel
+theorem subd7_3_915 : subd7_3 [1, -3, 5] = true := by decide +kernel
+theorem subd7_3_916 : subd7_3 [1, -3, 6] = true := by decide +kernel
+theorem subd7_3_917 : subd7_3 [1, -3, 7] = true := by decide +kernel
+theorem subd7_3_918 : subd7_3 [1, -3, 8] = true := by decide +kernel
+theorem subd7_3_919 : subd7_3 [1, -2, -8] = true := by decide +kernel
+theorem subd7_3_920 : subd7_3 [1, -2, -7] = true := by decide +kernel
+theorem subd7_3_921 : subd7_3 [1, -2, -6] = true := by decide +kernel
+theorem subd7_3_922 : subd7_3 [1, -2, -5] = true := by decide +kernel
+theorem subd7_3_923 : subd7_3 [1, -2, -4] = true := by decide +kernel
+theorem subd7_3_924 : subd7_3 [1, -2, -3] = true := by decide +kernel
+theorem subd7_3_925 : subd7_3 [1, -2, -2] = true := by decide +kernel
+theorem subd7_3_926 : subd7_3 [1, -2, -1] = true := by decide +kernel
+theorem subd7_3_927 : subd7_3 [1, -2, 0] = true := by decide +kernel
+theorem sbd7_3_28 : ∀ q ∈ blkd7_3_28, subd7_3 q = true := by
+  unfold blkd7_3_28
+  exact List.forall_mem_cons.2 ⟨subd7_3_896, List.forall_mem_cons.2 ⟨subd7_3_897, List.forall_mem_cons.2 ⟨subd7_3_898, List.forall_mem_cons.2 ⟨subd7_3_899, List.forall_mem_cons.2 ⟨subd7_3_900, List.forall_mem_cons.2 ⟨subd7_3_901, List.forall_mem_cons.2 ⟨subd7_3_902, List.forall_mem_cons.2 ⟨subd7_3_903, List.forall_mem_cons.2 ⟨subd7_3_904, List.forall_mem_cons.2 ⟨subd7_3_905, List.forall_mem_cons.2 ⟨subd7_3_906, List.forall_mem_cons.2 ⟨subd7_3_907, List.forall_mem_cons.2 ⟨subd7_3_908, List.forall_mem_cons.2 ⟨subd7_3_909, List.forall_mem_cons.2 ⟨subd7_3_910, List.forall_mem_cons.2 ⟨subd7_3_911, List.forall_mem_cons.2 ⟨subd7_3_912, List.forall_mem_cons.2 ⟨subd7_3_913, List.forall_mem_cons.2 ⟨subd7_3_914, List.forall_mem_cons.2 ⟨subd7_3_915, List.forall_mem_cons.2 ⟨subd7_3_916, List.forall_mem_cons.2 ⟨subd7_3_917, List.forall_mem_cons.2 ⟨subd7_3_918, List.forall_mem_cons.2 ⟨subd7_3_919, List.forall_mem_cons.2 ⟨subd7_3_920, List.forall_mem_cons.2 ⟨subd7_3_921, List.forall_mem_cons.2 ⟨subd7_3_922, List.forall_mem_cons.2 ⟨subd7_3_923, List.forall_mem_cons.2 ⟨subd7_3_924, List.forall_mem_cons.2 ⟨subd7_3_925, List.forall_mem_cons.2 ⟨subd7_3_926, List.forall_mem_cons.2 ⟨subd7_3_927, List.forall_mem_nil _⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩
+theorem subd7_3_928 : subd7_3 [1, -2, 1] = true := by decide +kernel
+theorem subd7_3_929 : subd7_3 [1, -2, 2] = true := by decide +kernel
+theorem subd7_3_930 : subd7_3 [1, -2, 3] = true := by decide +kernel
+theorem subd7_3_931 : subd7_3 [1, -2, 4] = true := by decide +kernel
+theorem subd7_3_932 : subd7_3 [1, -2, 5] = true := by decide +kernel
+theorem subd7_3_933 : subd7_3 [1, -2, 6] = true := by decide +kernel
+theorem subd7_3_934 : subd7_3 [1, -2, 7] = true := by decide +kernel
+theorem subd7_3_935 : subd7_3 [1, -2, 8] = true := by decide +kernel
+theorem subd7_3_936 : subd7_3 [1, -1, -8] = true := by decide +kernel
+theorem subd7_3_937 : subd7_3 [1, -1, -7] = true := by decide +kernel
+theorem subd7_3_938 : subd7_3 [1, -1, -6] = true := by decide +kernel
+theorem subd7_3_939 : subd7_3 [1, -1, -5] = true := by decide +kernel
+theorem subd7_3_940 : subd7_3 [1, -1, -4] = true := by decide +kernel
+theorem subd7_3_941 : subd7_3 [1, -1, -3] = true := by decide +kernel
+theorem subd7_3_942 : subd7_3 [1, -1, -2] = true := by decide +kernel
+theorem subd7_3_943 : subd7_3 [1, -1, -1] = true := by decide +kernel
+theorem subd7_3_944 : subd7_3 [1, -1, 0] = true := by decide +kernel
+theorem subd7_3_945 : subd7_3 [1, -1, 1] = true := by decide +kernel
+theorem subd7_3_946 : subd7_3 [1, -1, 2] = true := by decide +kernel
+theorem subd7_3_947 : subd7_3 [1, -1, 3] = true := by decide +kernel
+theorem subd7_3_948 : subd7_3 [1, -1, 4] = true := by decide +kernel
+theorem subd7_3_949 : subd7_3 [1, -1, 5] = true := by decide +kernel
+theorem subd7_3_950 : subd7_3 [1, -1, 6] = true := by decide +kernel
+theorem subd7_3_951 : subd7_3 [1, -1, 7] = true := by decide +kernel
+theorem subd7_3_952 : subd7_3 [1, -1, 8] = true := by decide +kernel
+theorem subd7_3_953 : subd7_3 [1, 0, -8] = true := by decide +kernel
+theorem subd7_3_954 : subd7_3 [1, 0, -7] = true := by decide +kernel
+theorem subd7_3_955 : subd7_3 [1, 0, -6] = true := by decide +kernel
+theorem subd7_3_956 : subd7_3 [1, 0, -5] = true := by decide +kernel
+theorem subd7_3_957 : subd7_3 [1, 0, -4] = true := by decide +kernel
+theorem subd7_3_958 : subd7_3 [1, 0, -3] = true := by decide +kernel
+theorem subd7_3_959 : subd7_3 [1, 0, -2] = true := by decide +kernel
+theorem sbd7_3_29 : ∀ q ∈ blkd7_3_29, subd7_3 q = true := by
+  unfold blkd7_3_29
+  exact List.forall_mem_cons.2 ⟨subd7_3_928, List.forall_mem_cons.2 ⟨subd7_3_929, List.forall_mem_cons.2 ⟨subd7_3_930, List.forall_mem_cons.2 ⟨subd7_3_931, List.forall_mem_cons.2 ⟨subd7_3_932, List.forall_mem_cons.2 ⟨subd7_3_933, List.forall_mem_cons.2 ⟨subd7_3_934, List.forall_mem_cons.2 ⟨subd7_3_935, List.forall_mem_cons.2 ⟨subd7_3_936, List.forall_mem_cons.2 ⟨subd7_3_937, List.forall_mem_cons.2 ⟨subd7_3_938, List.forall_mem_cons.2 ⟨subd7_3_939, List.forall_mem_cons.2 ⟨subd7_3_940, List.forall_mem_cons.2 ⟨subd7_3_941, List.forall_mem_cons.2 ⟨subd7_3_942, List.forall_mem_cons.2 ⟨subd7_3_943, List.forall_mem_cons.2 ⟨subd7_3_944, List.forall_mem_cons.2 ⟨subd7_3_945, List.forall_mem_cons.2 ⟨subd7_3_946, List.forall_mem_cons.2 ⟨subd7_3_947, List.forall_mem_cons.2 ⟨subd7_3_948, List.forall_mem_cons.2 ⟨subd7_3_949, List.forall_mem_cons.2 ⟨subd7_3_950, List.forall_mem_cons.2 ⟨subd7_3_951, List.forall_mem_cons.2 ⟨subd7_3_952, List.forall_mem_cons.2 ⟨subd7_3_953, List.forall_mem_cons.2 ⟨subd7_3_954, List.forall_mem_cons.2 ⟨subd7_3_955, List.forall_mem_cons.2 ⟨subd7_3_956, List.forall_mem_cons.2 ⟨subd7_3_957, List.forall_mem_cons.2 ⟨subd7_3_958, List.forall_mem_cons.2 ⟨subd7_3_959, List.forall_mem_nil _⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩
+theorem subd7_3_960 : subd7_3 [1, 0, -1] = true := by decide +kernel
+theorem subd7_3_961 : subd7_3 [1, 0, 0] = true := by decide +kernel
+theorem subd7_3_962 : subd7_3 [1, 0, 1] = true := by decide +kernel
+theorem subd7_3_963 : subd7_3 [1, 0, 2] = true := by decide +kernel
+theorem subd7_3_964 : subd7_3 [1, 0, 3] = true := by decide +kernel
+theorem subd7_3_965 : subd7_3 [1, 0, 4] = true := by decide +kernel
+theorem subd7_3_966 : subd7_3 [1, 0, 5] = true := by decide +kernel
+theorem subd7_3_967 : subd7_3 [1, 0, 6] = true := by decide +kernel
+theorem subd7_3_968 : subd7_3 [1, 0, 7] = true := by decide +kernel
+theorem subd7_3_969 : subd7_3 [1, 0, 8] = true := by decide +kernel
+theorem subd7_3_970 : subd7_3 [1, 1, -8] = true := by decide +kernel
+theorem subd7_3_971 : subd7_3 [1, 1, -7] = true := by decide +kernel
+theorem subd7_3_972 : subd7_3 [1, 1, -6] = true := by decide +kernel
+theorem subd7_3_973 : subd7_3 [1, 1, -5] = true := by decide +kernel
+theorem subd7_3_974 : subd7_3 [1, 1, -4] = true := by decide +kernel
+theorem subd7_3_975 : subd7_3 [1, 1, -3] = true := by decide +kernel
+theorem subd7_3_976 : subd7_3 [1, 1, -2] = true := by decide +kernel
+theorem subd7_3_977 : subd7_3 [1, 1, -1] = true := by decide +kernel
+theorem subd7_3_978 : subd7_3 [1, 1, 0] = true := by decide +kernel
+theorem subd7_3_979 : subd7_3 [1, 1, 1] = true := by decide +kernel
+theorem subd7_3_980 : subd7_3 [1, 1, 2] = true := by decide +kernel
+theorem subd7_3_981 : subd7_3 [1, 1, 3] = true := by decide +kernel
+theorem subd7_3_982 : subd7_3 [1, 1, 4] = true := by decide +kernel
+theorem subd7_3_983 : subd7_3 [1, 1, 5] = true := by decide +kernel
+theorem subd7_3_984 : subd7_3 [1, 1, 6] = true := by decide +kernel
+theorem subd7_3_985 : subd7_3 [1, 1, 7] = true := by decide +kernel
+theorem subd7_3_986 : subd7_3 [1, 1, 8] = true := by decide +kernel
+theorem subd7_3_987 : subd7_3 [1, 2, -8] = true := by decide +kernel
+theorem subd7_3_988 : subd7_3 [1, 2, -7] = true := by decide +kernel
+theorem subd7_3_989 : subd7_3 [1, 2, -6] = true := by decide +kernel
+theorem subd7_3_990 : subd7_3 [1, 2, -5] = true := by decide +kernel
+theorem subd7_3_991 : subd7_3 [1, 2, -4] = true := by decide +kernel
+theorem sbd7_3_30 : ∀ q ∈ blkd7_3_30, subd7_3 q = true := by
+  unfold blkd7_3_30
+  exact List.forall_mem_cons.2 ⟨subd7_3_960, List.forall_mem_cons.2 ⟨subd7_3_961, List.forall_mem_cons.2 ⟨subd7_3_962, List.forall_mem_cons.2 ⟨subd7_3_963, List.forall_mem_cons.2 ⟨subd7_3_964, List.forall_mem_cons.2 ⟨subd7_3_965, List.forall_mem_cons.2 ⟨subd7_3_966, List.forall_mem_cons.2 ⟨subd7_3_967, List.forall_mem_cons.2 ⟨subd7_3_968, List.forall_mem_cons.2 ⟨subd7_3_969, List.forall_mem_cons.2 ⟨subd7_3_970, List.forall_mem_cons.2 ⟨subd7_3_971, List.forall_mem_cons.2 ⟨subd7_3_972, List.forall_mem_cons.2 ⟨subd7_3_973, List.forall_mem_cons.2 ⟨subd7_3_974, List.forall_mem_cons.2 ⟨subd7_3_975, List.forall_mem_cons.2 ⟨subd7_3_976, List.forall_mem_cons.2 ⟨subd7_3_977, List.forall_mem_cons.2 ⟨subd7_3_978, List.forall_mem_cons.2 ⟨subd7_3_979, List.forall_mem_cons.2 ⟨subd7_3_980, List.forall_mem_cons.2 ⟨subd7_3_981, List.forall_mem_cons.2 ⟨subd7_3_982, List.forall_mem_cons.2 ⟨subd7_3_983, List.forall_mem_cons.2 ⟨subd7_3_984, List.forall_mem_cons.2 ⟨subd7_3_985, List.forall_mem_cons.2 ⟨subd7_3_986, List.forall_mem_cons.2 ⟨subd7_3_987, List.forall_mem_cons.2 ⟨subd7_3_988, List.forall_mem_cons.2 ⟨subd7_3_989, List.forall_mem_cons.2 ⟨subd7_3_990, List.forall_mem_cons.2 ⟨subd7_3_991, List.forall_mem_nil _⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩
+theorem subd7_3_992 : subd7_3 [1, 2, -3] = true := by decide +kernel
+theorem subd7_3_993 : subd7_3 [1, 2, -2] = true := by decide +kernel
+theorem subd7_3_994 : subd7_3 [1, 2, -1] = true := by decide +kernel
+theorem subd7_3_995 : subd7_3 [1, 2, 0] = true := by decide +kernel
+theorem subd7_3_996 : subd7_3 [1, 2, 1] = true := by decide +kernel
+theorem subd7_3_997 : subd7_3 [1, 2, 2] = true := by decide +kernel
+theorem subd7_3_998 : subd7_3 [1, 2, 3] = true := by decide +kernel
+theorem subd7_3_999 : subd7_3 [1, 2, 4] = true := by decide +kernel
+theorem subd7_3_1000 : subd7_3 [1, 2, 5] = true := by decide +kernel
+theorem subd7_3_1001 : subd7_3 [1, 2, 6] = true := by decide +kernel
+theorem subd7_3_1002 : subd7_3 [1, 2, 7] = true := by decide +kernel
+theorem subd7_3_1003 : subd7_3 [1, 2, 8] = true := by decide +kernel
+theorem subd7_3_1004 : subd7_3 [1, 3, -8] = true := by decide +kernel
+theorem subd7_3_1005 : subd7_3 [1, 3, -7] = true := by decide +kernel
+theorem subd7_3_1006 : subd7_3 [1, 3, -6] = true := by decide +kernel
+theorem subd7_3_1007 : subd7_3 [1, 3, -5] = true := by decide +kernel
+theorem subd7_3_1008 : subd7_3 [1, 3, -4] = true := by decide +kernel
+theorem subd7_3_1009 : subd7_3 [1, 3, -3] = true := by decide +kernel
+theorem subd7_3_1010 : subd7_3 [1, 3, -2] = true := by decide +kernel
+theorem subd7_3_1011 : subd7_3 [1, 3, -1] = true := by decide +kernel
+theorem subd7_3_1012 : subd7_3 [1, 3, 0] = true := by decide +kernel
+theorem subd7_3_1013 : subd7_3 [1, 3, 1] = true := by decide +kernel
+theorem subd7_3_1014 : subd7_3 [1, 3, 2] = true := by decide +kernel
+theorem subd7_3_1015 : subd7_3 [1, 3, 3] = true := by decide +kernel
+theorem subd7_3_1016 : subd7_3 [1, 3, 4] = true := by decide +kernel
+theorem subd7_3_1017 : subd7_3 [1, 3, 5] = true := by decide +kernel
+theorem subd7_3_1018 : subd7_3 [1, 3, 6] = true := by decide +kernel
+theorem subd7_3_1019 : subd7_3 [1, 3, 7] = true := by decide +kernel
+theorem subd7_3_1020 : subd7_3 [1, 4, -8] = true := by decide +kernel
+theorem subd7_3_1021 : subd7_3 [1, 4, -7] = true := by decide +kernel
+theorem subd7_3_1022 : subd7_3 [1, 4, -6] = true := by decide +kernel
+theorem subd7_3_1023 : subd7_3 [1, 4, -5] = true := by decide +kernel
+theorem sbd7_3_31 : ∀ q ∈ blkd7_3_31, subd7_3 q = true := by
+  unfold blkd7_3_31
+  exact List.forall_mem_cons.2 ⟨subd7_3_992, List.forall_mem_cons.2 ⟨subd7_3_993, List.forall_mem_cons.2 ⟨subd7_3_994, List.forall_mem_cons.2 ⟨subd7_3_995, List.forall_mem_cons.2 ⟨subd7_3_996, List.forall_mem_cons.2 ⟨subd7_3_997, List.forall_mem_cons.2 ⟨subd7_3_998, List.forall_mem_cons.2 ⟨subd7_3_999, List.forall_mem_cons.2 ⟨subd7_3_1000, List.forall_mem_cons.2 ⟨subd7_3_1001, List.forall_mem_cons.2 ⟨subd7_3_1002, List.forall_mem_cons.2 ⟨subd7_3_1003, List.forall_mem_cons.2 ⟨subd7_3_1004, List.forall_mem_cons.2 ⟨subd7_3_1005, List.forall_mem_cons.2 ⟨subd7_3_1006, List.forall_mem_cons.2 ⟨subd7_3_1007, List.forall_mem_cons.2 ⟨subd7_3_1008, List.forall_mem_cons.2 ⟨subd7_3_1009, List.forall_mem_cons.2 ⟨subd7_3_1010, List.forall_mem_cons.2 ⟨subd7_3_1011, List.forall_mem_cons.2 ⟨subd7_3_1012, List.forall_mem_cons.2 ⟨subd7_3_1013, List.forall_mem_cons.2 ⟨subd7_3_1014, List.forall_mem_cons.2 ⟨subd7_3_1015, List.forall_mem_cons.2 ⟨subd7_3_1016, List.forall_mem_cons.2 ⟨subd7_3_1017, List.forall_mem_cons.2 ⟨subd7_3_1018, List.forall_mem_cons.2 ⟨subd7_3_1019, List.forall_mem_cons.2 ⟨subd7_3_1020, List.forall_mem_cons.2 ⟨subd7_3_1021, List.forall_mem_cons.2 ⟨subd7_3_1022, List.forall_mem_cons.2 ⟨subd7_3_1023, List.forall_mem_nil _⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩
+theorem subd7_3_1024 : subd7_3 [1, 4, -4] = true := by decide +kernel
+theorem subd7_3_1025 : subd7_3 [1, 4, -3] = true := by decide +kernel
+theorem subd7_3_1026 : subd7_3 [1, 4, -2] = true := by decide +kernel
+theorem subd7_3_1027 : subd7_3 [1, 4, -1] = true := by decide +kernel
+theorem subd7_3_1028 : subd7_3 [1, 4, 0] = true := by decide +kernel
+theorem subd7_3_1029 : subd7_3 [1, 4, 1] = true := by decide +kernel
+theorem subd7_3_1030 : subd7_3 [1, 4, 2] = true := by decide +kernel
+theorem subd7_3_1031 : subd7_3 [1, 4, 3] = true := by decide +kernel
+theorem subd7_3_1032 : subd7_3 [1, 4, 4] = true := by decide +kernel
+theorem subd7_3_1033 : subd7_3 [1, 4, 5] = true := by decide +kernel
+theorem subd7_3_1034 : subd7_3 [1, 4, 6] = true := by decide +kernel
+theorem subd7_3_1035 : subd7_3 [1, 4, 7] = true := by decide +kernel
+theorem subd7_3_1036 : subd7_3 [1, 5, -7] = true := by decide +kernel
+theorem subd7_3_1037 : subd7_3 [1, 5, -6] = true := by decide +kernel
+theorem subd7_3_1038 : subd7_3 [1, 5, -5] = true := by decide +kernel
+theorem subd7_3_1039 : subd7_3 [1, 5, -4] = true := by decide +kernel
+theorem subd7_3_1040 : subd7_3 [1, 5, -3] = true := by decide +kernel
+theorem subd7_3_1041 : subd7_3 [1, 5, -2] = true := by decide +kernel
+theorem subd7_3_1042 : subd7_3 [1, 5, -1] = true := by decide +kernel
+theorem subd7_3_1043 : subd7_3 [1, 5, 0] = true := by decide +kernel
+theorem subd7_3_1044 : subd7_3 [1, 5, 1] = true := by decide +kernel
+theorem subd7_3_1045 : subd7_3 [1, 5, 2] = true := by decide +kernel
+theorem subd7_3_1046 : subd7_3 [1, 5, 3] = true := by decide +kernel
+theorem subd7_3_1047 : subd7_3 [1, 5, 4] = true := by decide +kernel
+theorem subd7_3_1048 : subd7_3 [1, 5, 5] = true := by decide +kernel
+theorem subd7_3_1049 : subd7_3 [1, 5, 6] = true := by decide +kernel
+theorem subd7_3_1050 : subd7_3 [1, 6, -7] = true := by decide +kernel
+theorem subd7_3_1051 : subd7_3 [1, 6, -6] = true := by decide +kernel
+theorem subd7_3_1052 : subd7_3 [1, 6, -5] = true := by decide +kernel
+theorem subd7_3_1053 : subd7_3 [1, 6, -4] = true := by decide +kernel
+theorem subd7_3_1054 : subd7_3 [1, 6, -3] = true := by decide +kernel
+theorem subd7_3_1055 : subd7_3 [1, 6, -2] = true := by decide +kernel
+theorem sbd7_3_32 : ∀ q ∈ blkd7_3_32, subd7_3 q = true := by
+  unfold blkd7_3_32
+  exact List.forall_mem_cons.2 ⟨subd7_3_1024, List.forall_mem_cons.2 ⟨subd7_3_1025, List.forall_mem_cons.2 ⟨subd7_3_1026, List.forall_mem_cons.2 ⟨subd7_3_1027, List.forall_mem_cons.2 ⟨subd7_3_1028, List.forall_mem_cons.2 ⟨subd7_3_1029, List.forall_mem_cons.2 ⟨subd7_3_1030, List.forall_mem_cons.2 ⟨subd7_3_1031, List.forall_mem_cons.2 ⟨subd7_3_1032, List.forall_mem_cons.2 ⟨subd7_3_1033, List.forall_mem_cons.2 ⟨subd7_3_1034, List.forall_mem_cons.2 ⟨subd7_3_1035, List.forall_mem_cons.2 ⟨subd7_3_1036, List.forall_mem_cons.2 ⟨subd7_3_1037, List.forall_mem_cons.2 ⟨subd7_3_1038, List.forall_mem_cons.2 ⟨subd7_3_1039, List.forall_mem_cons.2 ⟨subd7_3_1040, List.forall_mem_cons.2 ⟨subd7_3_1041, List.forall_mem_cons.2 ⟨subd7_3_1042, List.forall_mem_cons.2 ⟨subd7_3_1043, List.forall_mem_cons.2 ⟨subd7_3_1044, List.forall_mem_cons.2 ⟨subd7_3_1045, List.forall_mem_cons.2 ⟨subd7_3_1046, List.forall_mem_cons.2 ⟨subd7_3_1047, List.forall_mem_cons.2 ⟨subd7_3_1048, List.forall_mem_cons.2 ⟨subd7_3_1049, List.forall_mem_cons.2 ⟨subd7_3_1050, List.forall_mem_cons.2 ⟨subd7_3_1051, List.forall_mem_cons.2 ⟨subd7_3_1052, List.forall_mem_cons.2 ⟨subd7_3_1053, List.forall_mem_cons.2 ⟨subd7_3_1054, List.forall_mem_cons.2 ⟨subd7_3_1055, List.forall_mem_nil _⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩
+theorem subd7_3_1056 : subd7_3 [1, 6, -1] = true := by decide +kernel
+theorem subd7_3_1057 : subd7_3 [1, 6, 0] = true := by decide +kernel
+theorem subd7_3_1058 : subd7_3 [1, 6, 1] = true := by decide +kernel
+theorem subd7_3_1059 : subd7_3 [1, 6, 2] = true := by decide +kernel
+theorem subd7_3_1060 : subd7_3 [1, 6, 3] = true := by decide +kernel
+theorem subd7_3_1061 : subd7_3 [1, 6, 4] = true := by decide +kernel
+theorem subd7_3_1062 : subd7_3 [1, 6, 5] = true := by decide +kernel
+theorem subd7_3_1063 : subd7_3 [1, 7] = true := by decide +kernel
+theorem subd7_3_1064 : subd7_3 [1, 8] = true := by decide +kernel
+theorem subd7_3_1065 : subd7_3 [2, -9] = true := by decide +kernel
+theorem subd7_3_1066 : subd7_3 [2, -8] = true := by decide +kernel
+theorem subd7_3_1067 : subd7_3 [2, -7] = true := by decide +kernel
+theorem subd7_3_1068 : subd7_3 [2, -6] = true := by decide +kernel
+theorem subd7_3_1069 : subd7_3 [2, -5, -5] = true := by decide +kernel
+theorem subd7_3_1070 : subd7_3 [2, -5, -4] = true := by decide +kernel
+theorem subd7_3_1071 : subd7_3 [2, -5, -3] = true := by decide +kernel
+theorem subd7_3_1072 : subd7_3 [2, -5, -2] = true := by decide +kernel
+theorem subd7_3_1073 : subd7_3 [2, -5, -1] = true := by decide +kernel
+theorem subd7_3_1074 : subd7_3 [2, -5, 0] = true := by decide +kernel
+theorem subd7_3_1075 : subd7_3 [2, -5, 1] = true := by decide +kernel
+theorem subd7_3_1076 : subd7_3 [2, -5, 2] = true := by decide +kernel
+theorem subd7_3_1077 : subd7_3 [2, -5, 3] = true := by decide +kernel
+theorem subd7_3_1078 : subd7_3 [2, -5, 4] = true := by decide +kernel
+theorem subd7_3_1079 : subd7_3 [2, -5, 5] = true := by decide +kernel
+theorem subd7_3_1080 : subd7_3 [2, -5, 6] = true := by decide +kernel
+theorem subd7_3_1081 : subd7_3 [2, -5, 7] = true := by decide +kernel
+theorem subd7_3_1082 : subd7_3 [2, -4, -6] = true := by decide +kernel
+theorem subd7_3_1083 : subd7_3 [2, -4, -5] = true := by decide +kernel
+theorem subd7_3_1084 : subd7_3 [2, -4, -4] = true := by decide +kernel
+theorem subd7_3_1085 : subd7_3 [2, -4, -3] = true := by decide +kernel
+theorem subd7_3_1086 : subd7_3 [2, -4, -2] = true := by decide +kernel
+theorem subd7_3_1087 : subd7_3 [2, -4, -1] = true := by decide +kernel
+theorem sbd7_3_33 : ∀ q ∈ blkd7_3_33, subd7_3 q = true := by
+  unfold blkd7_3_33
+  exact List.forall_mem_cons.2 ⟨subd7_3_1056, List.forall_mem_cons.2 ⟨subd7_3_1057, List.forall_mem_cons.2 ⟨subd7_3_1058, List.forall_mem_cons.2 ⟨subd7_3_1059, List.forall_mem_cons.2 ⟨subd7_3_1060, List.forall_mem_cons.2 ⟨subd7_3_1061, List.forall_mem_cons.2 ⟨subd7_3_1062, List.forall_mem_cons.2 ⟨subd7_3_1063, List.forall_mem_cons.2 ⟨subd7_3_1064, List.forall_mem_cons.2 ⟨subd7_3_1065, List.forall_mem_cons.2 ⟨subd7_3_1066, List.forall_mem_cons.2 ⟨subd7_3_1067, List.forall_mem_cons.2 ⟨subd7_3_1068, List.forall_mem_cons.2 ⟨subd7_3_1069, List.forall_mem_cons.2 ⟨subd7_3_1070, List.forall_mem_cons.2 ⟨subd7_3_1071, List.forall_mem_cons.2 ⟨subd7_3_1072, List.forall_mem_cons.2 ⟨subd7_3_1073, List.forall_mem_cons.2 ⟨subd7_3_1074, List.forall_mem_cons.2 ⟨subd7_3_1075, List.forall_mem_cons.2 ⟨subd7_3_1076, List.forall_mem_cons.2 ⟨subd7_3_1077, List.forall_mem_cons.2 ⟨subd7_3_1078, List.forall_mem_cons.2 ⟨subd7_3_1079, List.forall_mem_cons.2 ⟨subd7_3_1080, List.forall_mem_cons.2 ⟨subd7_3_1081, List.forall_mem_cons.2 ⟨subd7_3_1082, List.forall_mem_cons.2 ⟨subd7_3_1083, List.forall_mem_cons.2 ⟨subd7_3_1084, List.forall_mem_cons.2 ⟨subd7_3_1085, List.forall_mem_cons.2 ⟨subd7_3_1086, List.forall_mem_cons.2 ⟨subd7_3_1087, List.forall_mem_nil _⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩
+theorem subd7_3_1088 : subd7_3 [2, -4, 0] = true := by decide +kernel
+theorem subd7_3_1089 : subd7_3 [2, -4, 1] = true := by decide +kernel
+theorem subd7_3_1090 : subd7_3 [2, -4, 2] = true := by decide +kernel
+theorem subd7_3_1091 : subd7_3 [2, -4, 3] = true := by decide +kernel
+theorem subd7_3_1092 : subd7_3 [2, -4, 4] = true := by decide +kernel
+theorem subd7_3_1093 : subd7_3 [2, -4, 5] = true := by decide +kernel
+theorem subd7_3_1094 : subd7_3 [2, -4, 6] = true := by decide +kernel
+theorem subd7_3_1095 : subd7_3 [2, -4, 7] = true := by decide +kernel
+theorem subd7_3_1096 : subd7_3 [2, -4, 8] = true := by decide +kernel
+theorem subd7_3_1097 : subd7_3 [2, -3, -7] = true := by decide +kernel
+theorem subd7_3_1098 : subd7_3 [2, -3, -6] = true := by decide +kernel
+theorem subd7_3_1099 : subd7_3 [2, -3, -5] = true := by decide +kernel
+theorem subd7_3_1100 : subd7_3 [2, -3, -4] = true := by decide +kernel
+theorem subd7_3_1101 : subd7_3 [2, -3, -3] = true := by decide +kernel
+theorem subd7_3_1102 : subd7_3 [2, -3, -2] = true := by decide +kernel
+theorem subd7_3_1103 : subd7_3 [2, -3, -1] = true := by decide +kernel
+theorem subd7_3_1104 : subd7_3 [2, -3, 0] = true := by decide +kernel
+theorem subd7_3_1105 : subd7_3 [2, -3, 1] = true := by decide +kernel
+theorem subd7_3_1106 : subd7_3 [2, -3, 2] = true := by decide +kernel
+theorem subd7_3_1107 : subd7_3 [2, -3, 3] = true := by decide +kernel
+theorem subd7_3_1108 : subd7_3 [2, -3, 4] = true := by decide +kernel
+theorem subd7_3_1109 : subd7_3 [2, -3, 5] = true := by decide +kernel
+theorem subd7_3_1110 : subd7_3 [2, -3, 6] = true := by decide +kernel
+theorem subd7_3_1111 : subd7_3 [2, -3, 7] = true := by decide +kernel
+theorem subd7_3_1112 : subd7_3 [2, -3, 8] = true := by decide +kernel
+theorem subd7_3_1113 : subd7_3 [2, -2, -7] = true := by decide +kernel
+theorem subd7_3_1114 : subd7_3 [2, -2, -6] = true := by decide +kernel
+theorem subd7_3_1115 : subd7_3 [2, -2, -5] = true := by decide +kernel
+theorem subd7_3_1116 : subd7_3 [2, -2, -4] = true := by decide +kernel
+theorem subd7_3_1117 : subd7_3 [2, -2, -3] = true := by decide +kernel
+theorem subd7_3_1118 : subd7_3 [2, -2, -2] = true := by decide +kernel
+theorem subd7_3_1119 : subd7_3 [2, -2, -1] = true := by decide +kernel
+theorem sbd7_3_34 : ∀ q ∈ blkd7_3_34, subd7_3 q = true := by
+  unfold blkd7_3_34
+  exact List.forall_mem_cons.2 ⟨subd7_3_1088, List.forall_mem_cons.2 ⟨subd7_3_1089, List.forall_mem_cons.2 ⟨subd7_3_1090, List.forall_mem_cons.2 ⟨subd7_3_1091, List.forall_mem_cons.2 ⟨subd7_3_1092, List.forall_mem_cons.2 ⟨subd7_3_1093, List.forall_mem_cons.2 ⟨subd7_3_1094, List.forall_mem_cons.2 ⟨subd7_3_1095, List.forall_mem_cons.2 ⟨subd7_3_1096, List.forall_mem_cons.2 ⟨subd7_3_1097, List.forall_mem_cons.2 ⟨subd7_3_1098, List.forall_mem_cons.2 ⟨subd7_3_1099, List.forall_mem_cons.2 ⟨subd7_3_1100, List.forall_mem_cons.2 ⟨subd7_3_1101, List.forall_mem_cons.2 ⟨subd7_3_1102, List.forall_mem_cons.2 ⟨subd7_3_1103, List.forall_mem_cons.2 ⟨subd7_3_1104, List.forall_mem_cons.2 ⟨subd7_3_1105, List.forall_mem_cons.2 ⟨subd7_3_1106, List.forall_mem_cons.2 ⟨subd7_3_1107, List.forall_mem_cons.2 ⟨subd7_3_1108, List.forall_mem_cons.2 ⟨subd7_3_1109, List.forall_mem_cons.2 ⟨subd7_3_1110, List.forall_mem_cons.2 ⟨subd7_3_1111, List.forall_mem_cons.2 ⟨subd7_3_1112, List.forall_mem_cons.2 ⟨subd7_3_1113, List.forall_mem_cons.2 ⟨subd7_3_1114, List.forall_mem_cons.2 ⟨subd7_3_1115, List.forall_mem_cons.2 ⟨subd7_3_1116, List.forall_mem_cons.2 ⟨subd7_3_1117, List.forall_mem_cons.2 ⟨subd7_3_1118, List.forall_mem_cons.2 ⟨subd7_3_1119, List.forall_mem_nil _⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩
+theorem subd7_3_1120 : subd7_3 [2, -2, 0] = true := by decide +kernel
+theorem subd7_3_1121 : subd7_3 [2, -2, 1] = true := by decide +kernel
+theorem subd7_3_1122 : subd7_3 [2, -2, 2] = true := by decide +kernel
+theorem subd7_3_1123 : subd7_3 [2, -2, 3] = true := by decide +kernel
+theorem subd7_3_1124 : subd7_3 [2, -2, 4] = true := by decide +kernel
+theorem subd7_3_1125 : subd7_3 [2, -2, 5] = true := by decide +kernel
+theorem subd7_3_1126 : subd7_3 [2, -2, 6] = true := by decide +kernel
+theorem subd7_3_1127 : subd7_3 [2, -2, 7] = true := by decide +kernel
+theorem subd7_3_1128 : subd7_3 [2, -2, 8] = true := by decide +kernel
+theorem subd7_3_1129 : subd7_3 [2, -1, -7] = true := by decide +kernel
+theorem subd7_3_1130 : subd7_3 [2, -1, -6] = true := by decide +kernel
+theorem subd7_3_1131 : subd7_3 [2, -1, -5] = true := by decide +kernel
+theorem subd7_3_1132 : subd7_3 [2, -1, -4] = true := by decide +kernel
+theorem subd7_3_1133 : subd7_3 [2, -1, -3] = true := by decide +kernel
+theorem subd7_3_1134 : subd7_3 [2, -1, -2] = true := by decide +kernel
+theorem subd7_3_1135 : subd7_3 [2, -1, -1] = true := by decide +kernel
+theorem subd7_3_1136 : subd7_3 [2, -1, 0] = true := by decide +kernel
+theorem subd7_3_1137 : subd7_3 [2, -1, 1] = true := by decide +kernel
+theorem subd7_3_1138 : subd7_3 [2, -1, 2] = true := by decide +kernel
+theorem subd7_3_1139 : subd7_3 [2, -1, 3] = true := by decide +kernel
+theorem subd7_3_1140 : subd7_3 [2, -1, 4] = true := by decide +kernel
+theorem subd7_3_1141 : subd7_3 [2, -1, 5] = true := by decide +kernel
+theorem subd7_3_1142 : subd7_3 [2, -1, 6] = true := by decide +kernel
+theorem subd7_3_1143 : subd7_3 [2, -1, 7] = true := by decide +kernel
+theorem subd7_3_1144 : subd7_3 [2, -1, 8] = true := by decide +kernel
+theorem subd7_3_1145 : subd7_3 [2, 0, -7] = true := by decide +kernel
+theorem subd7_3_1146 : subd7_3 [2, 0, -6] = true := by decide +kernel
+theorem subd7_3_1147 : subd7_3 [2, 0, -5] = true := by decide +kernel
+theorem subd7_3_1148 : subd7_3 [2, 0, -4] = true := by decide +kernel
+theorem subd7_3_1149 : subd7_3 [2, 0, -3] = true := by decide +kernel
+theorem subd7_3_1150 : subd7_3 [2, 0, -2] = true := by decide +kernel
+theorem subd7_3_1151 : subd7_3 [2, 0, -1] = true := by decide +kernel
+theorem sbd7_3_35 : ∀ q ∈ blkd7_3_35, subd7_3 q = true := by
+  unfold blkd7_3_35
+  exact List.forall_mem_cons.2 ⟨subd7_3_1120, List.forall_mem_cons.2 ⟨subd7_3_1121, List.forall_mem_cons.2 ⟨subd7_3_1122, List.forall_mem_cons.2 ⟨subd7_3_1123, List.forall_mem_cons.2 ⟨subd7_3_1124, List.forall_mem_cons.2 ⟨subd7_3_1125, List.forall_mem_cons.2 ⟨subd7_3_1126, List.forall_mem_cons.2 ⟨subd7_3_1127, List.forall_mem_cons.2 ⟨subd7_3_1128, List.forall_mem_cons.2 ⟨subd7_3_1129, List.forall_mem_cons.2 ⟨subd7_3_1130, List.forall_mem_cons.2 ⟨subd7_3_1131, List.forall_mem_cons.2 ⟨subd7_3_1132, List.forall_mem_cons.2 ⟨subd7_3_1133, List.forall_mem_cons.2 ⟨subd7_3_1134, List.forall_mem_cons.2 ⟨subd7_3_1135, List.forall_mem_cons.2 ⟨subd7_3_1136, List.forall_mem_cons.2 ⟨subd7_3_1137, List.forall_mem_cons.2 ⟨subd7_3_1138, List.forall_mem_cons.2 ⟨subd7_3_1139, List.forall_mem_cons.2 ⟨subd7_3_1140, List.forall_mem_cons.2 ⟨subd7_3_1141, List.forall_mem_cons.2 ⟨subd7_3_1142, List.forall_mem_cons.2 ⟨subd7_3_1143, List.forall_mem_cons.2 ⟨subd7_3_1144, List.forall_mem_cons.2 ⟨subd7_3_1145, List.forall_mem_cons.2 ⟨subd7_3_1146, List.forall_mem_cons.2 ⟨subd7_3_1147, List.forall_mem_cons.2 ⟨subd7_3_1148, List.forall_mem_cons.2 ⟨subd7_3_1149, List.forall_mem_cons.2 ⟨subd7_3_1150, List.forall_mem_cons.2 ⟨subd7_3_1151, List.forall_mem_nil _⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩
+theorem subd7_3_1152 : subd7_3 [2, 0, 0] = true := by decide +kernel
+theorem subd7_3_1153 : subd7_3 [2, 0, 1] = true := by decide +kernel
+theorem subd7_3_1154 : subd7_3 [2, 0, 2] = true := by decide +kernel
+theorem subd7_3_1155 : subd7_3 [2, 0, 3] = true := by decide +kernel
+theorem subd7_3_1156 : subd7_3 [2, 0, 4] = true := by decide +kernel
+theorem subd7_3_1157 : subd7_3 [2, 0, 5] = true := by decide +kernel
+theorem subd7_3_1158 : subd7_3 [2, 0, 6] = true := by decide +kernel
+theorem subd7_3_1159 : subd7_3 [2, 0, 7] = true := by decide +kernel
+theorem subd7_3_1160 : subd7_3 [2, 0, 8] = true := by decide +kernel
+theorem subd7_3_1161 : subd7_3 [2, 1, -7] = true := by decide +kernel
+theorem subd7_3_1162 : subd7_3 [2, 1, -6] = true := by decide +kernel
+theorem subd7_3_1163 : subd7_3 [2, 1, -5] = true := by decide +kernel
+theorem subd7_3_1164 : subd7_3 [2, 1, -4] = true := by decide +kernel
+theorem subd7_3_1165 : subd7_3 [2, 1, -3] = true := by decide +kernel
+theorem subd7_3_1166 : subd7_3 [2, 1, -2] = true := by decide +kernel
+theorem subd7_3_1167 : subd7_3 [2, 1, -1] = true := by decide +kernel
+theorem subd7_3_1168 : subd7_3 [2, 1, 0] = true := by decide +kernel
+theorem subd7_3_1169 : subd7_3 [2, 1, 1] = true := by decide +kernel
+theorem subd7_3_1170 : subd7_3 [2, 1, 2] = true := by decide +kernel
+theorem subd7_3_1171 : subd7_3 [2, 1, 3] = true := by decide +kernel
+theorem subd7_3_1172 : subd7_3 [2, 1, 4] = true := by decide +kernel
+theorem subd7_3_1173 : subd7_3 [2, 1, 5] = true := by decide +kernel
+theorem subd7_3_1174 : subd7_3 [2, 1, 6] = true := by decide +kernel
+theorem subd7_3_1175 : subd7_3 [2, 1, 7] = true := by decide +kernel
+theorem subd7_3_1176 : subd7_3 [2, 1, 8] = true := by decide +kernel
+theorem subd7_3_1177 : subd7_3 [2, 2, -7] = true := by decide +kernel
+theorem subd7_3_1178 : subd7_3 [2, 2, -6] = true := by decide +kernel
+theorem subd7_3_1179 : subd7_3 [2, 2, -5] = true := by decide +kernel
+theorem subd7_3_1180 : subd7_3 [2, 2, -4] = true := by decide +kernel
+theorem subd7_3_1181 : subd7_3 [2, 2, -3] = true := by decide +kernel
+theorem subd7_3_1182 : subd7_3 [2, 2, -2] = true := by decide +kernel
+theorem subd7_3_1183 : subd7_3 [2, 2, -1] = true := by decide +kernel
+theorem sbd7_3_36 : ∀ q ∈ blkd7_3_36, subd7_3 q = true := by
+  unfold blkd7_3_36
+  exact List.forall_mem_cons.2 ⟨subd7_3_1152, List.forall_mem_cons.2 ⟨subd7_3_1153, List.forall_mem_cons.2 ⟨subd7_3_1154, List.forall_mem_cons.2 ⟨subd7_3_1155, List.forall_mem_cons.2 ⟨subd7_3_1156, List.forall_mem_cons.2 ⟨subd7_3_1157, List.forall_mem_cons.2 ⟨subd7_3_1158, List.forall_mem_cons.2 ⟨subd7_3_1159, List.forall_mem_cons.2 ⟨subd7_3_1160, List.forall_mem_cons.2 ⟨subd7_3_1161, List.forall_mem_cons.2 ⟨subd7_3_1162, List.forall_mem_cons.2 ⟨subd7_3_1163, List.forall_mem_cons.2 ⟨subd7_3_1164, List.forall_mem_cons.2 ⟨subd7_3_1165, List.forall_mem_cons.2 ⟨subd7_3_1166, List.forall_mem_cons.2 ⟨subd7_3_1167, List.forall_mem_cons.2 ⟨subd7_3_1168, List.forall_mem_cons.2 ⟨subd7_3_1169, List.forall_mem_cons.2 ⟨subd7_3_1170, List.forall_mem_cons.2 ⟨subd7_3_1171, List.forall_mem_cons.2 ⟨subd7_3_1172, List.forall_mem_cons.2 ⟨subd7_3_1173, List.forall_mem_cons.2 ⟨subd7_3_1174, List.forall_mem_cons.2 ⟨subd7_3_1175, List.forall_mem_cons.2 ⟨subd7_3_1176, List.forall_mem_cons.2 ⟨subd7_3_1177, List.forall_mem_cons.2 ⟨subd7_3_1178, List.forall_mem_cons.2 ⟨subd7_3_1179, List.forall_mem_cons.2 ⟨subd7_3_1180, List.forall_mem_cons.2 ⟨subd7_3_1181, List.forall_mem_cons.2 ⟨subd7_3_1182, List.forall_mem_cons.2 ⟨subd7_3_1183, List.forall_mem_nil _⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩
+theorem subd7_3_1184 : subd7_3 [2, 2, 0] = true := by decide +kernel
+theorem subd7_3_1185 : subd7_3 [2, 2, 1] = true := by decide +kernel
+theorem subd7_3_1186 : subd7_3 [2, 2, 2] = true := by decide +kernel
+theorem subd7_3_1187 : subd7_3 [2, 2, 3] = true := by decide +kernel
+theorem subd7_3_1188 : subd7_3 [2, 2, 4] = true := by decide +kernel
+theorem subd7_3_1189 : subd7_3 [2, 2, 5] = true := by decide +kernel
+theorem subd7_3_1190 : subd7_3 [2, 2, 6] = true := by decide +kernel
+theorem subd7_3_1191 : subd7_3 [2, 2, 7] = true := by decide +kernel
+theorem subd7_3_1192 : subd7_3 [2, 2, 8] = true := by decide +kernel
+theorem subd7_3_1193 : subd7_3 [2, 3, -7] = true := by decide +kernel
+theorem subd7_3_1194 : subd7_3 [2, 3, -6] = true := by decide +kernel
+theorem subd7_3_1195 : subd7_3 [2, 3, -5] = true := by decide +kernel
+theorem subd7_3_1196 : subd7_3 [2, 3, -4] = true := by decide +kernel
+theorem subd7_3_1197 : subd7_3 [2, 3, -3] = true := by decide +kernel
+theorem subd7_3_1198 : subd7_3 [2, 3, -2] = true := by decide +kernel
+theorem subd7_3_1199 : subd7_3 [2, 3, -1] = true := by decide +kernel
+theorem subd7_3_1200 : subd7_3 [2, 3, 0] = true := by decide +kernel
+theorem subd7_3_1201 : subd7_3 [2, 3, 1] = true := by decide +kernel
+theorem subd7_3_1202 : subd7_3 [2, 3, 2] = true := by decide +kernel
+theorem subd7_3_1203 : subd7_3 [2, 3, 3] = true := by decide +kernel
+theorem subd7_3_1204 : subd7_3 [2, 3, 4] = true := by decide +kernel
+theorem subd7_3_1205 : subd7_3 [2, 3, 5] = true := by decide +kernel
+theorem subd7_3_1206 : subd7_3 [2, 3, 6] = true := by decide +kernel
+theorem subd7_3_1207 : subd7_3 [2, 3, 7] = true := by decide +kernel
+theorem subd7_3_1208 : subd7_3 [2, 4, -7] = true := by decide +kernel
+theorem subd7_3_1209 : subd7_3 [2, 4, -6] = true := by decide +kernel
+theorem subd7_3_1210 : subd7_3 [2, 4, -5] = true := by decide +kernel
+theorem subd7_3_1211 : subd7_3 [2, 4, -4] = true := by decide +kernel
+theorem subd7_3_1212 : subd7_3 [2, 4, -3] = true := by decide +kernel
+theorem subd7_3_1213 : subd7_3 [2, 4, -2] = true := by decide +kernel
+theorem subd7_3_1214 : subd7_3 [2, 4, -1] = true := by decide +kernel
+theorem subd7_3_1215 : subd7_3 [2, 4, 0] = true := by decide +kernel
+theorem sbd7_3_37 : ∀ q ∈ blkd7_3_37, subd7_3 q = true := by
+  unfold blkd7_3_37
+  exact List.forall_mem_cons.2 ⟨subd7_3_1184, List.forall_mem_cons.2 ⟨subd7_3_1185, List.forall_mem_cons.2 ⟨subd7_3_1186, List.forall_mem_cons.2 ⟨subd7_3_1187, List.forall_mem_cons.2 ⟨subd7_3_1188, List.forall_mem_cons.2 ⟨subd7_3_1189, List.forall_mem_cons.2 ⟨subd7_3_1190, List.forall_mem_cons.2 ⟨subd7_3_1191, List.forall_mem_cons.2 ⟨subd7_3_1192, List.forall_mem_cons.2 ⟨subd7_3_1193, List.forall_mem_cons.2 ⟨subd7_3_1194, List.forall_mem_cons.2 ⟨subd7_3_1195, List.forall_mem_cons.2 ⟨subd7_3_1196, List.forall_mem_cons.2 ⟨subd7_3_1197, List.forall_mem_cons.2 ⟨subd7_3_1198, List.forall_mem_cons.2 ⟨subd7_3_1199, List.forall_mem_cons.2 ⟨subd7_3_1200, List.forall_mem_cons.2 ⟨subd7_3_1201, List.forall_mem_cons.2 ⟨subd7_3_1202, List.forall_mem_cons.2 ⟨subd7_3_1203, List.forall_mem_cons.2 ⟨subd7_3_1204, List.forall_mem_cons.2 ⟨subd7_3_1205, List.forall_mem_cons.2 ⟨subd7_3_1206, List.forall_mem_cons.2 ⟨subd7_3_1207, List.forall_mem_cons.2 ⟨subd7_3_1208, List.forall_mem_cons.2 ⟨subd7_3_1209, List.forall_mem_cons.2 ⟨subd7_3_1210, List.forall_mem_cons.2 ⟨subd7_3_1211, List.forall_mem_cons.2 ⟨subd7_3_1212, List.forall_mem_cons.2 ⟨subd7_3_1213, List.forall_mem_cons.2 ⟨subd7_3_1214, List.forall_mem_cons.2 ⟨subd7_3_1215, List.forall_mem_nil _⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩⟩
+
+end ReflectZphi.Data.Cert5.C096
