@@ -184,7 +184,8 @@ def enum_psi(R, Psi, K, cap, extra=6):
     the smallest tree. (Far from the well-reduced region the original coordinates give very
     skewed searches: class 137 vertex cells 47.7M -> 133 nodes.) Only U unimodular with
     column 1 = w column 0 matters for correctness; the Lean check is unchanged."""
-    from fractions import Fraction as Fr
+    from zphi.definite import lll_gram, trace_form
+    from tools import emit_polyenum as E
     A, _ = trace_form(Psi)
     cands = []
     for k in range(3):
