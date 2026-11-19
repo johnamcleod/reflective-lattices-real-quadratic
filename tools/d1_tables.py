@@ -128,10 +128,12 @@ def table(D, d, ch):
         return (min(S), len(r), [abs(x[0]) + abs(x[1]) for x in r])
     srcs = sorted({ch[k]["src"] for k in ks})
     g = r"\varphi" if D == 5 else r"\omega"
+    top = max([ntop] + [2 + k for k in missing])
+    rng = "$n=2$" if top == 2 else f"$2\\le n\\le{top}$"
     out = [r"\begin{center}\footnotesize",
            r"\begin{tabular}{@{}lll@{}}",
            rf"\multicolumn{{3}}{{@{{}}l}}{{\normalsize $d={el(list(d), D)}$}}\\",
-           rf"\multicolumn{{3}}{{@{{}}l}}{{reflective for $2\le n\le{ntop}$; chambers: {', '.join(srcs)}}}\\[2pt]",
+           rf"\multicolumn{{3}}{{@{{}}l}}{{reflective for {rng}; chambers: {', '.join(srcs)}}}\\[2pt]",
            r"\toprule", r"root $(x_0;x_1,\dots)$ & $(r,r)$ & $n$ \\", r"\midrule",
            r"$-e_i+e_{i+1}$, $1\le i<n$ & $2$ & all \\",
            r"$-e_n$ & $1$ & all \\"]
@@ -140,9 +142,9 @@ def table(D, d, ch):
         out.append(rf"$({coords})$ & ${el(m, D)}$ & {ranges(S, ntop)} \\")
     out += [r"\bottomrule", r"\end{tabular}"]
     if missing:
-        out.append(r"\\[2pt]Also reflective for $n\in\{"
-                   + ",".join(str(2 + k) for k in missing)
-                   + r"\}$ (AlVin); chamber not verified, roots not listed.")
+        dims = ", ".join(str(2 + k) for k in missing)
+        out.append(r"\\[2pt]For $n=" + dims + r"$ the reflectivity is from AlVin; the chamber is not"
+                   r" verified and its roots are not listed.")
     out += [r"\end{center}", r"\medskip", ""]
     bad = [k for k in ks if not ch[k]["normalised"]]
     if bad:

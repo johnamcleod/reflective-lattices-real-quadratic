@@ -3,7 +3,8 @@ AlVin is not usable: over Q(sqrt13) (AlVin may return a reflection subgroup's po
 DISCREPANCIES #7) every reflective step; over Z[phi] the k = 0 step of the forms AlVin does
 not finish in rank 3.
 
-Each chamber is brought into AlVin's convention (stabiliser walls -e_i + e_{i+1}, -e_n) by
+For k = 0 the chamber is our certified rank-3 chamber (data/diagonal_{D}.json), which
+starts at e0 with -e1+e2, -e2. Each chamber is brought into AlVin's convention (stabiliser walls -e_i + e_{i+1}, -e_n) by
 a signed permutation of x_1..x_n (an isometry fixing e0, so the chamber stays the one at
 e0). Records that cannot be so normalised are kept with normalised = false.
 
@@ -99,7 +100,13 @@ def main():
             G = [[(-R(*d) if i == j == 0 else (R.one if i == j else R.zero)) for j in range(n)]
                  for i in range(n)]
             t0 = time.time()
-            if D == 13 and (d, k) in vn13:
+            if k == 0:
+                # our certified rank-3 chamber (classification data), started at e0 with
+                # -e1+e2, -e2: already in AlVin's convention (checked by normalise below)
+                rk3 = {tuple(r["d"]): r for r in json.load(open(ROOT / f"data/diagonal_{D}.json"))["b"]}
+                roots = [[R(*x) for x in r] for r in rk3[d]["roots"]]
+                status, src = "reflective", f"data/diagonal_{D}.json"
+            elif D == 13 and (d, k) in vn13:
                 v = vn13[(d, k)]
                 roots = [[R(*x) for x in r] for r in v["roots"]]
                 status, src = v["status"], "logs/vn13.jsonl"
