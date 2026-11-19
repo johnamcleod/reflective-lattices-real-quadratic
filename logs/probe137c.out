@@ -1,0 +1,36 @@
+norms ['1', '2', '4', '1+1φ', '5+1φ', '2+2φ', '10+2φ', '4+4φ', '20+4φ']
+n points 18
+0 edge length 0.5306 max |coord| A 4.73e+04
+1 edge length 2.5949 max |coord| A 3.06e+05
+2 edge length 2.5949 max |coord| A 6.74e+03
+3 edge length 1.0613 max |coord| A 6.12e+05
+4 edge length 2.5949 max |coord| A 9.59e+05
+5 edge length 2.5949 max |coord| A 9.16e+05
+6 edge length 1.0613 max |coord| A 1.09e+07
+7 edge length 2.5949 max |coord| A 1.49e+07
+8 edge length 3.4272 max |coord| A 5.59e+06
+9 edge length 0.5306 max |coord| A 2.77e+07
+10 edge length 2.5949 max |coord| A 3.83e+07
+11 edge length 2.5949 max |coord| A 3.52e+06
+12 edge length 1.0613 max |coord| A 5.09e+06
+13 edge length 2.5949 max |coord| A 3.91e+06
+14 edge length 2.5949 max |coord| A 4.3e+05
+15 edge length 1.0613 max |coord| A 9.68e+05
+16 edge length 2.5949 max |coord| A 8.9e+05
+0 vertex cell nodes 29229 C2 1.03125 per-norm max 5493
+1 vertex cell nodes 26075 C2 1.03125 per-norm max 4727
+2 vertex cell nodes 172721 C2 1.0572916666666667 per-norm max 32385
+3 vertex cell nodes 979585 C2 1.0450367647058822 per-norm max 188381
+4 vertex cell nodes 1680633 C2 1.015625 per-norm max 315053
+5 vertex cell nodes 3362773 C2 1.015625 per-norm max 624099
+6 vertex cell nodes 12260895 C2 1.0669070512820513 per-norm max 2269111
+7 vertex cell nodes 18304423 C2 1.015625 per-norm max 3396029
+8 vertex cell nodes 34891053 C2 1.015625 per-norm max 6524915
+9 vertex cell nodes 47670485 C2 1.015625 per-norm max 8828519
+10 vertex cell nodes 40090113 C2 1.1136642156862746 per-norm max 7393163
+11 vertex cell nodes 9710059 C2 1.0501077586206897 per-norm max 1794455
+12 vertex cell nodes 6083977 C2 1.015625 per-norm max 1129809
+13 vertex cell nodes 4517969 C2 1.015625 per-norm max 841281
+14 vertex cell nodes 1230421 C2 1.015625 per-norm max 226983
+15 vertex cell nodes 810723 C2 1.015625 per-norm max 152169
+16 vertex cell nodes 998911 C2 1.1003707627118644 per-norm max 185129
