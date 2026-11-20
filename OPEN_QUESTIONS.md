@@ -80,6 +80,7 @@ Each entry gives its status and how it will be resolved. None of these is assume
 - **Located (2026-11-13, user pointer):** Mcleod's thesis (2013), Theorem 3.0.8 (`papers/mcleod_thesis_2013.txt`, lines 1453–1460), restates Bugaenko 1990, Theorem 2.
   - **Statement:** if a hyperbolic form f splits as f′ ⊕ (a one-dimensional unimodular form), then the fundamental polytope P′ of the maximal reflection subgroup of O(f′) is a face of the fundamental polytope P for f.
   - **Consequence:** f reflective (P of finite volume) ⇒ the face P′ has finite volume ⇒ f′ reflective. Contrapositively, L_k not reflective ⇒ L_{k+1} = L_k ⊕ ⟨1⟩ not reflective. No diagonality of f′ is required.
+- **Update (2026-11-20, pre-review report):** the paper now cites Bugaenko, Adv. Soviet Math. 8 (1992), Thm 2.1, via Bogachev arXiv:1610.06148, Thm 5.2 / Cor 5.2.1: for L = L′ ⊕ M with M positive definite, the chamber of W(L) meets Λ′ = hyperbolic space of L′ in ∅ or a chamber of W(L′). With M = ⟨1⟩ = ⟨e⟩ and the chamber chosen with a wall on e^⊥, this gives Corollary 14.2 (L_{k+1} reflective ⇒ L_k reflective). Listed as imported in the manuscript; still not read in the original.
 - **Status:** statement located through a secondary source (Mcleod's restatement). Still to do: check it against Bugaenko's original when the paper is available, including the ground ring (Mcleod uses it over Q(√5)). Deferred with D1.
 
 ## Q10. Two undetermined ℚ(√13) candidates (2026-11-15)

@@ -1,6 +1,6 @@
 #!/bin/zsh
 # Run a command with a cap on the physical memory footprint of its whole process tree.
-# Every 3 s, sum `phys_footprint` over the tree; above the cap, kill the tree (by PID) and
+# Every 3 s, sum `phys_footprint` over the tree (RSS if `footprint` does not answer in 5 s); above the cap, kill the tree (by PID) and
 # exit 137 with a message on stderr. macOS does not enforce RLIMIT_AS, hence the watchdog.
 #
 # Usage: tools/memcap.sh LIMIT_MB command [args...]
@@ -19,8 +19,14 @@ tree() {  # the PIDs of $1 and all its descendants
 footprint_mb() {  # summed phys_footprint (MB) of the given PIDs
   local tot=0 v u
   for p in "$@"; do
-    read v u <<< "$(footprint -p $p 2>/dev/null | awk '/phys_footprint:/{print $2, $3; exit}')"
-    [[ -z $v ]] && continue
+    # footprint can hang (seen 2026-11-20, 40 min on a live PID): give it 5 s
+    read v u <<< "$( { footprint -p $p 2>/dev/null & fp=$!
+                       ( sleep 5; kill $fp 2>/dev/null ) >/dev/null 2>&1 & w=$!
+                       wait $fp; kill $w 2>/dev/null; } | awk '/phys_footprint:/{print $2, $3; exit}')"
+    if [[ -z $v ]]; then  # footprint gave nothing in time: fall back to the resident set size
+      v=$(ps -o rss= -p $p 2>/dev/null | tr -d ' '); [[ -z $v ]] && continue
+      u=KB
+    fi
     case $u in
       KB) v=$(( v / 1024 )) ;;
       GB) v=$(( v * 1024 )) ;;

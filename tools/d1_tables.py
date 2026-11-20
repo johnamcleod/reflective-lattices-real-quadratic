@@ -147,7 +147,7 @@ def table(D, d, ch):
            r"\begin{tabular}{@{}lll@{}}",
            rf"\multicolumn{{3}}{{@{{}}l}}{{\normalsize $d={el(list(d), D)}$}}\\",
            rf"\multicolumn{{3}}{{@{{}}l}}{{reflective for {rng}; chambers: {', '.join(srcs)}}}\\[2pt]",
-           r"\toprule", r"root $(x_0;x_1,\dots)$ & $(r,r)$ & $n$ \\", r"\midrule",
+           r"\toprule", r"root $(x_0;x_1,\dots)$ & $r^2$ & $n$ \\", r"\midrule",
            r"$-e_i+e_{i+1}$, $1\le i<n$ & $2$ & all \\",
            r"$-e_n$ & $1$ & all \\"]
     for r, (m, S) in sorted(rows.items(), key=sortkey):

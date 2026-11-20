@@ -87,7 +87,8 @@ def parse_entry(s):
 def _run_pty(args, cwd, timeout):
     """Run under a pseudo-terminal so that AlVin's stdout is line-buffered: the roots
     printed before a timeout are then not lost. On timeout the child (this PID only)
-    is killed."""
+    is killed. Returns (output, timed_out, returncode); returncode < 0 is a signal (AlVin
+    segfaults intermittently on some forms, e.g. <-(-15+9w),1,1,1> over Q(sqrt13))."""
     import os, pty, select, time
     master, slave = pty.openpty()
     p = subprocess.Popen(args, cwd=cwd, stdout=slave, stderr=slave, stdin=subprocess.DEVNULL)
@@ -123,7 +124,7 @@ def _run_pty(args, cwd, timeout):
             break
         chunks.append(data)
     os.close(master)
-    return b"".join(chunks).decode(errors="replace"), timed_out
+    return b"".join(chunks).decode(errors="replace"), timed_out, p.returncode
 
 
 def run_alvin(d, timeout):
@@ -131,7 +132,7 @@ def run_alvin(d, timeout):
     args = [str(ALVIN), f"-k=Q[sqrt {D}]", "-qf", ",".join([alvin_coeff(neg), "1", "1"])]
     with tempfile.TemporaryDirectory() as td:
         (pathlib.Path(td) / "output").mkdir()
-        out, timed_out = _run_pty(args, td, timeout)
+        out, timed_out, _rc = _run_pty(args, td, timeout)
         graphs = list((pathlib.Path(td) / "output").glob("*.coxiter"))
         graph = graphs[0].read_text() if graphs else None
     roots = []
@@ -140,7 +141,8 @@ def run_alvin(d, timeout):
         if m:
             roots.append([parse_entry(t) for t in m.group(1).split(",")])
     header = re.search(r"Quadratic form \((\d+),(\d+)\):\s*(.*)", out)
-    return {"roots": roots, "ended": ("Algorithm ended" in out) and not timed_out,
+    return {"roots": roots, "ended": ("Algorithm ended" in out) and not timed_out and _rc == 0,
+            "returncode": _rc,
             "timed_out": timed_out, "graph": graph,
             "says_nonreflective": bool(re.search(r"not reflective", out, re.I)),
             "form": header.group(3).strip() if header else None,

@@ -55,16 +55,22 @@ def run_alvin(d, k):
     cmd = [str(ALVIN), f"-k=Q[sqrt {D}]", "-qf", ",".join(coeffs)]  # killed by PID on timeout
     with tempfile.TemporaryDirectory() as td:
         (pathlib.Path(td) / "output").mkdir()
-        t0 = time.time()
-        out, timed_out = _run_pty(cmd, td, TIMEOUT)
-        secs = time.time() - t0
+        crashes = 0
+        while True:  # AlVin segfaults intermittently: retry (at most 5 crashes)
+            t0 = time.time()
+            out, timed_out, rc = _run_pty(cmd, td, TIMEOUT)
+            secs = time.time() - t0
+            if timed_out or rc == 0 or crashes >= 5:
+                break
+            crashes += 1
         graphs = list((pathlib.Path(td) / "output").glob("*.coxiter"))
         graph = graphs[0].read_text() if graphs else None
     root_lines = [m.group(1).split(",") for m in
                   (re.match(r"\s*e\d+\s*=\s*\((.*)\)\s*$", line) for line in out.splitlines()) if m]
     nroots = len(root_lines)
     header = re.search(r"Quadratic form \((\d+),(\d+)\)", out)
-    return dict(ended=("Algorithm ended" in out) and not timed_out, timed_out=timed_out,
+    return dict(ended=("Algorithm ended" in out) and not timed_out and rc == 0, timed_out=timed_out,
+                returncode=rc, crashes=crashes,
                 nroots=nroots, secs=round(secs, 1), root_lines=root_lines,
                 signature=[int(header.group(1)), int(header.group(2))] if header else None,
                 says_nonreflective=bool(re.search(r"not reflective", out, re.I)),

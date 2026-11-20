@@ -306,14 +306,18 @@ def main():
         group = [x for x in items if x["D"] == D]
         ring = r"\ZZ[\varphi]" if D == 5 else r"\ZZ[\omega]"
         out.append(rf"\subsubsection*{{Over ${ring}$}}\leavevmode\par\smallskip")
+        out.append(r"\emph{Legend.} $k=1$ (rank $4$): dual polyhedron; a vertex per wall, a plain "
+                   r"edge for a right dihedral angle, an edge labelled $m$ for $\pi/m$ ($m\ge3$). "
+                   r"$k\ge2$: Coxeter diagram; no edge for orthogonal mirrors, a plain edge for "
+                   r"$\pi/3$, label $m$ for $\pi/m$, dotted for ultraparallel mirrors.\par\smallskip")
         if D == 13:
             nv = sum(1 for x in group if x["src"] == "ours")
             out.append(
                 "These diagrams are those of the chambers found by our own implementation "
-                "(stage~2, or the diagonal fast path of Section~\\ref{sec:d1-checks}) where it has finished" + (f" ({nv} of {len(group)}; the diagram marked [AlVin] is "
+                "(the general implementation, or the diagonal fast path of Section~\\ref{sec:d1-checks}) where it has finished" + (f" ({nv} of {len(group)}; the diagram marked [AlVin] is "
                 "\\textbf{unverified})" if nv < len(group) else "")
                 + "; AlVin's polytopes over this ring may belong to a reflection subgroup "
-                "(DISCREPANCIES~\\#7)." if nv else
+                "(Section~\\ref{sec:zsqrt13})." if nv else
                 "\\textbf{Unverified:} these are AlVin's polytopes, which over this ring may "
                 "belong to a proper reflection subgroup (DISCREPANCIES~\\#7); the chamber check "
                 "by our own implementation is running.")

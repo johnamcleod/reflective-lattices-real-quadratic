@@ -1,4 +1,8 @@
-"""Build-only port of AlVin to igraph 1.0 + modern libc++ (no arithmetic changes).
+"""Build-only port of AlVin to igraph 1.0 + modern libc++ (no arithmetic changes), plus one
+memory-safety fix (2026-11-20): in find*PossibleNorms2, `vector<unsigned int> pow2({1})` has
+size 1 but the loop writes pow2[i] for every prime factor, a heap overflow. It made AlVin
+segfault intermittently (about half the runs on <-(-15+9w),1,1,1> over Q(sqrt13)); the
+vector is now sized to the factor count.
 Usage: python3 port_alvin.py <AlVin source dir>"""
 import pathlib, re, sys
 src = pathlib.Path(sys.argv[1])
@@ -26,6 +30,13 @@ for f in list(src.glob("quadraticinteger*.h")) + list(src.glob("quadraticinteger
     t2 = re.sub(r"(?<![:\w])array<long int, 2>", "std::array<long int, 2>", t)
     if t2 != t:
         f.write_text(t2)
+for f in src.glob("*_alvin.cpp"):
+    t = f.read_text()
+    t2 = re.sub(r"vector<unsigned int> pow2\(\{1\}\);(\s*)for \(unsigned int i\(1\); i < (\w+); i\+\+\)",
+                r"vector<unsigned int> pow2(\2 + 1, 1);\1for (unsigned int i(1); i < \2; i++)", t)
+    if t2 != t:
+        f.write_text(t2)
+    assert "pow2({1})" not in t2, f
 cm = src / "CMakeLists.txt"
 t = cm.read_text().replace('add_definitions("-std=c++11")', 'add_definitions("-std=c++17")')
 t = t.replace('add_definitions("-msse3")', '#add_definitions("-msse3")')

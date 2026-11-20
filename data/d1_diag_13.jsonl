@@ -26,7 +26,7 @@
 {"D": 13, "d": [-12, 6], "k": 1, "rank": 4, "timeout_s": 600, "ended": false, "timed_out": true, "nroots": 213, "secs": 600.1, "signature": [3, 1], "says_nonreflective": false, "status": "open"}
 {"D": 13, "d": [-12, 6], "final": true, "k_reflective_max": 0, "stop": "open", "stop_k": 1, "timeout_s": 600}
 {"D": 13, "d": [-15, 9], "k": 0, "rank": 3, "timeout_s": 600, "ended": true, "timed_out": false, "nroots": 8, "secs": 0.7, "signature": [2, 1], "says_nonreflective": false, "graph_file": "data/d1_graphs_13/d-15_9_k0.coxiter", "coxiter": {"cocompact": "yes", "finite_covolume": "yes", "dimension": "2"}, "status": "reflective"}
-{"D": 13, "d": [-15, 9], "k": 1, "rank": 4, "timeout_s": 600, "ended": false, "timed_out": false, "nroots": 1, "secs": 0.1, "signature": [3, 1], "says_nonreflective": false, "status": "open"}
+{"D": 13, "d": [-15, 9], "k": 1, "rank": 4, "timeout_s": 600, "ended": false, "timed_out": true, "nroots": 453, "secs": 600.0, "signature": [3, 1], "says_nonreflective": false, "status": "open", "returncode": -9, "crashes": 0, "note": "rerun 2026-11-20 with the AlVin pow2 overflow fixed (tools/patches/port_alvin.py); the original record (0.1 s, 1 root) was an AlVin segfault"}
 {"D": 13, "d": [-15, 9], "final": true, "k_reflective_max": 0, "stop": "open", "stop_k": 1, "timeout_s": 600}
 {"D": 13, "d": [-3, 9], "k": 0, "rank": 3, "timeout_s": 600, "ended": false, "timed_out": true, "nroots": 16, "secs": 600.0, "signature": [2, 1], "says_nonreflective": false, "status": "open"}
 {"D": 13, "d": [-3, 9], "final": true, "k_reflective_max": null, "stop": "open", "stop_k": 0, "timeout_s": 600}
