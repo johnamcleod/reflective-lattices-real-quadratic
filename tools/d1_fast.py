@@ -85,7 +85,7 @@ def main():
         d = tuple(r["d"])
         ka = r["k_reflective_max"] if r["k_reflective_max"] is not None else 0
         cases += [(d, k, "known") for k in range(ka + 1)] + [(d, ka + 1, "open")]
-    cases.sort(key=lambda c: (c[1], c[0]))
+    cases.sort(key=lambda c: (c[2] != "known", c[1], c[0]))  # known steps first
     with open(out, "a") as f:
         for d, k, role in cases:
             if (d, k) in done:  # records ended by Delta_max are dropped before a rerun

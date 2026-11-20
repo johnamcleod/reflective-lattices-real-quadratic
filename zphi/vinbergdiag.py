@@ -150,9 +150,9 @@ class DiagLattice:
         out.append(v)
         return out
 
-    def candidates(self, D1: Fr, D2: Fr):
+    def candidates(self, D1: Fr, D2: Fr, deadline: Optional[float] = None):
         """(delta, m, r) with D1 < delta <= D2 (D1 = None: delta > 0), r a root, x0 > 0,
-        x1 >= ... >= xn >= 0."""
+        x1 >= ... >= xn >= 0. Raises _Timeout once time.time() > deadline (checked per x0)."""
         R, d, n = self.R, self.d, self.n
         out = []
         sd = -d.sfloat()
@@ -161,6 +161,8 @@ class DiagLattice:
             hi = sqrt(float(D2) * float(m) / float(d))
             B = sqrt(max(m.sfloat(), 0) / sd)
             for x0 in box(R, 0, hi, B):
+                if deadline is not None and _time.time() > deadline:
+                    raise _Timeout
                 if x0.sign() <= 0:
                     continue
                 if not (2 * d * x0 / m).is_integral():
@@ -180,6 +182,10 @@ class DiagLattice:
         return out
 
 
+class _Timeout(Exception):
+    pass
+
+
 def _cmp(a, b):
     return (a[0] - b[0]).sign()
 
@@ -197,7 +203,14 @@ def vinberg_diag(d, n: int, Delta0: Fr = Fr(1, 4), Delta_max: Fr = Fr(10 ** 6),
     lo, Delta = None, Fr(Delta0)
     last_check = -1
     while Delta <= Delta_max:
-        cands = sorted(L.candidates(lo, Delta), key=cmp_to_key(_cmp))
+        try:
+            # the slice is abandoned unfinished at the deadline; the roots accepted so far
+            # (all from completed slices) are still a prefix of the accepted sequence
+            cands = sorted(L.candidates(lo, Delta, None if time_limit is None else t0 + time_limit),
+                           key=cmp_to_key(_cmp))
+        except _Timeout:
+            return dict(status="undetermined", roots=acc, n_start=n_start, Delta=lo,
+                        reason="time_limit")
         i = 0
         while i < len(cands):
             j = i
