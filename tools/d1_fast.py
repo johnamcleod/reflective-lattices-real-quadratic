@@ -26,6 +26,10 @@ from zphi.ring import get_ring  # noqa: E402
 from zphi.linalg import bil  # noqa: E402
 from zphi.vinbergdiag import vinberg_diag  # noqa: E402
 
+# vinbergdiag's default 10^6 is too small: <-(-3+9w), 1, 1> over Q(sqrt13) has a wall at
+# delta = 1.27e7. The time limit (checked per Delta slice) is the effective bound.
+DELTA_MAX = 10 ** 12
+
 
 def same_up_to_unit(R, r, s):
     i = next(j for j, x in enumerate(r) if not x.is_zero())
@@ -84,12 +88,12 @@ def main():
     cases.sort(key=lambda c: (c[1], c[0]))
     with open(out, "a") as f:
         for d, k, role in cases:
-            if (d, k) in done:
+            if (d, k) in done:  # records ended by Delta_max are dropped before a rerun
                 continue
             t0 = time.time()
             rec = dict(D=D, d=list(d), k=k, role=role)
             try:
-                res = vinberg_diag(R(*d), 2 + k, time_limit=tl)
+                res = vinberg_diag(R(*d), 2 + k, time_limit=tl, Delta_max=DELTA_MAX)
             except ValueError as e:
                 rec.update(status="not_b_n", reason=str(e))
             else:
