@@ -100,6 +100,19 @@ def load():
             key = (D, tuple(r["d"]))
             forms.setdefault(key, {})[r["k"]] = dict(roots=r["roots"], norms=r["norms"], src=src,
                                                        normalised=r.get("normalised", True))
+    # chambers from the diagonal fast path (zphi/vinbergdiag.py, tools/d1_fast.py), already in
+    # AlVin's convention; used only for steps no other source covers
+    for D in (5, 13):
+        p = ROOT / f"data/d1_fast_{D}.jsonl"
+        if not p.exists():
+            continue
+        for line in open(p):
+            r = json.loads(line)
+            if r.get("status") != "reflective" or r.get("role") != "known":
+                continue
+            ch = forms.setdefault((D, tuple(r["d"])), {})
+            if r["k"] not in ch:
+                ch[r["k"]] = dict(roots=r["roots"], norms=r["norms"], src="ours", normalised=True)
     return forms
 
 
