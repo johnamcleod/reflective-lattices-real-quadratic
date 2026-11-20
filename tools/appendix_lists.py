@@ -112,7 +112,7 @@ def main():
         for r in new:
             cl = r["cl"]
             f.write("\\begin{itemize}\n\\item angles $(" + ",".join(str(a) for a in cl["polygon"]["angles"])
-                    + ")$, root norms $(" + ", ".join(el(x, 2) for x in r["norms"]) + ")$, $\\det="
+                    + ")$, root norms mod unit squares $(" + ", ".join(el(x, 2) for x in r["norms"]) + ")$, $\\det="
                     + el(cl["det"], 2) + "$,\n\\[G=" + gram_tex(cl["gram"], 2).replace("psmallmatrix", "pmatrix")
                     + ",\\]\nsimple roots (in cyclic order) "
                     + ", ".join("$" + vec_tex(v, 2) + "$" for v in cl["polygon"]["roots"]) + ".\n\\end{itemize}\n")
