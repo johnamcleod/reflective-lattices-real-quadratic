@@ -124,7 +124,7 @@ Mark's 522 appendix entries: re-checked with the final `check_polygon` (`tools/v
 
 ### Regression after the field-profile refactor (2026-11-13)
 
-Re-run with the refactored code (commit 84f2248): `verify_all.py` 2373/2373 certificates
+Re-run with the refactored code (commit 0daaefb): `verify_all.py` 2373/2373 certificates
 pass (1280 reflective, 1093 non-reflective); `verify_mark.py` 522/522; `cand_classes.py`
 146 classes, 0 of Mark's classes missing, the same 2 new classes (DISCREPANCIES #5).
 Logs: `logs/regr_*.log`.
