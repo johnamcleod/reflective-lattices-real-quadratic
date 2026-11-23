@@ -17,7 +17,13 @@ logs/recheck_{D}.jsonl (restartable on that log). Parts whose stamp matches thei
 (and Base) are reused; main modules and monolithic classes are recompiled, with their axioms.
 Each record gets "reused" = the number of parts taken from matching stamps.
 
-Usage: python tools/check_split.py D [--jobs=2] [--mem=4000] [--threads=1] [--only=a,b,...] [--recheck]
+--olean: like --recheck (log logs/olean_{D}.jsonl), but every main module and monolithic class is
+compiled from its own source to its .olean (with a stamp; no #print axioms), and at the end
+Data/Cert{D}.lean and ReflectZphi/Results.lean are compiled, so that Results.lean is checked
+against the certificates: its `#print axioms all_reflective` and `#audit_axioms` output goes
+to logs/results_{D}.out. Results.lean then compiles without errors only if all is well.
+
+Usage: python tools/check_split.py D [--jobs=2] [--mem=4000] [--threads=1] [--only=a,b,...] [--recheck | --olean]
 """
 from __future__ import annotations
 
@@ -97,7 +103,7 @@ def run_module(lean, env, src, olean, mem, threads, append_axioms=False, tmpdir=
     return rec
 
 
-def check_class(D, ci, lean, env, mem, threads, jobs, tmpdir):
+def check_class(D, ci, lean, env, mem, threads, jobs, tmpdir, olean=False):
     rel = f"ReflectZphi/Data/Cert{D}/C{ci:03d}"
     src_main = os.path.join(LEAN_DIR, rel + ".lean")
     sub = os.path.join(LEAN_DIR, rel)
@@ -119,7 +125,14 @@ def check_class(D, ci, lean, env, mem, threads, jobs, tmpdir):
             mods += recs
             ok = all(r["rc"] == 0 and not r["errors"] for r in recs)
     main = None
-    if ok:
+    if ok and olean:
+        deps = [os.path.join(sub, f) for f in sorted(os.listdir(sub)) if f.endswith(".lean")] \
+            if os.path.isdir(sub) else []
+        main = run_module(lean, env, src_main, os.path.join(BUILD, rel + ".olean"), mem, threads,
+                          deps=deps)
+        mods.append(main)
+        ok = main["rc"] == 0 and not main["errors"]
+    elif ok:
         main = run_module(lean, env, src_main, None, mem, threads, append_axioms=True, tmpdir=tmpdir)
         mods.append(main)
         ok = (main["rc"] == 0 and not main["errors"] and main["axioms"] is not None
@@ -140,7 +153,9 @@ def main():
     opts = dict((a[2:].split("=", 1) + [""])[:2] for a in sys.argv[1:] if a.startswith("--"))
     D = int(args[0])
     jobs, mem, threads = int(opts.get("jobs", 2)), int(opts.get("mem", 4000)), int(opts.get("threads", 1))
-    logp = os.path.join(ROOT, f"logs/{'recheck' if 'recheck' in opts else 'check_split'}_{D}.jsonl")
+    olean = "olean" in opts
+    mode = "olean" if olean else ("recheck" if "recheck" in opts else "check_split")
+    logp = os.path.join(ROOT, f"logs/{mode}_{D}.jsonl")
     done = set()
     if os.path.exists(logp):
         for l in open(logp):
@@ -162,9 +177,35 @@ def main():
     log = open(logp, "a")
     with tempfile.TemporaryDirectory() as tmpdir:
         for ci in classes:
-            rec = check_class(D, ci, lean, env, mem, threads, jobs, tmpdir)
+            rec = check_class(D, ci, lean, env, mem, threads, jobs, tmpdir, olean=olean)
             print(json.dumps({k: rec[k] for k in rec if k != "per_module"}), flush=True)
             log.write(json.dumps(rec) + "\n"); log.flush()
+    if olean and "only" not in opts:
+        allok = set()
+        for l in open(logp):
+            r = json.loads(l)
+            if r["ok"]:
+                allok.add(r["cls"])
+        d = os.path.join(LEAN_DIR, f"ReflectZphi/Data/Cert{D}")
+        everything = {int(f[1:4]) for f in os.listdir(d) if f.endswith(".lean")}
+        if allok != everything:
+            print(json.dumps(dict(results="not compiled", missing=sorted(everything - allok))), flush=True)
+            return
+        agg = run_module(lean, env, os.path.join(LEAN_DIR, f"ReflectZphi/Data/Cert{D}.lean"),
+                         os.path.join(BUILD, f"ReflectZphi/Data/Cert{D}.olean"), mem, threads,
+                         deps=[os.path.join(d, f) for f in sorted(os.listdir(d)) if f.endswith(".lean")])
+        print(json.dumps(dict(aggregate=agg)), flush=True)
+        if agg["rc"] != 0 or agg["errors"]:
+            return
+        cmd = ["/usr/bin/time", "-l", "caffeinate", "-i", "nice", "-n", "19",
+               os.path.join(ROOT, "tools/memcap.sh"), str(mem), lean, f"-M{mem + 3000}",
+               f"-j{threads}", os.path.join(LEAN_DIR, "ReflectZphi/Results.lean")]
+        p = subprocess.run(cmd, cwd=LEAN_DIR, env=env, capture_output=True, text=True)
+        out = p.stdout + p.stderr
+        open(os.path.join(ROOT, f"logs/results_{D}.out"), "w").write(out)
+        print(json.dumps(dict(results_rc=p.returncode,
+                              report=[l for l in out.splitlines() if "axiom" in l or "error" in l])),
+              flush=True)
 
 
 if __name__ == "__main__":

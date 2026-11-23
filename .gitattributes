@@ -1,0 +1,3 @@
+# Generated Lean certificates (tools/emit_*.py): collapsed in diffs, excluded from language stats
+lean/ReflectZphi/Data/** linguist-generated=true
+lean/ReflectZphi/Results.lean linguist-generated=true

@@ -1,7 +1,8 @@
 #!/bin/sh
-# Fails if any listed theorem depends on an axiom outside {propext, Classical.choice, Quot.sound}
-# (plus the approved imported theorems allcock_thin_part and vinberg_chamber, to be declared in
-# ReflectZphi/Imported.lean; none declared yet, so none is allowed yet).
+# Fails if any theorem of the hand-written library (scripts/CheckAxioms.lean: the listed theorems
+# and `#audit_axioms ReflectZphi`) depends on an axiom outside {propext, Classical.choice,
+# Quot.sound}. The imported results (ReflectZphi/Imported.lean) are hypotheses, not axioms, so
+# nothing else is allowed. The certificate library is audited by ReflectZphi/Results.lean.
 cd "$(dirname "$0")/.." || exit 1
 out=$(lake env lean scripts/CheckAxioms.lean 2>&1) || { echo "$out"; exit 1; }
 echo "$out"

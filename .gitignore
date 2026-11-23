@@ -10,3 +10,5 @@ lean/.lake/
 logs/
 tools/csrc/*.dylib
 papers/
+blueprint/web/
+blueprint/print/
