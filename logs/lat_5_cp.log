@@ -1,0 +1,13 @@
+close_pair D=5: 20/237 chunks, 3s
+close_pair D=5: 40/237 chunks, 4s
+close_pair D=5: 60/237 chunks, 5s
+close_pair D=5: 80/237 chunks, 7s
+close_pair D=5: 100/237 chunks, 9s
+close_pair D=5: 120/237 chunks, 10s
+close_pair D=5: 140/237 chunks, 12s
+close_pair D=5: 160/237 chunks, 15s
+close_pair D=5: 180/237 chunks, 17s
+close_pair D=5: 200/237 chunks, 19s
+close_pair D=5: 220/237 chunks, 22s
+close_pair D=5: 237/237 chunks, 24s
+{"27": {"configs": 23700, "enlargements": 11459, "ssf": 638, "ssf_locally_simple": 564}}

@@ -1,0 +1,21 @@
+short_pair D=5: 20/400 chunks, 4s
+short_pair D=5: 40/400 chunks, 6s
+short_pair D=5: 60/400 chunks, 9s
+short_pair D=5: 80/400 chunks, 13s
+short_pair D=5: 100/400 chunks, 15s
+short_pair D=5: 120/400 chunks, 17s
+short_pair D=5: 140/400 chunks, 19s
+short_pair D=5: 160/400 chunks, 21s
+short_pair D=5: 180/400 chunks, 28s
+short_pair D=5: 200/400 chunks, 30s
+short_pair D=5: 220/400 chunks, 32s
+short_pair D=5: 240/400 chunks, 34s
+short_pair D=5: 260/400 chunks, 36s
+short_pair D=5: 280/400 chunks, 38s
+short_pair D=5: 300/400 chunks, 40s
+short_pair D=5: 320/400 chunks, 42s
+short_pair D=5: 340/400 chunks, 45s
+short_pair D=5: 360/400 chunks, 48s
+short_pair D=5: 380/400 chunks, 50s
+short_pair D=5: 400/400 chunks, 53s
+{"22": {"configs": 2946, "enlargements": 3020, "ssf": 256, "ssf_locally_simple": 204}, "23": {"configs": 36961, "enlargements": 30934, "ssf": 1253, "ssf_locally_simple": 1172}}

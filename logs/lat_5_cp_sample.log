@@ -1,0 +1,27 @@
+keys 464 s
+configs 23700 chunks 237
+chunk 20 0.3
+chunk 50 0.4
+chunk 70 0.5
+chunk 60 0.5
+chunk 40 0.6
+chunk 10 0.6
+chunk 80 0.4
+chunk 30 0.7
+chunk 0 0.7
+chunk 110 0.3
+chunk 130 0.2
+chunk 140 0.3
+chunk 160 0.3
+chunk 180 0.2
+chunk 100 0.6
+chunk 200 0.3
+chunk 210 0.3
+chunk 90 1.1
+chunk 230 0.3
+chunk 170 0.8
+chunk 150 1.0
+chunk 220 0.7
+chunk 190 1.1
+chunk 120 2.0
+sample wall 3 s for 24 chunks

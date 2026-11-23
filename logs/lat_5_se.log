@@ -1,0 +1,2 @@
+short_edge D=5: 20/20 chunks, 178s
+{"15": {"configs": 298, "enlargements": 1629, "ssf": 168, "ssf_locally_simple": 117}, "16": {"configs": 1636, "enlargements": 7023, "ssf": 430, "ssf_locally_simple": 373}}
