@@ -51,6 +51,7 @@ Each entry gives its status and how it will be resolved. None of these is assume
     - {(2,5,6), (3,5,5)}.
 
     This differs from the step-1 notes' recollection of Takeuchi in two places, (2,5,5) and (2,5,10); see DISCREPANCIES #6. A check against Takeuchi's paper is still pending (PDF needed).
+  - **Update 2026-11-23:** Nagano–Shiga, arXiv:1511.02941v5, Table App 1, reproduces Takeuchi's list with class labels: VI = (2,4,5), (2,4,10), (2,5,5), (2,10,10), (4,4,5), (5,10,10); VII = (2,5,6), (3,5,5); VIII = (2,3,10), (2,5,10), (3,3,5), (5,5,5), all over ℚ(√5). This is exactly our grouping, and the paper now cites it alongside Takeuchi. Takeuchi's original itself has still not been read.
 - **Guglielmetti's ⟨−√5,1,1⟩ and ⟨−φ,2+φ,1⟩:** fetch the thesis.
 - **Bugaenko's ⟨−φ,1,1⟩:** primary source probably unavailable; also check by computation.
 - **Mcleod thesis §3.2:** a copy is in the sibling project.
@@ -58,10 +59,12 @@ Each entry gives its status and how it will be resolved. None of these is assume
 ## Q6. The H₂ glue-sign lemma (the analogue of Mark's Lemmas 6–7)
 
 - This must be proved before walking can use H₂ glue signs. Until then, walking uses A₂ signs only, and Vinberg is used everywhere else.
+- **Status (2026-11-23):** not needed. No result depends on it (the walk is a search heuristic; every decision is a certificate), and the manuscript does not claim it.
 
 ## Q7. Step-1 §4.1 for A₁² corners
 
 - The claim that "b is a unit" is unproven for right-angled corners (step-1 §9 item 4). Not needed by the pipeline, which handles A₁² generically, but the manuscript must not claim it.
+- **Status (2026-11-23):** not needed, and not claimed in the manuscript.
 
 ## Q8. Normalisation of s in (22)/(27) relative to the re-derived form
 
@@ -82,6 +85,7 @@ Each entry gives its status and how it will be resolved. None of these is assume
   - **Consequence:** f reflective (P of finite volume) ⇒ the face P′ has finite volume ⇒ f′ reflective. Contrapositively, L_k not reflective ⇒ L_{k+1} = L_k ⊕ ⟨1⟩ not reflective. No diagonality of f′ is required.
 - **Update (2026-11-20, pre-review report):** the paper now cites Bugaenko, Adv. Soviet Math. 8 (1992), Thm 2.1, via Bogachev arXiv:1610.06148, Thm 5.2 / Cor 5.2.1: for L = L′ ⊕ M with M positive definite, the chamber of W(L) meets Λ′ = hyperbolic space of L′ in ∅ or a chamber of W(L′). With M = ⟨1⟩ = ⟨e⟩ and the chamber chosen with a wall on e^⊥, this gives Corollary 14.2 (L_{k+1} reflective ⇒ L_k reflective). Listed as imported in the manuscript; still not read in the original.
 - **Status:** statement located through a secondary source (Mcleod's restatement). Still to do: check it against Bugaenko's original when the paper is available, including the ground ring (Mcleod uses it over Q(√5)). Deferred with D1.
+- **Update 2026-11-23 (pre-arXiv review):** the paper now cites Bugaenko 1990, Thm 2 (the rank-one unimodular case used) and 1992, Thm 2.1, through the restatements of Bogachev and the author's thesis, lists the theorem as imported, and says that only Corollary 14.2 (monotonicity in k) depends on it; the lower bounds k_A do not. The originals are still unread.
 
 ## Q10. Two undetermined ℚ(√13) candidates (2026-11-15)
 
@@ -96,3 +100,5 @@ Next steps:
 - otherwise try a different decision method (a certificate of non-reflectivity from a loxodromic in the stabiliser, or a longer Vinberg run with a different start vector).
 
 Do not assume either way.
+
+**Status (2026-11-23):** still open. The manuscript states the ℚ(√13) result as provisional (at least 39 classes, 2 candidates undecided).

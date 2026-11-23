@@ -79,10 +79,72 @@ def test_local_superlattices(R, p):
         assert len(Ns) == local_count_formula(e, p)
 
 
+@pytest.mark.parametrize("D,p", [(13, 2), (13, "w"), (13, "1-w"), (13, "2w-1"),
+                                 (1, 2), (2, "sqrt2"), (5, 2), (5, "pi")], ids=str)
+def test_local_superlattices_ext(D, p):
+    """Section 6.2: Z[omega] (2 inert, 3 split as (w)(1-w), 13 ramified), and exponents 3."""
+    from zphi.ring import get_ring
+    R = get_ring(D)
+    w = R.w if D != 1 else None
+    p = {"w": w, "1-w": R.one - w if w is not None else None, "2w-1": 2 * w - R.one if w is not None else None,
+         "sqrt2": w, "pi": R(3) - w if w is not None else None}.get(p, p)
+    p = R(p) if isinstance(p, int) else p
+    types = [(0, 0, 1), (0, 1, 1), (1, 1, 1), (0, 0, 2), (0, 1, 2), (1, 1, 2), (0, 2, 2)]
+    types += [(0, 0, 3), (0, 1, 3), (1, 1, 3), (0, 2, 3)]
+    for e in types:
+        Ns = local_superlattices(e, p)
+        D3 = [[p ** e[i] if i == j else R.zero for j in range(3)] for i in range(3)]
+        keys = set()
+        for N in Ns:
+            assert all(x.is_integral() for row in N for x in row)
+            T = mat_mul(inv(N), D3)
+            assert all(x.is_integral() for row in T for x in row)
+            keys.add(_canon(N))
+        assert len(keys) == len(Ns), "duplicates"
+        assert len(Ns) == local_count_formula(e, p), (e, len(Ns))
+
+
+# Every module type O/p^e1 + O/p^e2 + O/p^e3 with max e >= 2 that the candidate stage
+# meets (tools/hull_exponents.py, logs/hull_exponents.json): (D, N(p), sorted e).
+_CENSUS = {
+    2: {2: ["002", "003", "004", "005", "006", "007", "008", "009", "012", "013", "014",
+            "015", "016", "017", "018", "022", "023", "024", "025", "026", "027", "112",
+            "113", "114", "115", "116", "117", "122", "123", "124", "222", "223", "224"],
+        7: ["002"], 9: ["002"]},
+    5: {4: ["002", "003", "004", "012", "013"], 5: ["002", "003", "012"], 9: ["002"],
+        11: ["002"]},
+    13: {3: ["002", "003", "012"], 4: ["002", "003", "004", "012", "112"]},
+}
+
+
+@pytest.mark.parametrize("D", sorted(_CENSUS))
+def test_local_superlattices_census(D):
+    """Section 6.2: every occurring type, including exponents up to 9 at sqrt2."""
+    from zphi.ring import get_ring
+    from zphi.lattices import prime_list
+    R = get_ring(D)
+    for q, types in _CENSUS[D].items():
+        r = q if all(q % k for k in range(2, q)) else int(round(q ** 0.5))
+        p = next(t for t in prime_list(R(r)) if abs(int(t.norm())) == q)
+        for s in types:
+            e = tuple(int(c) for c in s)
+            Ns = local_superlattices(e, p)
+            D3 = [[p ** e[i] if i == j else R.zero for j in range(3)] for i in range(3)]
+            keys = set()
+            for N in Ns:
+                assert all(x.is_integral() for row in N for x in row)
+                T = mat_mul(inv(N), D3)
+                assert all(x.is_integral() for row in T for x in row)
+                keys.add(_canon(N))
+            assert len(keys) == len(Ns), ("duplicates", D, q, e)
+            assert len(Ns) == local_count_formula(e, p), (D, q, e, len(Ns))
+
+
 def test_birkhoff_count_vs_brute_force():
     """Number of subgroups of Z/p^a x Z/p^b x Z/p^c, by brute force."""
-    cases = [(2, lam) for lam in [(1,), (1, 1), (2, 1), (1, 1, 1), (2, 2), (2, 1, 1)]] \
-        + [(3, lam) for lam in [(1,), (1, 1), (2, 1), (1, 1, 1)]]
+    cases = [(2, lam) for lam in [(1,), (1, 1), (2, 1), (1, 1, 1), (2, 2), (2, 1, 1),
+                                  (3,), (3, 1), (3, 2), (3, 1, 1)]] \
+        + [(3, lam) for lam in [(1,), (1, 1), (2, 1), (1, 1, 1), (3,), (3, 1)]]
     for p, lam in cases:
         if True:
             mods = [p ** x for x in lam]

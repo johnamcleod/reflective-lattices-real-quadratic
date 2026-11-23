@@ -1,0 +1,133 @@
+'ReflectZphi.Results.all_reflective' depends on axioms: [propext, Classical.choice, Quot.sound]
+#audit_axioms ReflectZphi.Data: 763689 theorems, axioms used: [Quot.sound, Classical.choice, propext]
+#audit_axioms ReflectZphi.Results: 2 theorems, axioms used: [Quot.sound, Classical.choice, propext]
+/Users/jam/dev/sandbox/reflect-zphi/tools/memcap.sh:10: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+footprint_mb:4: nice(5) failed: operation not permitted
+footprint_mb:5: nice(5) failed: operation not permitted
+memcap: peak footprint 1174 MB
+      190.53 real        21.21 user        41.29 sys
+          3606724608  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              741049  page reclaims
+             1561121  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                 442  signals received
+               20620  voluntary context switches
+             1635308  involuntary context switches
+           389929109  instructions retired
+           325180795  cycles elapsed
+             1753520  peak memory footprint

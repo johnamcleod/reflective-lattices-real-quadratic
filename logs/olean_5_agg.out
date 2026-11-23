@@ -1,0 +1,2 @@
+{"aggregate": {"mod": "ReflectZphi/Data/Cert5.lean", "rc": 0, "user": 8.72, "rss_mb": 3154, "fp_mb": 1042, "errors": []}}
+{"results_rc": 0, "report": ["'ReflectZphi.Results.all_reflective' depends on axioms: [propext, Classical.choice, Quot.sound]", "#audit_axioms ReflectZphi.Data: 763689 theorems, axioms used: [Quot.sound, Classical.choice, propext]", "#audit_axioms ReflectZphi.Results: 2 theorems, axioms used: [Quot.sound, Classical.choice, propext]"]}

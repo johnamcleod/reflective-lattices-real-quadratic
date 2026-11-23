@@ -175,6 +175,19 @@ tools/build_alvin.sh                                                   # AlVin +
 
 The long runs were made under [`tools/memcap.sh`](tools/memcap.sh), a memory cap for macOS. The usage of each driver is in its docstring.
 
+The runs were made on macOS (Apple silicon, Homebrew). On Linux the following should work (Debian/Ubuntu package names; this recipe has not been tested):
+
+```sh
+sudo apt install pari-gp libpari-dev libgmp-dev zsh cmake libigraph-dev libmpfr-dev   # PARI 2.17 or later is needed;
+                                                                                     # build it from source if the distribution's is older
+python3.10 -m venv .venv && .venv/bin/pip install -r requirements.txt
+.venv/bin/pytest
+curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh  # Lean via elan; lean/lean-toolchain pins v4.35.0
+tools/build_alvin.sh                                                                 # uses the system compiler off macOS
+```
+
+`tools/memcap.sh` runs under zsh on Linux too: without macOS's `footprint` it measures the resident set size. Alternatively, cap memory with `systemd-run --user --scope -p MemoryMax=4G <command>`.
+
 Compile `ReflectZphi/Results.lean` with `tools/check_split.py --olean`, not with `lake build`. Lake would recompile every certificate module, with no limit on parallel jobs or memory: more than 25 CPU-hours. The script compiles one module per `lean` process under a memory cap, and reuses the compiled parts whose source is unchanged.
 
 The blueprint is built with [leanblueprint](https://github.com/PatrickMassot/leanblueprint) (plasTeX):

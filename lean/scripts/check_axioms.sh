@@ -7,6 +7,7 @@ cd "$(dirname "$0")/.." || exit 1
 out=$(lake env lean scripts/CheckAxioms.lean 2>&1) || { echo "$out"; exit 1; }
 echo "$out"
 bad=$(echo "$out" | tr ',[]' '\n\n\n' | sed 's/^ *//' | grep -v "^$" | grep -v "depends on axioms:" \
-      | grep -vx "propext\|Classical.choice\|Quot.sound" | grep -v "does not depend on any axioms")
+      | grep -vx "propext\|Classical.choice\|Quot.sound" | grep -v "does not depend on any axioms" \
+      | grep -v -E "^#audit_axioms .*: [0-9]+ theorems$|^axioms used: ?$")
 if [ -n "$bad" ]; then echo "UNEXPECTED AXIOMS:"; echo "$bad"; exit 1; fi
 echo "axioms OK"

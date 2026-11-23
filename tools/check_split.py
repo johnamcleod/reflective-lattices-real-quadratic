@@ -2,7 +2,7 @@
 
 A class C### consists of C###/Base.lean, C###/P###.lean (imports Base) and C###.lean (the
 main module; imports Base and all parts, proves `reflective`). Each module is compiled by
-its own `lean` process (under tools/memcap.sh, Lean's -M, -j threads, nice 19, caffeinate),
+its own `lean` process (under tools/memcap.sh, Lean's -M, -j threads, nice 19, caffeinate on macOS),
 writing its .olean at its module path in lake's build directory (lean resolves the
 ReflectZphi package to one directory). Lake has no trace for these files and would rebuild
 them on a later `lake build` of the certificate modules; no other lake target imports them. The parts of one class run up to
@@ -43,6 +43,27 @@ LEAN_DIR = os.path.join(ROOT, "lean")
 BUILD = os.path.join(LEAN_DIR, ".lake", "build", "lib", "lean")
 
 
+def wrap():
+    """Command prefix: timing (BSD `time -l` on macOS, GNU `time -v` on Linux), caffeinate on
+    macOS only, nice 19."""
+    if sys.platform == "darwin":
+        return ["/usr/bin/time", "-l", "caffeinate", "-i", "nice", "-n", "19"]
+    if os.path.exists("/usr/bin/time"):
+        return ["/usr/bin/time", "-v", "nice", "-n", "19"]
+    return ["nice", "-n", "19"]
+
+
+def parse_time(out):
+    """(user seconds, max RSS in MB) from the output of BSD or GNU /usr/bin/time."""
+    user = re.search(r"([\d.]+) user", out) or re.search(r"User time \(seconds\): ([\d.]+)", out)
+    rss = re.search(r"(\d+)\s+maximum resident set size", out)            # bytes (BSD)
+    rss_mb = int(rss.group(1)) // 2**20 if rss else None
+    if rss is None:
+        k = re.search(r"Maximum resident set size \(kbytes\): (\d+)", out)  # GNU
+        rss_mb = int(k.group(1)) // 1024 if k else None
+    return (float(user.group(1)) if user else None), rss_mb
+
+
 def lean_env():
     out = subprocess.run(["lake", "env", "printenv", "LEAN_PATH"], cwd=LEAN_DIR,
                          capture_output=True, text=True, check=True).stdout.strip()
@@ -75,8 +96,7 @@ def run_module(lean, env, src, olean, mem, threads, append_axioms=False, tmpdir=
         ns = re.search(r"^namespace (\S+)", text, re.M).group(1)
         path = os.path.join(tmpdir, os.path.basename(src))
         open(path, "w").write(text.replace(f"end {ns}\n", f"#print axioms reflective\nend {ns}\n"))
-    cmd = ["/usr/bin/time", "-l", "caffeinate", "-i", "nice", "-n", "19",
-           os.path.join(ROOT, "tools/memcap.sh"), str(mem),
+    cmd = wrap() + [os.path.join(ROOT, "tools/memcap.sh"), str(mem),
            lean, f"-M{mem + 3000}", f"-j{threads}"]  # -M counts mapped oleans (~3 GB); memcap is the real cap
     if olean:
         os.makedirs(os.path.dirname(olean), exist_ok=True)
@@ -84,14 +104,12 @@ def run_module(lean, env, src, olean, mem, threads, append_axioms=False, tmpdir=
     cmd += [path]
     p = subprocess.run(cmd, cwd=LEAN_DIR, env=env, capture_output=True, text=True)
     out = p.stdout + p.stderr
-    user = re.search(r"([\d.]+) user", out)
-    rss = re.search(r"(\d+)\s+maximum resident set size", out)
+    user, rss_mb = parse_time(out)
     fp = re.search(r"memcap: peak footprint (\d+) MB", out)
     errors = [l for l in out.splitlines() if ": error" in l or l.startswith("memcap: footprint")]
     ax = re.search(r"depends on axioms: \[([^\]]*)\]", out)
     rec = dict(mod=os.path.relpath(src, LEAN_DIR), rc=p.returncode,
-               user=float(user.group(1)) if user else None,
-               rss_mb=int(rss.group(1)) // 2**20 if rss else None,
+               user=user, rss_mb=rss_mb,
                fp_mb=int(fp.group(1)) if fp else None, errors=errors[:5])
     if append_axioms:
         rec["axioms"] = [a.strip() for a in ax.group(1).split(",")] if ax else None
@@ -197,8 +215,7 @@ def main():
         print(json.dumps(dict(aggregate=agg)), flush=True)
         if agg["rc"] != 0 or agg["errors"]:
             return
-        cmd = ["/usr/bin/time", "-l", "caffeinate", "-i", "nice", "-n", "19",
-               os.path.join(ROOT, "tools/memcap.sh"), str(mem), lean, f"-M{mem + 3000}",
+        cmd = wrap() + [os.path.join(ROOT, "tools/memcap.sh"), str(mem), lean, f"-M{mem + 3000}",
                f"-j{threads}", os.path.join(LEAN_DIR, "ReflectZphi/Results.lean")]
         p = subprocess.run(cmd, cwd=LEAN_DIR, env=env, capture_output=True, text=True)
         out = p.stdout + p.stderr

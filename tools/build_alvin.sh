@@ -29,19 +29,22 @@ clone AlVin   https://github.com/rgugliel/AlVin.git   "$ALVIN_COMMIT"
 git -C "$SRC/AlVin" checkout -q -- .
 python3 "$HERE/patches/port_alvin.py" "$SRC/AlVin"
 
-# Apple CLT clang on this SDK cannot find libc++ headers; use Homebrew LLVM.
-LLVM=/opt/homebrew/opt/llvm/bin
-CMAKE_ARGS=(-DCMAKE_BUILD_TYPE=Release
-            -DCMAKE_CXX_FLAGS=-I/opt/homebrew/include
-            -DCMAKE_EXE_LINKER_FLAGS=-L/opt/homebrew/lib)
+CMAKE_ARGS=(-DCMAKE_BUILD_TYPE=Release)
+if [ "$(uname)" = Darwin ]; then
+  # Apple CLT clang on this SDK cannot find libc++ headers; use Homebrew LLVM.
+  LLVM=/opt/homebrew/opt/llvm/bin
+  export CXX=$LLVM/clang++ CC=$LLVM/clang
+  CMAKE_ARGS+=(-DCMAKE_CXX_FLAGS=-I/opt/homebrew/include
+               -DCMAKE_EXE_LINKER_FLAGS=-L/opt/homebrew/lib)
+fi   # elsewhere (Linux): the system compiler, with igraph, gmp and mpfr from the package manager
 # AlVin: OpenMP disabled -- openblas (via igraph) loads a second libomp and aborts.
 # This only makes AlVin single-threaded; results are unaffected.
 for name in CoxIter AlVin; do
   extra=()
   [ "$name" = AlVin ] && extra=(-DCMAKE_DISABLE_FIND_PACKAGE_OpenMP=TRUE)
   rm -rf "$SRC/$name/build"; mkdir -p "$SRC/$name/build/output"
-  (cd "$SRC/$name/build" && CXX=$LLVM/clang++ CC=$LLVM/clang \
-     cmake "${CMAKE_ARGS[@]}" ${extra[@]+"${extra[@]}"} .. >/dev/null && make -j8 >/dev/null)
+  (cd "$SRC/$name/build" && \
+     cmake "${CMAKE_ARGS[@]}" ${extra[@]+"${extra[@]}"} .. >/dev/null && make -j4 >/dev/null)
 done
 echo "AlVin   @ $(cat "$HERE/AlVin.commit")"
 echo "CoxIter @ $(cat "$HERE/CoxIter.commit")"
