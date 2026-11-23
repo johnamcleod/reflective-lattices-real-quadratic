@@ -1,0 +1,624 @@
+{"cls": 0, "sides": 3, "chain": 3, "cells": 1, "nodes": 841, "max_nodes": 841, "subtrees": 5, "secs": 0.2, "bytes": 5999}
+{"cls": 1, "sides": 3, "chain": 3, "cells": 1, "nodes": 605, "max_nodes": 605, "subtrees": 5, "secs": 0.1, "bytes": 5637}
+{"cls": 2, "sides": 3, "chain": 3, "cells": 1, "nodes": 155, "max_nodes": 155, "subtrees": 1, "secs": 0.1, "bytes": 5277}
+{"cls": 3, "sides": 3, "chain": 3, "cells": 1, "nodes": 2219, "max_nodes": 2219, "subtrees": 28, "secs": 0.2, "bytes": 8386}
+{"cls": 4, "sides": 4, "chain": 4, "cells": 1, "nodes": 541, "max_nodes": 541, "subtrees": 5, "secs": 0.2, "bytes": 6103}
+{"cls": 5, "sides": 4, "chain": 4, "cells": 1, "nodes": 1947, "max_nodes": 1947, "subtrees": 28, "secs": 0.2, "bytes": 8473}
+{"cls": 6, "sides": 4, "chain": 4, "cells": 1, "nodes": 2723, "max_nodes": 2723, "subtrees": 40, "secs": 0.2, "bytes": 9874}
+{"cls": 7, "sides": 4, "chain": 4, "cells": 1, "nodes": 2879, "max_nodes": 2879, "subtrees": 50, "secs": 0.2, "bytes": 10897}
+{"cls": 8, "sides": 4, "chain": 4, "cells": 1, "nodes": 1541, "max_nodes": 1541, "subtrees": 22, "secs": 0.2, "bytes": 7727}
+{"cls": 9, "sides": 4, "chain": 5, "cells": 4, "nodes": 43890, "max_nodes": 24545, "subtrees": 877, "secs": 2.6, "bytes": 116253}
+{"cls": 10, "sides": 4, "chain": 5, "cells": 4, "nodes": 37202, "max_nodes": 20169, "subtrees": 639, "secs": 2.2, "bytes": 86740}
+{"cls": 11, "sides": 4, "chain": 4, "cells": 1, "nodes": 469, "max_nodes": 469, "subtrees": 5, "secs": 0.2, "bytes": 5835}
+{"cls": 12, "sides": 4, "chain": 4, "cells": 1, "nodes": 2211, "max_nodes": 2211, "subtrees": 28, "secs": 0.2, "bytes": 8395}
+{"cls": 13, "sides": 4, "chain": 4, "cells": 1, "nodes": 2149, "max_nodes": 2149, "subtrees": 26, "secs": 0.2, "bytes": 8145}
+{"cls": 14, "sides": 4, "chain": 4, "cells": 1, "nodes": 1507, "max_nodes": 1507, "subtrees": 30, "secs": 0.2, "bytes": 8941}
+{"cls": 15, "sides": 4, "chain": 4, "cells": 3, "nodes": 6117, "max_nodes": 2691, "subtrees": 82, "secs": 0.6, "bytes": 18126}
+{"cls": 16, "sides": 4, "chain": 4, "cells": 3, "nodes": 22055, "max_nodes": 10283, "subtrees": 176, "secs": 1.3, "bytes": 29606}
+{"cls": 17, "sides": 4, "chain": 4, "cells": 1, "nodes": 1767, "max_nodes": 1767, "subtrees": 22, "secs": 0.2, "bytes": 7813}
+{"cls": 18, "sides": 4, "chain": 5, "cells": 4, "nodes": 17748, "max_nodes": 5729, "subtrees": 198, "secs": 2.4, "bytes": 34334}
+{"cls": 19, "sides": 4, "chain": 4, "cells": 3, "nodes": 20705, "max_nodes": 13055, "subtrees": 188, "secs": 1.4, "bytes": 30875}
+{"cls": 20, "sides": 4, "chain": 5, "cells": 4, "nodes": 12034, "max_nodes": 3619, "subtrees": 134, "secs": 1.6, "bytes": 27603}
+{"cls": 21, "sides": 4, "chain": 4, "cells": 3, "nodes": 5115, "max_nodes": 2729, "subtrees": 58, "secs": 0.7, "bytes": 16612}
+{"cls": 22, "sides": 4, "chain": 7, "cells": 6, "nodes": 54508, "max_nodes": 12399, "subtrees": 851, "secs": 5.6, "bytes": 116858}
+{"cls": 23, "sides": 5, "chain": 5, "cells": 1, "nodes": 1055, "max_nodes": 1055, "subtrees": 5, "secs": 0.2, "bytes": 6056}
+{"cls": 24, "sides": 5, "chain": 5, "cells": 2, "nodes": 3730, "max_nodes": 2715, "subtrees": 48, "secs": 0.5, "bytes": 13349}
+{"cls": 25, "sides": 5, "chain": 5, "cells": 4, "nodes": 30356, "max_nodes": 10549, "subtrees": 298, "secs": 2.2, "bytes": 46022}
+{"cls": 26, "sides": 5, "chain": 6, "cells": 5, "nodes": 41801, "max_nodes": 12379, "subtrees": 403, "secs": 3.2, "bytes": 60125}
+{"cls": 27, "sides": 5, "chain": 7, "cells": 6, "nodes": 87092, "max_nodes": 24329, "subtrees": 1079, "secs": 5.3, "bytes": 143144}
+{"cls": 28, "sides": 5, "chain": 7, "cells": 6, "nodes": 72206, "max_nodes": 22003, "subtrees": 819, "secs": 5.4, "bytes": 110603}
+{"cls": 29, "sides": 5, "chain": 5, "cells": 1, "nodes": 2159, "max_nodes": 2159, "subtrees": 28, "secs": 0.2, "bytes": 8577}
+{"cls": 30, "sides": 5, "chain": 5, "cells": 2, "nodes": 5946, "max_nodes": 2979, "subtrees": 80, "secs": 0.5, "bytes": 16355}
+{"cls": 31, "sides": 5, "chain": 6, "cells": 5, "nodes": 68373, "max_nodes": 22873, "subtrees": 1160, "secs": 4.2, "bytes": 152064}
+{"cls": 32, "sides": 5, "chain": 5, "cells": 4, "nodes": 16510, "max_nodes": 6943, "subtrees": 241, "secs": 1.4, "bytes": 39836}
+{"cls": 33, "sides": 5, "chain": 6, "cells": 5, "nodes": 52725, "max_nodes": 16063, "subtrees": 454, "secs": 3.2, "bytes": 67077}
+{"cls": 34, "sides": 5, "chain": 5, "cells": 3, "nodes": 9205, "max_nodes": 4429, "subtrees": 134, "secs": 0.9, "bytes": 25178}
+{"cls": 35, "sides": 5, "chain": 7, "cells": 6, "nodes": 73480, "max_nodes": 25747, "subtrees": 871, "secs": 5.2, "bytes": 118878}
+{"cls": 36, "sides": 5, "chain": 6, "cells": 5, "nodes": 21673, "max_nodes": 5547, "subtrees": 279, "secs": 3.1, "bytes": 47319}
+{"cls": 37, "sides": 5, "chain": 6, "cells": 5, "nodes": 20365, "max_nodes": 7127, "subtrees": 346, "secs": 2.6, "bytes": 54978}
+{"cls": 38, "sides": 6, "chain": 7, "cells": 6, "nodes": 15781, "max_nodes": 3419, "subtrees": 216, "secs": 2.5, "bytes": 40543}
+{"cls": 39, "sides": 6, "chain": 6, "cells": 5, "nodes": 25161, "max_nodes": 6083, "subtrees": 288, "secs": 2.2, "bytes": 46705}
+{"cls": 40, "sides": 6, "chain": 7, "cells": 5, "nodes": 14915, "max_nodes": 4273, "subtrees": 176, "secs": 2.3, "bytes": 33648}
+{"cls": 41, "sides": 6, "chain": 6, "cells": 5, "nodes": 38249, "max_nodes": 12417, "subtrees": 353, "secs": 4.3, "bytes": 54743}
+{"cls": 42, "sides": 6, "chain": 7, "cells": 6, "nodes": 15016, "max_nodes": 5215, "subtrees": 182, "secs": 3.6, "bytes": 37507}
+{"cls": 43, "sides": 6, "chain": 7, "cells": 6, "nodes": 92518, "max_nodes": 39313, "subtrees": 1736, "secs": 9.7, "bytes": 225602}
+{"cls": 44, "sides": 6, "chain": 7, "cells": 6, "nodes": 131184, "max_nodes": 42231, "subtrees": 3180, "secs": 6.6, "bytes": 399072}
+{"cls": 45, "sides": 6, "chain": 9, "cells": 8, "nodes": 28827, "max_nodes": 7137, "subtrees": 330, "secs": 9.7, "bytes": 58432}
+{"cls": 46, "sides": 6, "chain": 9, "cells": 8, "nodes": 40621, "max_nodes": 12735, "subtrees": 472, "secs": 11.6, "bytes": 75350}
+{"cls": 47, "sides": 6, "chain": 7, "cells": 6, "nodes": 146619, "max_nodes": 54063, "subtrees": 3965, "secs": 6.6, "bytes": 496525}
+{"cls": 48, "sides": 6, "chain": 7, "cells": 6, "nodes": 59473, "max_nodes": 20839, "subtrees": 944, "secs": 3.9, "bytes": 127345}
+{"cls": 49, "sides": 6, "chain": 9, "cells": 8, "nodes": 202634, "max_nodes": 72317, "subtrees": 5708, "secs": 7.9, "bytes": 714864}
+{"cls": 50, "sides": 6, "chain": 6, "cells": 4, "nodes": 10612, "max_nodes": 3113, "subtrees": 146, "secs": 1.2, "bytes": 29161}
+{"cls": 51, "sides": 6, "chain": 6, "cells": 3, "nodes": 6943, "max_nodes": 2743, "subtrees": 96, "secs": 0.8, "bytes": 20998}
+{"cls": 52, "sides": 6, "chain": 7, "cells": 5, "nodes": 20417, "max_nodes": 6771, "subtrees": 262, "secs": 2.1, "bytes": 44783}
+{"cls": 53, "sides": 6, "chain": 6, "cells": 5, "nodes": 15845, "max_nodes": 5229, "subtrees": 179, "secs": 1.7, "bytes": 35469}
+{"cls": 54, "sides": 6, "chain": 7, "cells": 5, "nodes": 47573, "max_nodes": 20527, "subtrees": 863, "secs": 3.1, "bytes": 117049}
+{"cls": 55, "sides": 6, "chain": 7, "cells": 6, "nodes": 88668, "max_nodes": 32321, "subtrees": 2391, "secs": 4.1, "bytes": 304162}
+{"cls": 56, "sides": 6, "chain": 9, "cells": 8, "nodes": 60034, "max_nodes": 20889, "subtrees": 1020, "secs": 5.4, "bytes": 140356}
+{"cls": 57, "sides": 6, "chain": 6, "cells": 5, "nodes": 370592, "max_nodes": 150001, "subtrees": 23833, "secs": 8.3, "bytes": 2991779}
+{"cls": 58, "sides": 6, "chain": 8, "cells": 7, "nodes": 82577, "max_nodes": 24887, "subtrees": 1261, "secs": 5.6, "bytes": 167948}
+{"cls": 59, "sides": 6, "chain": 9, "cells": 8, "nodes": 210528, "max_nodes": 70677, "subtrees": 5754, "secs": 9.0, "bytes": 720964}
+{"cls": 60, "sides": 6, "chain": 9, "cells": 8, "nodes": 101378, "max_nodes": 31385, "subtrees": 1499, "secs": 6.7, "bytes": 199636}
+{"cls": 61, "sides": 6, "chain": 7, "cells": 6, "nodes": 434708, "max_nodes": 150001, "subtrees": 48746, "secs": 10.7, "bytes": 6180835}
+{"cls": 62, "sides": 7, "chain": 8, "cells": 7, "nodes": 27433, "max_nodes": 9897, "subtrees": 258, "secs": 2.7, "bytes": 46856}
+{"cls": 63, "sides": 7, "chain": 9, "cells": 7, "nodes": 122697, "max_nodes": 35905, "subtrees": 2588, "secs": 5.8, "bytes": 328837}
+{"cls": 64, "sides": 7, "chain": 8, "cells": 7, "nodes": 395117, "max_nodes": 150001, "subtrees": 16775, "secs": 9.1, "bytes": 2089466}
+{"cls": 65, "sides": 7, "chain": 8, "cells": 7, "nodes": 418657, "max_nodes": 150001, "subtrees": 18717, "secs": 9.4, "bytes": 2335495}
+{"cls": 66, "sides": 7, "chain": 8, "cells": 7, "nodes": 60979, "max_nodes": 13135, "subtrees": 500, "secs": 3.9, "bytes": 76594}
+{"cls": 67, "sides": 7, "chain": 8, "cells": 7, "nodes": 122177, "max_nodes": 29339, "subtrees": 2118, "secs": 6.1, "bytes": 273442}
+{"cls": 68, "sides": 8, "chain": 9, "cells": 8, "nodes": 42214, "max_nodes": 14909, "subtrees": 465, "secs": 3.6, "bytes": 74373}
+{"cls": 69, "sides": 8, "chain": 9, "cells": 8, "nodes": 558225, "max_nodes": 150001, "subtrees": 44725, "secs": 14.1, "bytes": 5637624}
+{"cls": 70, "sides": 8, "chain": 8, "cells": 6, "nodes": 43528, "max_nodes": 11129, "subtrees": 441, "secs": 2.8, "bytes": 68056}
+{"cls": 71, "sides": 8, "chain": 8, "cells": 7, "nodes": 30564, "max_nodes": 9331, "subtrees": 320, "secs": 2.8, "bytes": 54528}
+{"cls": 72, "sides": 8, "chain": 10, "cells": 8, "nodes": 76976, "max_nodes": 18097, "subtrees": 1419, "secs": 5.8, "bytes": 190558}
+{"cls": 73, "sides": 8, "chain": 9, "cells": 7, "nodes": 103333, "max_nodes": 25167, "subtrees": 1790, "secs": 7.1, "bytes": 231573}
+{"cls": 74, "sides": 8, "chain": 13, "cells": 12, "nodes": 297463, "max_nodes": 61345, "subtrees": 8271, "secs": 14.2, "bytes": 1046093}
+{"cls": 75, "sides": 8, "chain": 12, "cells": 11, "nodes": 366059, "max_nodes": 82053, "subtrees": 8967, "secs": 19.4, "bytes": 1118986}
+{"cls": 76, "sides": 8, "chain": 10, "cells": 9, "nodes": 100787, "max_nodes": 26095, "subtrees": 1391, "secs": 5.3, "bytes": 186626}
+{"cls": 77, "sides": 8, "chain": 8, "cells": 7, "nodes": 909789, "max_nodes": 150001, "subtrees": 746579, "secs": 120.4, "bytes": 97230563}
+{"cls": 78, "sides": 8, "chain": 9, "cells": 8, "nodes": 108838, "max_nodes": 35933, "subtrees": 1998, "secs": 5.8, "bytes": 260022}
+{"cls": 79, "sides": 8, "chain": 10, "cells": 9, "nodes": 306375, "max_nodes": 83333, "subtrees": 7511, "secs": 10.8, "bytes": 941101}
+{"cls": 80, "sides": 8, "chain": 12, "cells": 11, "nodes": 322927, "max_nodes": 65899, "subtrees": 8316, "secs": 13.0, "bytes": 1046160}
+{"cls": 81, "sides": 8, "chain": 9, "cells": 8, "nodes": 113506, "max_nodes": 36419, "subtrees": 2631, "secs": 6.6, "bytes": 338597}
+{"cls": 82, "sides": 8, "chain": 10, "cells": 9, "nodes": 27741, "max_nodes": 6225, "subtrees": 323, "secs": 3.6, "bytes": 60514}
+{"cls": 83, "sides": 8, "chain": 11, "cells": 10, "nodes": 310324, "max_nodes": 90123, "subtrees": 7986, "secs": 12.5, "bytes": 1000387}
+{"cls": 84, "sides": 8, "chain": 11, "cells": 10, "nodes": 521396, "max_nodes": 150001, "subtrees": 20211, "secs": 13.3, "bytes": 2525291}
+{"cls": 85, "sides": 8, "chain": 12, "cells": 11, "nodes": 67809, "max_nodes": 9703, "subtrees": 667, "secs": 6.4, "bytes": 105081}
+{"cls": 86, "sides": 8, "chain": 9, "cells": 8, "nodes": 311550, "max_nodes": 99425, "subtrees": 7865, "secs": 11.2, "bytes": 983151}
+{"cls": 87, "sides": 8, "chain": 10, "cells": 9, "nodes": 435701, "max_nodes": 150001, "subtrees": 21095, "secs": 15.8, "bytes": 2638296}
+{"cls": 88, "sides": 8, "chain": 9, "cells": 8, "nodes": 448224, "max_nodes": 150001, "subtrees": 15075, "secs": 12.8, "bytes": 1877787}
+{"cls": 89, "sides": 8, "chain": 9, "cells": 8, "nodes": 411509, "max_nodes": 150001, "subtrees": 22222, "secs": 9.7, "bytes": 2784652}
+{"cls": 90, "sides": 8, "chain": 10, "cells": 9, "nodes": 475277, "max_nodes": 150001, "subtrees": 47386, "secs": 15.0, "bytes": 6002595}
+{"cls": 91, "sides": 8, "chain": 10, "cells": 9, "nodes": 410267, "max_nodes": 150001, "subtrees": 33607, "secs": 13.4, "bytes": 4245511}
+{"cls": 92, "sides": 9, "chain": 11, "cells": 10, "nodes": 195690, "max_nodes": 46837, "subtrees": 4673, "secs": 12.4, "bytes": 588727}
+{"cls": 93, "sides": 9, "chain": 11, "cells": 10, "nodes": 193888, "max_nodes": 37041, "subtrees": 4100, "secs": 15.7, "bytes": 522466}
+{"cls": 94, "sides": 10, "chain": 11, "cells": 10, "nodes": 89283, "max_nodes": 20005, "subtrees": 1049, "secs": 6.3, "bytes": 147986}
+{"cls": 95, "sides": 10, "chain": 10, "cells": 9, "nodes": 340487, "max_nodes": 76917, "subtrees": 8343, "secs": 11.7, "bytes": 1035654}
+{"cls": 96, "sides": 10, "chain": 11, "cells": 10, "nodes": 917912, "max_nodes": 150001, "subtrees": 308236, "secs": 42.3, "bytes": 39658906}
+{"cls": 97, "sides": 10, "chain": 13, "cells": 12, "nodes": 172547, "max_nodes": 54659, "subtrees": 3328, "secs": 9.2, "bytes": 429903}
+{"cls": 98, "sides": 10, "chain": 11, "cells": 10, "nodes": 126006, "max_nodes": 34883, "subtrees": 2715, "secs": 7.4, "bytes": 351384}
+{"cls": 99, "error": "RuntimeError('6 cell(s) above the node cap 150000')"}
+{"cls": 100, "sides": 10, "chain": 13, "cells": 11, "nodes": 415089, "max_nodes": 130263, "subtrees": 9026, "secs": 37.8, "bytes": 1133569}
+{"cls": 101, "error": "RuntimeError('6 cell(s) above the node cap 150000')"}
+{"cls": 102, "sides": 10, "chain": 11, "cells": 10, "nodes": 207579, "max_nodes": 57949, "subtrees": 5262, "secs": 32.1, "bytes": 661061}
+{"cls": 103, "error": "RuntimeError('5 cell(s) above the node cap 150000')"}
+{"cls": 104, "sides": 10, "chain": 14, "cells": 13, "nodes": 218439, "max_nodes": 41587, "subtrees": 4415, "secs": 77.0, "bytes": 563774}
+{"cls": 105, "sides": 10, "chain": 15, "cells": 14, "nodes": 149944, "max_nodes": 30721, "subtrees": 2765, "secs": 51.2, "bytes": 366322}
+{"cls": 106, "error": "RuntimeError('2 cell(s) above the node cap 150000')"}
+{"cls": 107, "error": "RuntimeError('7 cell(s) above the node cap 150000')"}
+{"cls": 108, "error": "RuntimeError('5 cell(s) above the node cap 150000')"}
+{"cls": 109, "error": "RuntimeError('5 cell(s) above the node cap 150000')"}
+{"cls": 110, "error": "RuntimeError('6 cell(s) above the node cap 150000')"}
+{"cls": 111, "error": "RuntimeError('6 cell(s) above the node cap 150000')"}
+{"cls": 112, "error": "RuntimeError('1 cell(s) above the node cap 150000')"}
+{"cls": 113, "error": "RuntimeError('3 cell(s) above the node cap 150000')"}
+{"cls": 114, "sides": 12, "chain": 19, "cells": 18, "nodes": 555224, "max_nodes": 60255, "subtrees": 13257, "secs": 41.3, "bytes": 1670271}
+{"cls": 115, "error": "RuntimeError('9 cell(s) above the node cap 150000')"}
+{"cls": 116, "error": "RuntimeError('6 cell(s) above the node cap 150000')"}
+{"cls": 117, "error": "RuntimeError('3 cell(s) above the node cap 150000')"}
+{"cls": 118, "error": "RuntimeError('6 cell(s) above the node cap 150000')"}
+{"cls": 119, "error": "RuntimeError('1 cell(s) above the node cap 150000')"}
+{"cls": 120, "sides": 12, "chain": 15, "cells": 14, "nodes": 274138, "max_nodes": 38871, "subtrees": 5732, "secs": 16.3, "bytes": 732898}
+{"cls": 121, "error": "RuntimeError('2 cell(s) above the node cap 150000')"}
+{"cls": 122, "error": "RuntimeError('5 cell(s) above the node cap 150000')"}
+{"cls": 123, "error": "RuntimeError('5 cell(s) above the node cap 150000')"}
+{"cls": 124, "error": "RuntimeError('5 cell(s) above the node cap 150000')"}
+{"cls": 125, "sides": 13, "chain": 14, "cells": 13, "nodes": 264368, "max_nodes": 50173, "subtrees": 5707, "secs": 12.2, "bytes": 720706}
+{"cls": 126, "error": "RuntimeError('2 cell(s) above the node cap 150000')"}
+{"cls": 127, "sides": 14, "chain": 17, "cells": 16, "nodes": 385517, "max_nodes": 55235, "subtrees": 9255, "secs": 15.0, "bytes": 1168737}
+{"cls": 128, "error": "RuntimeError('8 cell(s) above the node cap 150000')"}
+{"cls": 129, "error": "RuntimeError('8 cell(s) above the node cap 150000')"}
+{"cls": 130, "error": "RuntimeError('7 cell(s) above the node cap 150000')"}
+{"cls": 131, "error": "RuntimeError('6 cell(s) above the node cap 150000')"}
+{"cls": 132, "error": "RuntimeError('10 cell(s) above the node cap 150000')"}
+{"cls": 133, "error": "RuntimeError('6 cell(s) above the node cap 150000')"}
+{"cls": 134, "sides": 16, "chain": 21, "cells": 20, "nodes": 581146, "max_nodes": 76923, "subtrees": 13912, "secs": 27.4, "bytes": 1764492}
+{"cls": 135, "error": "RuntimeError('9 cell(s) above the node cap 150000')"}
+{"cls": 136, "error": "RuntimeError('5 cell(s) above the node cap 150000')"}
+{"cls": 137, "error": "RuntimeError('16 cell(s) above the node cap 150000')"}
+{"cls": 138, "sides": 18, "chain": 27, "cells": 26, "nodes": 678943, "max_nodes": 65559, "subtrees": 17106, "secs": 29.8, "bytes": 2183776}
+{"cls": 139, "error": "RuntimeError('2 cell(s) above the node cap 150000')"}
+{"cls": 140, "error": "RuntimeError('5 cell(s) above the node cap 150000')"}
+{"cls": 141, "error": "RuntimeError('9 cell(s) above the node cap 150000')"}
+{"cls": 142, "error": "RuntimeError('9 cell(s) above the node cap 150000')"}
+{"cls": 143, "error": "RuntimeError('14 cell(s) above the node cap 150000')"}
+{"cls": 0, "sides": 3, "chain": 3, "cells": 1, "nodes": 841, "max_nodes": 841, "subtrees": 5, "secs": 0.2, "bytes": 5999}
+{"cls": 1, "sides": 3, "chain": 3, "cells": 1, "nodes": 605, "max_nodes": 605, "subtrees": 5, "secs": 0.2, "bytes": 5637}
+{"cls": 2, "sides": 3, "chain": 3, "cells": 1, "nodes": 155, "max_nodes": 155, "subtrees": 1, "secs": 0.1, "bytes": 5277}
+{"cls": 3, "sides": 3, "chain": 3, "cells": 1, "nodes": 2219, "max_nodes": 2219, "subtrees": 28, "secs": 0.2, "bytes": 8386}
+{"cls": 4, "sides": 4, "chain": 4, "cells": 1, "nodes": 541, "max_nodes": 541, "subtrees": 5, "secs": 0.2, "bytes": 6103}
+{"cls": 5, "sides": 4, "chain": 4, "cells": 1, "nodes": 1947, "max_nodes": 1947, "subtrees": 28, "secs": 0.2, "bytes": 8473}
+{"cls": 6, "sides": 4, "chain": 4, "cells": 1, "nodes": 2723, "max_nodes": 2723, "subtrees": 40, "secs": 0.2, "bytes": 9874}
+{"cls": 7, "sides": 4, "chain": 4, "cells": 1, "nodes": 2879, "max_nodes": 2879, "subtrees": 50, "secs": 0.2, "bytes": 10897}
+{"cls": 8, "sides": 4, "chain": 4, "cells": 1, "nodes": 1541, "max_nodes": 1541, "subtrees": 22, "secs": 0.2, "bytes": 7727}
+{"cls": 9, "sides": 4, "chain": 5, "cells": 4, "nodes": 43890, "max_nodes": 24545, "subtrees": 877, "secs": 2.8, "bytes": 116253}
+{"cls": 10, "sides": 4, "chain": 5, "cells": 4, "nodes": 37202, "max_nodes": 20169, "subtrees": 639, "secs": 2.0, "bytes": 86740}
+{"cls": 11, "sides": 4, "chain": 4, "cells": 1, "nodes": 469, "max_nodes": 469, "subtrees": 5, "secs": 0.2, "bytes": 5835}
+{"cls": 12, "sides": 4, "chain": 4, "cells": 1, "nodes": 2211, "max_nodes": 2211, "subtrees": 28, "secs": 0.2, "bytes": 8395}
+{"cls": 13, "sides": 4, "chain": 4, "cells": 1, "nodes": 2149, "max_nodes": 2149, "subtrees": 26, "secs": 0.2, "bytes": 8145}
+{"cls": 14, "sides": 4, "chain": 4, "cells": 1, "nodes": 1507, "max_nodes": 1507, "subtrees": 30, "secs": 0.4, "bytes": 8941}
+{"cls": 15, "sides": 4, "chain": 4, "cells": 3, "nodes": 6117, "max_nodes": 2691, "subtrees": 82, "secs": 0.7, "bytes": 18126}
+{"cls": 16, "sides": 4, "chain": 4, "cells": 3, "nodes": 22055, "max_nodes": 10283, "subtrees": 176, "secs": 1.5, "bytes": 29606}
+{"cls": 17, "sides": 4, "chain": 4, "cells": 1, "nodes": 1767, "max_nodes": 1767, "subtrees": 22, "secs": 0.2, "bytes": 7813}
+{"cls": 18, "sides": 4, "chain": 5, "cells": 4, "nodes": 17748, "max_nodes": 5729, "subtrees": 198, "secs": 2.6, "bytes": 34334}
+{"cls": 19, "sides": 4, "chain": 4, "cells": 3, "nodes": 20705, "max_nodes": 13055, "subtrees": 188, "secs": 1.5, "bytes": 30875}
+{"cls": 20, "sides": 4, "chain": 5, "cells": 4, "nodes": 12034, "max_nodes": 3619, "subtrees": 134, "secs": 1.6, "bytes": 27603}
+{"cls": 21, "sides": 4, "chain": 4, "cells": 3, "nodes": 5115, "max_nodes": 2729, "subtrees": 58, "secs": 0.6, "bytes": 16612}
+{"cls": 22, "sides": 4, "chain": 7, "cells": 6, "nodes": 54508, "max_nodes": 12399, "subtrees": 851, "secs": 6.3, "bytes": 116858}
+{"cls": 23, "sides": 5, "chain": 5, "cells": 1, "nodes": 1055, "max_nodes": 1055, "subtrees": 5, "secs": 0.2, "bytes": 6056}
+{"cls": 24, "sides": 5, "chain": 5, "cells": 2, "nodes": 3730, "max_nodes": 2715, "subtrees": 48, "secs": 0.6, "bytes": 13349}
+{"cls": 25, "sides": 5, "chain": 5, "cells": 4, "nodes": 30356, "max_nodes": 10549, "subtrees": 298, "secs": 2.5, "bytes": 46022}
+{"cls": 26, "sides": 5, "chain": 6, "cells": 5, "nodes": 41801, "max_nodes": 12379, "subtrees": 403, "secs": 3.3, "bytes": 60125}
+{"cls": 27, "sides": 5, "chain": 7, "cells": 6, "nodes": 87092, "max_nodes": 24329, "subtrees": 1079, "secs": 6.5, "bytes": 143144}
+{"cls": 28, "sides": 5, "chain": 7, "cells": 6, "nodes": 72206, "max_nodes": 22003, "subtrees": 819, "secs": 7.2, "bytes": 110603}
+{"cls": 29, "sides": 5, "chain": 5, "cells": 1, "nodes": 2159, "max_nodes": 2159, "subtrees": 28, "secs": 0.3, "bytes": 8577}
+{"cls": 30, "sides": 5, "chain": 5, "cells": 2, "nodes": 5946, "max_nodes": 2979, "subtrees": 80, "secs": 0.6, "bytes": 16355}
+{"cls": 31, "sides": 5, "chain": 6, "cells": 5, "nodes": 68373, "max_nodes": 22873, "subtrees": 1160, "secs": 5.0, "bytes": 152064}
+{"cls": 32, "sides": 5, "chain": 5, "cells": 4, "nodes": 16510, "max_nodes": 6943, "subtrees": 241, "secs": 1.8, "bytes": 39836}
+{"cls": 33, "sides": 5, "chain": 6, "cells": 5, "nodes": 52725, "max_nodes": 16063, "subtrees": 454, "secs": 4.2, "bytes": 67077}
+{"cls": 34, "sides": 5, "chain": 5, "cells": 3, "nodes": 9205, "max_nodes": 4429, "subtrees": 134, "secs": 1.2, "bytes": 25178}
+{"cls": 35, "sides": 5, "chain": 7, "cells": 6, "nodes": 73480, "max_nodes": 25747, "subtrees": 871, "secs": 5.7, "bytes": 118878}
+{"cls": 36, "sides": 5, "chain": 6, "cells": 5, "nodes": 21673, "max_nodes": 5547, "subtrees": 279, "secs": 2.7, "bytes": 47319}
+{"cls": 37, "sides": 5, "chain": 6, "cells": 5, "nodes": 20365, "max_nodes": 7127, "subtrees": 346, "secs": 2.5, "bytes": 54978}
+{"cls": 38, "sides": 6, "chain": 7, "cells": 6, "nodes": 15781, "max_nodes": 3419, "subtrees": 216, "secs": 3.1, "bytes": 40543}
+{"cls": 39, "sides": 6, "chain": 6, "cells": 5, "nodes": 25161, "max_nodes": 6083, "subtrees": 288, "secs": 2.7, "bytes": 46705}
+{"cls": 40, "sides": 6, "chain": 7, "cells": 5, "nodes": 14915, "max_nodes": 4273, "subtrees": 176, "secs": 3.2, "bytes": 33648}
+{"cls": 41, "sides": 6, "chain": 6, "cells": 5, "nodes": 38249, "max_nodes": 12417, "subtrees": 353, "secs": 4.0, "bytes": 54743}
+{"cls": 42, "sides": 6, "chain": 7, "cells": 6, "nodes": 15016, "max_nodes": 5215, "subtrees": 182, "secs": 3.3, "bytes": 37507}
+{"cls": 43, "sides": 6, "chain": 7, "cells": 6, "nodes": 92518, "max_nodes": 39313, "subtrees": 1736, "secs": 9.9, "bytes": 225602}
+{"cls": 44, "sides": 6, "chain": 7, "cells": 6, "nodes": 131184, "max_nodes": 42231, "subtrees": 3180, "secs": 5.3, "bytes": 399072}
+{"cls": 45, "sides": 6, "chain": 9, "cells": 8, "nodes": 28827, "max_nodes": 7137, "subtrees": 330, "secs": 4.6, "bytes": 58432}
+{"cls": 46, "sides": 6, "chain": 9, "cells": 8, "nodes": 40621, "max_nodes": 12735, "subtrees": 472, "secs": 9.6, "bytes": 75350}
+{"cls": 47, "sides": 6, "chain": 7, "cells": 6, "nodes": 146619, "max_nodes": 54063, "subtrees": 3965, "secs": 6.8, "bytes": 496525}
+{"cls": 48, "sides": 6, "chain": 7, "cells": 6, "nodes": 59473, "max_nodes": 20839, "subtrees": 944, "secs": 3.6, "bytes": 127345}
+{"cls": 49, "sides": 6, "chain": 9, "cells": 8, "nodes": 202634, "max_nodes": 72317, "subtrees": 5708, "secs": 9.5, "bytes": 714864}
+{"cls": 50, "sides": 6, "chain": 6, "cells": 4, "nodes": 10612, "max_nodes": 3113, "subtrees": 146, "secs": 1.3, "bytes": 29161}
+{"cls": 51, "sides": 6, "chain": 6, "cells": 3, "nodes": 6943, "max_nodes": 2743, "subtrees": 96, "secs": 0.9, "bytes": 20998}
+{"cls": 52, "sides": 6, "chain": 7, "cells": 5, "nodes": 20417, "max_nodes": 6771, "subtrees": 262, "secs": 3.2, "bytes": 44783}
+{"cls": 53, "sides": 6, "chain": 6, "cells": 5, "nodes": 15845, "max_nodes": 5229, "subtrees": 179, "secs": 1.9, "bytes": 35469}
+{"cls": 54, "sides": 6, "chain": 7, "cells": 5, "nodes": 47573, "max_nodes": 20527, "subtrees": 863, "secs": 3.6, "bytes": 117049}
+{"cls": 55, "sides": 6, "chain": 7, "cells": 6, "nodes": 88668, "max_nodes": 32321, "subtrees": 2391, "secs": 6.8, "bytes": 304162}
+{"cls": 56, "sides": 6, "chain": 9, "cells": 8, "nodes": 60034, "max_nodes": 20889, "subtrees": 1020, "secs": 5.0, "bytes": 140356}
+{"cls": 57, "error": "RuntimeError('2 cell(s) above the node cap 150000')"}
+{"cls": 58, "sides": 6, "chain": 8, "cells": 7, "nodes": 82577, "max_nodes": 24887, "subtrees": 1261, "secs": 7.3, "bytes": 167948}
+{"cls": 59, "sides": 6, "chain": 9, "cells": 8, "nodes": 210528, "max_nodes": 70677, "subtrees": 5754, "secs": 10.1, "bytes": 720964}
+{"cls": 60, "sides": 6, "chain": 9, "cells": 8, "nodes": 101378, "max_nodes": 31385, "subtrees": 1499, "secs": 8.6, "bytes": 199636}
+{"cls": 61, "error": "RuntimeError('2 cell(s) above the node cap 150000')"}
+{"cls": 62, "sides": 7, "chain": 8, "cells": 7, "nodes": 27433, "max_nodes": 9897, "subtrees": 258, "secs": 3.0, "bytes": 46856}
+{"cls": 63, "sides": 7, "chain": 9, "cells": 7, "nodes": 122697, "max_nodes": 35905, "subtrees": 2588, "secs": 5.9, "bytes": 328837}
+{"cls": 64, "error": "RuntimeError('1 cell(s) above the node cap 150000')"}
+{"cls": 65, "error": "RuntimeError('1 cell(s) above the node cap 150000')"}
+{"cls": 66, "sides": 7, "chain": 8, "cells": 7, "nodes": 60979, "max_nodes": 13135, "subtrees": 500, "secs": 4.0, "bytes": 76594}
+{"cls": 67, "sides": 7, "chain": 8, "cells": 7, "nodes": 122177, "max_nodes": 29339, "subtrees": 2118, "secs": 6.5, "bytes": 273442}
+{"cls": 68, "sides": 8, "chain": 9, "cells": 8, "nodes": 42214, "max_nodes": 14909, "subtrees": 465, "secs": 3.8, "bytes": 74373}
+{"cls": 69, "error": "RuntimeError('2 cell(s) above the node cap 150000')"}
+{"cls": 70, "sides": 8, "chain": 8, "cells": 6, "nodes": 43528, "max_nodes": 11129, "subtrees": 441, "secs": 3.2, "bytes": 68056}
+{"cls": 71, "sides": 8, "chain": 8, "cells": 7, "nodes": 30564, "max_nodes": 9331, "subtrees": 320, "secs": 3.2, "bytes": 54528}
+{"cls": 72, "sides": 8, "chain": 10, "cells": 8, "nodes": 76976, "max_nodes": 18097, "subtrees": 1419, "secs": 8.0, "bytes": 190558}
+{"cls": 73, "sides": 8, "chain": 9, "cells": 7, "nodes": 103333, "max_nodes": 25167, "subtrees": 1790, "secs": 7.7, "bytes": 231573}
+{"cls": 74, "sides": 8, "chain": 13, "cells": 12, "nodes": 297463, "max_nodes": 61345, "subtrees": 8271, "secs": 16.9, "bytes": 1046093}
+{"cls": 75, "sides": 8, "chain": 12, "cells": 11, "nodes": 366059, "max_nodes": 82053, "subtrees": 8967, "secs": 23.8, "bytes": 1118986}
+{"cls": 76, "sides": 8, "chain": 10, "cells": 9, "nodes": 100787, "max_nodes": 26095, "subtrees": 1391, "secs": 6.3, "bytes": 186626}
+{"cls": 77, "error": "RuntimeError('6 cell(s) above the node cap 150000')"}
+{"cls": 78, "sides": 8, "chain": 9, "cells": 8, "nodes": 108838, "max_nodes": 35933, "subtrees": 1998, "secs": 7.3, "bytes": 260022}
+{"cls": 79, "sides": 8, "chain": 10, "cells": 9, "nodes": 306375, "max_nodes": 83333, "subtrees": 7511, "secs": 12.5, "bytes": 941101}
+{"cls": 80, "sides": 8, "chain": 12, "cells": 11, "nodes": 322927, "max_nodes": 65899, "subtrees": 8316, "secs": 14.7, "bytes": 1046160}
+{"cls": 81, "sides": 8, "chain": 9, "cells": 8, "nodes": 113506, "max_nodes": 36419, "subtrees": 2631, "secs": 7.6, "bytes": 338597}
+{"cls": 82, "sides": 8, "chain": 10, "cells": 9, "nodes": 27741, "max_nodes": 6225, "subtrees": 323, "secs": 4.3, "bytes": 60514}
+{"cls": 83, "sides": 8, "chain": 11, "cells": 10, "nodes": 310324, "max_nodes": 90123, "subtrees": 7986, "secs": 16.4, "bytes": 1000387}
+{"cls": 84, "error": "RuntimeError('2 cell(s) above the node cap 150000')"}
+{"cls": 85, "sides": 8, "chain": 12, "cells": 11, "nodes": 67809, "max_nodes": 9703, "subtrees": 667, "secs": 7.2, "bytes": 105081}
+{"cls": 86, "sides": 8, "chain": 9, "cells": 8, "nodes": 311550, "max_nodes": 99425, "subtrees": 7865, "secs": 12.9, "bytes": 983151}
+{"cls": 87, "error": "RuntimeError('1 cell(s) above the node cap 150000')"}
+{"cls": 88, "error": "RuntimeError('1 cell(s) above the node cap 150000')"}
+{"cls": 89, "error": "RuntimeError('2 cell(s) above the node cap 150000')"}
+{"cls": 90, "error": "RuntimeError('2 cell(s) above the node cap 150000')"}
+{"cls": 91, "error": "RuntimeError('2 cell(s) above the node cap 150000')"}
+{"cls": 92, "sides": 9, "chain": 11, "cells": 10, "nodes": 195690, "max_nodes": 46837, "subtrees": 4673, "secs": 14.8, "bytes": 588727}
+{"cls": 93, "sides": 9, "chain": 11, "cells": 10, "nodes": 193888, "max_nodes": 37041, "subtrees": 4100, "secs": 18.6, "bytes": 522466}
+{"cls": 94, "sides": 10, "chain": 11, "cells": 10, "nodes": 89283, "max_nodes": 20005, "subtrees": 1049, "secs": 8.1, "bytes": 147986}
+{"cls": 95, "sides": 10, "chain": 10, "cells": 9, "nodes": 340487, "max_nodes": 76917, "subtrees": 8343, "secs": 14.7, "bytes": 1035654}
+{"cls": 96, "error": "RuntimeError('5 cell(s) above the node cap 150000')"}
+{"cls": 97, "sides": 10, "chain": 13, "cells": 12, "nodes": 172547, "max_nodes": 54659, "subtrees": 3328, "secs": 9.7, "bytes": 429903}
+{"cls": 98, "sides": 10, "chain": 11, "cells": 10, "nodes": 126006, "max_nodes": 34883, "subtrees": 2715, "secs": 8.3, "bytes": 351384}
+{"cls": 57, "sides": 6, "chain": 8, "cells": 7, "nodes": 336078, "max_nodes": 110141, "subtrees": 8311, "secs": 11.1, "bytes": 1035786}
+{"cls": 61, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 64, "sides": 7, "chain": 9, "cells": 8, "nodes": 380246, "max_nodes": 82055, "subtrees": 9992, "secs": 11.4, "bytes": 1238181}
+{"cls": 65, "sides": 7, "chain": 9, "cells": 8, "nodes": 464030, "max_nodes": 115891, "subtrees": 12140, "secs": 13.0, "bytes": 1503533}
+{"cls": 69, "sides": 8, "chain": 11, "cells": 10, "nodes": 633663, "max_nodes": 141889, "subtrees": 17873, "secs": 25.5, "bytes": 2217199}
+{"cls": 77, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 84, "sides": 8, "chain": 13, "cells": 12, "nodes": 575708, "max_nodes": 118539, "subtrees": 14855, "secs": 22.4, "bytes": 1851041}
+{"cls": 87, "sides": 8, "chain": 11, "cells": 10, "nodes": 415020, "max_nodes": 73379, "subtrees": 11590, "secs": 21.3, "bytes": 1438176}
+{"cls": 88, "sides": 8, "chain": 10, "cells": 9, "nodes": 463471, "max_nodes": 121905, "subtrees": 12324, "secs": 16.8, "bytes": 1530839}
+{"cls": 89, "sides": 8, "chain": 11, "cells": 10, "nodes": 402633, "max_nodes": 123119, "subtrees": 10966, "secs": 14.1, "bytes": 1364265}
+{"cls": 90, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 91, "sides": 8, "chain": 13, "cells": 12, "nodes": 489370, "max_nodes": 134859, "subtrees": 13678, "secs": 21.4, "bytes": 1713552}
+{"cls": 96, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 99, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 101, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 103, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 106, "sides": 10, "chain": 15, "cells": 14, "nodes": 769860, "max_nodes": 125415, "subtrees": 21879, "secs": 29.8, "bytes": 2721712}
+{"cls": 107, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 108, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 109, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 110, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 111, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 112, "sides": 12, "chain": 15, "cells": 14, "nodes": 723128, "max_nodes": 129697, "subtrees": 19791, "secs": 25.6, "bytes": 2466076}
+{"cls": 113, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 115, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 116, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 117, "sides": 12, "chain": 20, "cells": 19, "nodes": 884648, "max_nodes": 135093, "subtrees": 18673, "secs": 31.7, "bytes": 2399486}
+{"cls": 118, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 119, "sides": 12, "chain": 17, "cells": 16, "nodes": 439708, "max_nodes": 86791, "subtrees": 11007, "secs": 20.3, "bytes": 1393101}
+{"cls": 121, "sides": 12, "chain": 18, "cells": 17, "nodes": 646659, "max_nodes": 127561, "subtrees": 15583, "secs": 31.9, "bytes": 1998541}
+{"cls": 122, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 123, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 124, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 126, "sides": 14, "chain": 16, "cells": 15, "nodes": 789322, "max_nodes": 108085, "subtrees": 22152, "secs": 35.7, "bytes": 2779924}
+{"cls": 128, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 129, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 130, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 131, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 132, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 133, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 135, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 136, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 137, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 139, "sides": 18, "chain": 24, "cells": 23, "nodes": 876738, "max_nodes": 147299, "subtrees": 21580, "secs": 38.0, "bytes": 2762102}
+{"cls": 140, "sides": 18, "chain": 30, "cells": 29, "nodes": 1994109, "max_nodes": 148073, "subtrees": 53476, "secs": 63.7, "bytes": 6817209}
+{"cls": 141, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 142, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 143, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 9, "sides": 4, "chain": 5, "cells": 4, "nodes": 43890, "max_nodes": 24545, "subtrees": 877, "secs": 3.2, "bytes": 119842}
+{"cls": 10, "sides": 4, "chain": 5, "cells": 4, "nodes": 37202, "max_nodes": 20169, "subtrees": 639, "secs": 2.6, "bytes": 90331}
+{"cls": 19, "sides": 4, "chain": 4, "cells": 3, "nodes": 20705, "max_nodes": 13055, "subtrees": 188, "secs": 2.3, "bytes": 33873}
+{"cls": 22, "sides": 4, "chain": 7, "cells": 6, "nodes": 54508, "max_nodes": 12399, "subtrees": 851, "secs": 8.1, "bytes": 123467}
+{"cls": 25, "sides": 5, "chain": 5, "cells": 4, "nodes": 30356, "max_nodes": 10549, "subtrees": 298, "secs": 4.4, "bytes": 49875}
+{"cls": 26, "sides": 5, "chain": 6, "cells": 5, "nodes": 41801, "max_nodes": 12379, "subtrees": 403, "secs": 3.3, "bytes": 64639}
+{"cls": 27, "sides": 5, "chain": 7, "cells": 6, "nodes": 87092, "max_nodes": 24329, "subtrees": 1079, "secs": 7.0, "bytes": 149031}
+{"cls": 28, "sides": 5, "chain": 7, "cells": 6, "nodes": 72206, "max_nodes": 22003, "subtrees": 819, "secs": 7.6, "bytes": 116531}
+{"cls": 31, "sides": 5, "chain": 6, "cells": 5, "nodes": 68373, "max_nodes": 22873, "subtrees": 1160, "secs": 6.0, "bytes": 157174}
+{"cls": 33, "sides": 5, "chain": 6, "cells": 5, "nodes": 52725, "max_nodes": 16063, "subtrees": 454, "secs": 5.0, "bytes": 72162}
+{"cls": 35, "sides": 5, "chain": 7, "cells": 6, "nodes": 73480, "max_nodes": 25747, "subtrees": 871, "secs": 6.5, "bytes": 124677}
+{"cls": 41, "sides": 6, "chain": 6, "cells": 5, "nodes": 38249, "max_nodes": 12417, "subtrees": 353, "secs": 5.3, "bytes": 59637}
+{"cls": 43, "sides": 6, "chain": 7, "cells": 6, "nodes": 92518, "max_nodes": 39313, "subtrees": 1736, "secs": 13.2, "bytes": 233038}
+{"cls": 44, "sides": 6, "chain": 7, "cells": 6, "nodes": 131184, "max_nodes": 42231, "subtrees": 3180, "secs": 7.0, "bytes": 404689}
+{"cls": 46, "sides": 6, "chain": 9, "cells": 8, "nodes": 40621, "max_nodes": 12735, "subtrees": 472, "secs": 10.8, "bytes": 82228}
+{"cls": 47, "sides": 6, "chain": 7, "cells": 6, "nodes": 146619, "max_nodes": 54063, "subtrees": 3965, "secs": 8.3, "bytes": 501955}
+{"cls": 48, "sides": 6, "chain": 7, "cells": 6, "nodes": 59473, "max_nodes": 20839, "subtrees": 944, "secs": 4.0, "bytes": 132724}
+{"cls": 49, "sides": 6, "chain": 9, "cells": 8, "nodes": 202634, "max_nodes": 72317, "subtrees": 5708, "secs": 9.3, "bytes": 722117}
+{"cls": 52, "sides": 6, "chain": 7, "cells": 5, "nodes": 20417, "max_nodes": 6771, "subtrees": 262, "secs": 2.6, "bytes": 49306}
+{"cls": 54, "sides": 6, "chain": 7, "cells": 5, "nodes": 47573, "max_nodes": 20527, "subtrees": 863, "secs": 4.4, "bytes": 121349}
+{"cls": 55, "sides": 6, "chain": 7, "cells": 6, "nodes": 88668, "max_nodes": 32321, "subtrees": 2391, "secs": 7.4, "bytes": 309338}
+{"cls": 56, "sides": 6, "chain": 9, "cells": 8, "nodes": 60034, "max_nodes": 20889, "subtrees": 1020, "secs": 6.8, "bytes": 147392}
+{"cls": 57, "sides": 6, "chain": 8, "cells": 7, "nodes": 336078, "max_nodes": 110141, "subtrees": 8311, "secs": 11.8, "bytes": 1042425}
+{"cls": 58, "sides": 6, "chain": 8, "cells": 7, "nodes": 82577, "max_nodes": 24887, "subtrees": 1261, "secs": 7.8, "bytes": 175168}
+{"cls": 59, "sides": 6, "chain": 9, "cells": 8, "nodes": 210528, "max_nodes": 70677, "subtrees": 5754, "secs": 11.1, "bytes": 728776}
+{"cls": 60, "sides": 6, "chain": 9, "cells": 8, "nodes": 101378, "max_nodes": 31385, "subtrees": 1499, "secs": 8.5, "bytes": 206931}
+{"cls": 63, "sides": 7, "chain": 9, "cells": 7, "nodes": 122697, "max_nodes": 35905, "subtrees": 2588, "secs": 7.3, "bytes": 335519}
+{"cls": 64, "sides": 7, "chain": 9, "cells": 8, "nodes": 380246, "max_nodes": 82055, "subtrees": 9992, "secs": 11.2, "bytes": 1246229}
+{"cls": 65, "sides": 7, "chain": 9, "cells": 8, "nodes": 464030, "max_nodes": 115891, "subtrees": 12140, "secs": 11.8, "bytes": 1513077}
+{"cls": 66, "sides": 7, "chain": 8, "cells": 7, "nodes": 60979, "max_nodes": 13135, "subtrees": 500, "secs": 5.0, "bytes": 83093}
+{"cls": 67, "sides": 7, "chain": 8, "cells": 7, "nodes": 122177, "max_nodes": 29339, "subtrees": 2118, "secs": 8.3, "bytes": 280075}
+{"cls": 68, "sides": 8, "chain": 9, "cells": 8, "nodes": 42214, "max_nodes": 14909, "subtrees": 465, "secs": 4.2, "bytes": 82466}
+{"cls": 69, "sides": 8, "chain": 11, "cells": 10, "nodes": 633663, "max_nodes": 141889, "subtrees": 17873, "secs": 27.6, "bytes": 2228136}
+{"cls": 70, "sides": 8, "chain": 8, "cells": 6, "nodes": 43528, "max_nodes": 11129, "subtrees": 441, "secs": 3.9, "bytes": 73740}
+{"cls": 71, "sides": 8, "chain": 8, "cells": 7, "nodes": 30564, "max_nodes": 9331, "subtrees": 320, "secs": 3.6, "bytes": 61149}
+{"cls": 72, "sides": 8, "chain": 10, "cells": 8, "nodes": 76976, "max_nodes": 18097, "subtrees": 1419, "secs": 7.7, "bytes": 198101}
+{"cls": 73, "sides": 8, "chain": 9, "cells": 7, "nodes": 103333, "max_nodes": 25167, "subtrees": 1790, "secs": 8.0, "bytes": 238483}
+{"cls": 74, "sides": 8, "chain": 13, "cells": 12, "nodes": 297463, "max_nodes": 61345, "subtrees": 8271, "secs": 15.8, "bytes": 1059071}
+{"cls": 75, "sides": 8, "chain": 12, "cells": 11, "nodes": 366059, "max_nodes": 82053, "subtrees": 8967, "secs": 22.1, "bytes": 1132029}
+{"cls": 76, "sides": 8, "chain": 10, "cells": 9, "nodes": 100787, "max_nodes": 26095, "subtrees": 1391, "secs": 5.7, "bytes": 195087}
+{"cls": 78, "sides": 8, "chain": 9, "cells": 8, "nodes": 108838, "max_nodes": 35933, "subtrees": 1998, "secs": 6.8, "bytes": 267049}
+{"cls": 79, "sides": 8, "chain": 10, "cells": 9, "nodes": 306375, "max_nodes": 83333, "subtrees": 7511, "secs": 14.9, "bytes": 948986}
+{"cls": 80, "sides": 8, "chain": 12, "cells": 11, "nodes": 322927, "max_nodes": 65899, "subtrees": 8316, "secs": 18.5, "bytes": 1056570}
+{"cls": 81, "sides": 8, "chain": 9, "cells": 8, "nodes": 113506, "max_nodes": 36419, "subtrees": 2631, "secs": 7.7, "bytes": 346212}
+{"cls": 83, "sides": 8, "chain": 11, "cells": 10, "nodes": 310324, "max_nodes": 90123, "subtrees": 7986, "secs": 14.8, "bytes": 1009756}
+{"cls": 84, "sides": 8, "chain": 13, "cells": 12, "nodes": 575708, "max_nodes": 118539, "subtrees": 14855, "secs": 20.0, "bytes": 1861874}
+{"cls": 85, "sides": 8, "chain": 12, "cells": 11, "nodes": 67809, "max_nodes": 9703, "subtrees": 667, "secs": 7.8, "bytes": 114729}
+{"cls": 86, "sides": 8, "chain": 9, "cells": 8, "nodes": 311550, "max_nodes": 99425, "subtrees": 7865, "secs": 12.1, "bytes": 990491}
+{"cls": 87, "sides": 8, "chain": 11, "cells": 10, "nodes": 415020, "max_nodes": 73379, "subtrees": 11590, "secs": 15.7, "bytes": 1450185}
+{"cls": 88, "sides": 8, "chain": 10, "cells": 9, "nodes": 463471, "max_nodes": 121905, "subtrees": 12324, "secs": 16.0, "bytes": 1541628}
+{"cls": 89, "sides": 8, "chain": 11, "cells": 10, "nodes": 402633, "max_nodes": 123119, "subtrees": 10966, "secs": 15.6, "bytes": 1373468}
+{"cls": 91, "sides": 8, "chain": 13, "cells": 12, "nodes": 489370, "max_nodes": 134859, "subtrees": 13678, "secs": 18.7, "bytes": 1725966}
+{"cls": 92, "sides": 9, "chain": 11, "cells": 10, "nodes": 195690, "max_nodes": 46837, "subtrees": 4673, "secs": 17.1, "bytes": 599691}
+{"cls": 93, "sides": 9, "chain": 11, "cells": 10, "nodes": 193888, "max_nodes": 37041, "subtrees": 4100, "secs": 19.3, "bytes": 534825}
+{"cls": 94, "sides": 10, "chain": 11, "cells": 10, "nodes": 89283, "max_nodes": 20005, "subtrees": 1049, "secs": 7.5, "bytes": 157453}
+{"cls": 95, "sides": 10, "chain": 10, "cells": 9, "nodes": 340487, "max_nodes": 76917, "subtrees": 8343, "secs": 16.7, "bytes": 1044918}
+{"cls": 97, "sides": 10, "chain": 13, "cells": 12, "nodes": 172547, "max_nodes": 54659, "subtrees": 3328, "secs": 11.5, "bytes": 441221}
+{"cls": 98, "sides": 10, "chain": 11, "cells": 10, "nodes": 126006, "max_nodes": 34883, "subtrees": 2715, "secs": 9.7, "bytes": 361161}
+{"cls": 100, "sides": 10, "chain": 13, "cells": 11, "nodes": 415089, "max_nodes": 130263, "subtrees": 9026, "secs": 17.5, "bytes": 1143356}
+{"cls": 102, "sides": 10, "chain": 11, "cells": 10, "nodes": 207579, "max_nodes": 57949, "subtrees": 5262, "secs": 11.8, "bytes": 669835}
+{"cls": 104, "sides": 10, "chain": 14, "cells": 13, "nodes": 218439, "max_nodes": 41587, "subtrees": 4415, "secs": 12.8, "bytes": 576241}
+{"cls": 105, "sides": 10, "chain": 15, "cells": 14, "nodes": 149944, "max_nodes": 30721, "subtrees": 2765, "secs": 13.6, "bytes": 380151}
+{"cls": 106, "sides": 10, "chain": 15, "cells": 14, "nodes": 769860, "max_nodes": 125415, "subtrees": 21879, "secs": 28.2, "bytes": 2735352}
+{"cls": 112, "sides": 12, "chain": 15, "cells": 14, "nodes": 723128, "max_nodes": 129697, "subtrees": 19791, "secs": 22.9, "bytes": 2479267}
+{"cls": 114, "sides": 12, "chain": 19, "cells": 18, "nodes": 555224, "max_nodes": 60255, "subtrees": 13257, "secs": 37.3, "bytes": 1688697}
+{"cls": 117, "sides": 12, "chain": 20, "cells": 19, "nodes": 884648, "max_nodes": 135093, "subtrees": 18673, "secs": 28.2, "bytes": 2399505}
+{"cls": 119, "sides": 12, "chain": 17, "cells": 16, "nodes": 439708, "max_nodes": 86791, "subtrees": 11007, "secs": 23.1, "bytes": 1393117}
+{"cls": 120, "sides": 12, "chain": 15, "cells": 14, "nodes": 274138, "max_nodes": 38871, "subtrees": 5732, "secs": 16.6, "bytes": 745389}
+{"cls": 121, "sides": 12, "chain": 18, "cells": 17, "nodes": 646659, "max_nodes": 127561, "subtrees": 15583, "secs": 31.7, "bytes": 1998558}
+{"cls": 125, "sides": 13, "chain": 14, "cells": 13, "nodes": 264368, "max_nodes": 50173, "subtrees": 5707, "secs": 17.3, "bytes": 733526}
+{"cls": 126, "sides": 14, "chain": 16, "cells": 15, "nodes": 789322, "max_nodes": 108085, "subtrees": 22152, "secs": 33.6, "bytes": 2779939}
+{"cls": 127, "sides": 14, "chain": 17, "cells": 16, "nodes": 385517, "max_nodes": 55235, "subtrees": 9255, "secs": 18.8, "bytes": 1184881}
+{"cls": 134, "sides": 16, "chain": 21, "cells": 20, "nodes": 581146, "max_nodes": 76923, "subtrees": 13912, "secs": 34.9, "bytes": 1788766}
+{"cls": 138, "sides": 18, "chain": 27, "cells": 26, "nodes": 678943, "max_nodes": 65559, "subtrees": 17106, "secs": 38.2, "bytes": 2208422}
+{"cls": 139, "sides": 18, "chain": 24, "cells": 23, "nodes": 876738, "max_nodes": 147299, "subtrees": 21580, "secs": 34.5, "bytes": 2762125}
+{"cls": 140, "sides": 18, "chain": 30, "cells": 29, "nodes": 1994109, "max_nodes": 148073, "subtrees": 53476, "secs": 57.9, "bytes": 6817238}
+{"cls": 77, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 96, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 99, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 101, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 107, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 108, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 115, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 124, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 19, "sides": 4, "chain": 4, "cells": 3, "nodes": 20705, "max_nodes": 13055, "subtrees": 188, "secs": 1.4, "bytes": 32789, "modules": 4}
+{"cls": 58, "sides": 6, "chain": 8, "cells": 7, "nodes": 82577, "max_nodes": 24887, "subtrees": 1261, "secs": 5.4, "bytes": 169466, "modules": 8}
+{"cls": 58, "sides": 6, "chain": 8, "cells": 7, "nodes": 82577, "max_nodes": 24887, "subtrees": 1261, "secs": 6.1, "bytes": 169552, "modules": 8}
+{"cls": 52, "sides": 6, "chain": 7, "cells": 5, "nodes": 20417, "max_nodes": 6771, "subtrees": 262, "secs": 2.0, "bytes": 47454, "modules": 4}
+{"cls": 25, "sides": 5, "chain": 5, "cells": 4, "nodes": 30356, "max_nodes": 10549, "subtrees": 298, "secs": 2.0, "bytes": 48390, "modules": 5}
+{"cls": 71, "sides": 8, "chain": 8, "cells": 7, "nodes": 30564, "max_nodes": 9331, "subtrees": 320, "secs": 3.0, "bytes": 58800, "modules": 5}
+{"cls": 10, "sides": 4, "chain": 5, "cells": 4, "nodes": 37202, "max_nodes": 20169, "subtrees": 639, "secs": 2.0, "bytes": 87528, "modules": 5}
+{"cls": 9, "sides": 4, "chain": 5, "cells": 4, "nodes": 43890, "max_nodes": 24545, "subtrees": 877, "secs": 2.8, "bytes": 116007, "modules": 5}
+{"cls": 54, "sides": 6, "chain": 7, "cells": 5, "nodes": 47573, "max_nodes": 20527, "subtrees": 863, "secs": 3.1, "bytes": 117653, "modules": 6}
+{"cls": 48, "sides": 6, "chain": 7, "cells": 6, "nodes": 59473, "max_nodes": 20839, "subtrees": 944, "secs": 3.5, "bytes": 128689, "modules": 7}
+{"cls": 56, "sides": 6, "chain": 9, "cells": 8, "nodes": 60034, "max_nodes": 20889, "subtrees": 1020, "secs": 4.7, "bytes": 142647, "modules": 7}
+{"cls": 85, "sides": 8, "chain": 12, "cells": 11, "nodes": 67809, "max_nodes": 9703, "subtrees": 667, "secs": 7.2, "bytes": 110744, "modules": 7}
+{"cls": 61, "sides": 6, "chain": 8, "cells": 7, "nodes": 867439, "max_nodes": 364343, "subtrees": 20891, "secs": 44.9, "bytes": 2537433, "modules": 62}
+{"cls": 31, "sides": 5, "chain": 6, "cells": 5, "nodes": 68373, "max_nodes": 22873, "subtrees": 1160, "secs": 5.3, "bytes": 152287, "modules": 7}
+{"cls": 35, "sides": 5, "chain": 7, "cells": 6, "nodes": 73480, "max_nodes": 25747, "subtrees": 871, "secs": 7.7, "bytes": 121149, "modules": 8}
+{"cls": 72, "sides": 8, "chain": 10, "cells": 8, "nodes": 76976, "max_nodes": 18097, "subtrees": 1419, "secs": 7.0, "bytes": 191657, "modules": 8}
+{"cls": 27, "sides": 5, "chain": 7, "cells": 6, "nodes": 87092, "max_nodes": 24329, "subtrees": 1079, "secs": 5.3, "bytes": 144938, "modules": 9}
+{"cls": 55, "sides": 6, "chain": 7, "cells": 6, "nodes": 88668, "max_nodes": 32321, "subtrees": 2391, "secs": 4.1, "bytes": 299486, "modules": 8}
+{"cls": 94, "sides": 10, "chain": 11, "cells": 10, "nodes": 89283, "max_nodes": 20005, "subtrees": 1049, "secs": 7.0, "bytes": 152446, "modules": 9}
+{"cls": 43, "sides": 6, "chain": 7, "cells": 6, "nodes": 92518, "max_nodes": 39313, "subtrees": 1736, "secs": 10.3, "bytes": 226231, "modules": 9}
+{"cls": 76, "sides": 8, "chain": 10, "cells": 9, "nodes": 100787, "max_nodes": 26095, "subtrees": 1391, "secs": 6.5, "bytes": 189287, "modules": 10}
+{"cls": 60, "sides": 6, "chain": 9, "cells": 8, "nodes": 101378, "max_nodes": 31385, "subtrees": 1499, "secs": 7.3, "bytes": 200967, "modules": 10}
+{"cls": 73, "sides": 8, "chain": 9, "cells": 7, "nodes": 103333, "max_nodes": 25167, "subtrees": 1790, "secs": 7.6, "bytes": 231353, "modules": 10}
+{"cls": 78, "sides": 8, "chain": 9, "cells": 8, "nodes": 108838, "max_nodes": 35933, "subtrees": 1998, "secs": 7.0, "bytes": 259001, "modules": 10}
+{"cls": 81, "sides": 8, "chain": 9, "cells": 8, "nodes": 113506, "max_nodes": 36419, "subtrees": 2631, "secs": 7.0, "bytes": 335206, "modules": 10}
+{"cls": 67, "sides": 7, "chain": 8, "cells": 7, "nodes": 122177, "max_nodes": 29339, "subtrees": 2118, "secs": 6.7, "bytes": 271898, "modules": 11}
+{"cls": 63, "sides": 7, "chain": 9, "cells": 7, "nodes": 122697, "max_nodes": 35905, "subtrees": 2588, "secs": 6.3, "bytes": 325310, "modules": 11}
+{"cls": 98, "sides": 10, "chain": 11, "cells": 10, "nodes": 126006, "max_nodes": 34883, "subtrees": 2715, "secs": 8.0, "bytes": 349614, "modules": 11}
+{"cls": 44, "sides": 6, "chain": 7, "cells": 6, "nodes": 131184, "max_nodes": 42231, "subtrees": 3180, "secs": 4.9, "bytes": 392290, "modules": 11}
+{"cls": 47, "sides": 6, "chain": 7, "cells": 6, "nodes": 146619, "max_nodes": 54063, "subtrees": 3965, "secs": 5.9, "bytes": 486531, "modules": 12}
+{"cls": 105, "sides": 10, "chain": 15, "cells": 14, "nodes": 149944, "max_nodes": 30721, "subtrees": 2765, "secs": 12.2, "bytes": 367944, "modules": 13}
+{"cls": 97, "sides": 10, "chain": 13, "cells": 12, "nodes": 172547, "max_nodes": 54659, "subtrees": 3328, "secs": 10.6, "bytes": 427734, "modules": 15}
+{"cls": 93, "sides": 9, "chain": 11, "cells": 10, "nodes": 193888, "max_nodes": 37041, "subtrees": 4100, "secs": 18.8, "bytes": 518779, "modules": 16}
+{"cls": 92, "sides": 9, "chain": 11, "cells": 10, "nodes": 195690, "max_nodes": 46837, "subtrees": 4673, "secs": 13.2, "bytes": 581173, "modules": 16}
+{"cls": 49, "sides": 6, "chain": 9, "cells": 8, "nodes": 202634, "max_nodes": 72317, "subtrees": 5708, "secs": 8.4, "bytes": 699995, "modules": 16}
+{"cls": 102, "sides": 10, "chain": 11, "cells": 10, "nodes": 207579, "max_nodes": 57949, "subtrees": 5262, "secs": 9.6, "bytes": 649448, "modules": 17}
+{"cls": 59, "sides": 6, "chain": 9, "cells": 8, "nodes": 210528, "max_nodes": 70677, "subtrees": 5754, "secs": 9.0, "bytes": 706571, "modules": 17}
+{"cls": 104, "sides": 10, "chain": 14, "cells": 13, "nodes": 218439, "max_nodes": 41587, "subtrees": 4415, "secs": 12.7, "bytes": 558803, "modules": 18}
+{"cls": 125, "sides": 13, "chain": 14, "cells": 13, "nodes": 264368, "max_nodes": 50173, "subtrees": 5707, "secs": 14.2, "bytes": 711225, "modules": 21}
+{"cls": 120, "sides": 12, "chain": 15, "cells": 14, "nodes": 274138, "max_nodes": 38871, "subtrees": 5732, "secs": 15.5, "bytes": 723605, "modules": 22}
+{"cls": 74, "sides": 8, "chain": 13, "cells": 12, "nodes": 297463, "max_nodes": 61345, "subtrees": 8271, "secs": 15.7, "bytes": 1026648, "modules": 23}
+{"cls": 79, "sides": 8, "chain": 10, "cells": 9, "nodes": 306375, "max_nodes": 83333, "subtrees": 7511, "secs": 13.1, "bytes": 921167, "modules": 23}
+{"cls": 83, "sides": 8, "chain": 11, "cells": 10, "nodes": 310324, "max_nodes": 90123, "subtrees": 7986, "secs": 14.1, "bytes": 979818, "modules": 24}
+{"cls": 86, "sides": 8, "chain": 9, "cells": 8, "nodes": 311550, "max_nodes": 99425, "subtrees": 7865, "secs": 12.0, "bytes": 961625, "modules": 24}
+{"cls": 80, "sides": 8, "chain": 12, "cells": 11, "nodes": 322927, "max_nodes": 65899, "subtrees": 8316, "secs": 13.9, "bytes": 1024860, "modules": 24}
+{"cls": 57, "sides": 6, "chain": 8, "cells": 7, "nodes": 336078, "max_nodes": 110141, "subtrees": 8311, "secs": 10.8, "bytes": 1012160, "modules": 25}
+{"cls": 77, "error": "RuntimeError('more than 40000 subtrees in one cell')"}
+{"cls": 95, "sides": 10, "chain": 10, "cells": 9, "nodes": 340487, "max_nodes": 76917, "subtrees": 8343, "secs": 14.3, "bytes": 1014070, "modules": 26}
+{"cls": 75, "sides": 8, "chain": 12, "cells": 11, "nodes": 366059, "max_nodes": 82053, "subtrees": 8967, "secs": 21.7, "bytes": 1098188, "modules": 27}
+{"cls": 64, "sides": 7, "chain": 9, "cells": 8, "nodes": 380246, "max_nodes": 82055, "subtrees": 9992, "secs": 10.9, "bytes": 1209293, "modules": 28}
+{"cls": 127, "sides": 14, "chain": 17, "cells": 16, "nodes": 385517, "max_nodes": 55235, "subtrees": 9255, "secs": 16.3, "bytes": 1149020, "modules": 29}
+{"cls": 90, "sides": 8, "chain": 12, "cells": 11, "nodes": 846653, "max_nodes": 275767, "subtrees": 22910, "secs": 76.9, "bytes": 2780169, "modules": 60}
+{"cls": 89, "sides": 8, "chain": 11, "cells": 10, "nodes": 402633, "max_nodes": 123119, "subtrees": 10966, "secs": 12.0, "bytes": 1332652, "modules": 30}
+{"cls": 87, "sides": 8, "chain": 11, "cells": 10, "nodes": 415020, "max_nodes": 73379, "subtrees": 11590, "secs": 14.9, "bytes": 1406110, "modules": 31}
+{"cls": 100, "sides": 10, "chain": 13, "cells": 11, "nodes": 415089, "max_nodes": 130263, "subtrees": 9026, "secs": 14.3, "bytes": 1111089, "modules": 31}
+{"cls": 119, "sides": 12, "chain": 17, "cells": 16, "nodes": 439708, "max_nodes": 86791, "subtrees": 11007, "secs": 18.0, "bytes": 1351730, "modules": 33}
+{"cls": 88, "sides": 8, "chain": 10, "cells": 9, "nodes": 463471, "max_nodes": 121905, "subtrees": 12324, "secs": 13.2, "bytes": 1495704, "modules": 34}
+{"cls": 65, "sides": 7, "chain": 9, "cells": 8, "nodes": 464030, "max_nodes": 115891, "subtrees": 12140, "secs": 10.8, "bytes": 1468301, "modules": 34}
+{"cls": 91, "sides": 8, "chain": 13, "cells": 12, "nodes": 489370, "max_nodes": 134859, "subtrees": 13678, "secs": 18.6, "bytes": 1674632, "modules": 36}
+{"cls": 114, "sides": 12, "chain": 19, "cells": 18, "nodes": 555224, "max_nodes": 60255, "subtrees": 13257, "secs": 31.1, "bytes": 1639442, "modules": 41}
+{"cls": 84, "sides": 8, "chain": 13, "cells": 12, "nodes": 575708, "max_nodes": 118539, "subtrees": 14855, "secs": 16.7, "bytes": 1807575, "modules": 41}
+{"cls": 134, "sides": 16, "chain": 21, "cells": 20, "nodes": 581146, "max_nodes": 76923, "subtrees": 13912, "secs": 29.4, "bytes": 1735859, "modules": 43}
+{"cls": 69, "sides": 8, "chain": 11, "cells": 10, "nodes": 633663, "max_nodes": 141889, "subtrees": 17873, "secs": 18.0, "bytes": 2162065, "modules": 45}
+{"cls": 96, "error": "RuntimeError('more than 40000 subtrees in one cell')"}
+{"cls": 121, "sides": 12, "chain": 18, "cells": 17, "nodes": 646659, "max_nodes": 127561, "subtrees": 15583, "secs": 25.5, "bytes": 1941467, "modules": 47}
+{"cls": 138, "sides": 18, "chain": 27, "cells": 26, "nodes": 678943, "max_nodes": 65559, "subtrees": 17106, "secs": 33.1, "bytes": 2143061, "modules": 49}
+{"cls": 112, "sides": 12, "chain": 15, "cells": 14, "nodes": 723128, "max_nodes": 129697, "subtrees": 19791, "secs": 23.2, "bytes": 2406437, "modules": 52}
+{"cls": 106, "sides": 10, "chain": 15, "cells": 14, "nodes": 769860, "max_nodes": 125415, "subtrees": 21879, "secs": 21.5, "bytes": 2654106, "modules": 54}
+{"cls": 126, "sides": 14, "chain": 16, "cells": 15, "nodes": 789322, "max_nodes": 108085, "subtrees": 22152, "secs": 24.9, "bytes": 2697383, "modules": 56}
+{"cls": 139, "sides": 18, "chain": 24, "cells": 23, "nodes": 876738, "max_nodes": 147299, "subtrees": 21580, "secs": 30.2, "bytes": 2682772, "modules": 63}
+{"cls": 117, "sides": 12, "chain": 20, "cells": 19, "nodes": 884648, "max_nodes": 135093, "subtrees": 18673, "secs": 25.1, "bytes": 2333894, "modules": 63}
+{"cls": 140, "sides": 18, "chain": 30, "cells": 29, "nodes": 1994109, "max_nodes": 148073, "subtrees": 53476, "secs": 52.2, "bytes": 6622654, "modules": 138}
+{"cls": 99, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 101, "error": "RuntimeError('more than 40000 subtrees in one cell')"}
+{"cls": 103, "sides": 10, "chain": 13, "cells": 12, "nodes": 1991905, "max_nodes": 613085, "subtrees": 46980, "secs": 92.8, "bytes": 5726754, "modules": 138}
+{"cls": 107, "sides": 10, "chain": 13, "cells": 12, "nodes": 10039384, "max_nodes": 3710595, "subtrees": 127595, "secs": 229.2, "bytes": 15813406, "modules": 732}
+{"cls": 108, "sides": 10, "chain": 17, "cells": 16, "nodes": 11296596, "max_nodes": 2638067, "subtrees": 130983, "secs": 328.9, "bytes": 16511136, "modules": 846}
+{"cls": 109, "sides": 10, "chain": 15, "cells": 14, "nodes": 1968700, "max_nodes": 346903, "subtrees": 42228, "secs": 109.8, "bytes": 5153931, "modules": 137}
+{"cls": 110, "sides": 11, "chain": 15, "cells": 14, "nodes": 5213154, "max_nodes": 1228197, "subtrees": 108496, "secs": 175.5, "bytes": 13364740, "modules": 362}
+{"cls": 111, "sides": 12, "chain": 16, "cells": 14, "nodes": 4023953, "max_nodes": 1091411, "subtrees": 76267, "secs": 175.0, "bytes": 9399815, "modules": 283}
+{"cls": 113, "sides": 12, "chain": 16, "cells": 15, "nodes": 1115660, "max_nodes": 220411, "subtrees": 31248, "secs": 71.9, "bytes": 3798481, "modules": 77}
+{"cls": 115, "error": "RuntimeError('more than 40000 subtrees in one cell')"}
+{"cls": 116, "sides": 12, "chain": 17, "cells": 15, "nodes": 3047249, "max_nodes": 744447, "subtrees": 75462, "secs": 124.9, "bytes": 9255446, "modules": 210}
+{"cls": 118, "sides": 12, "chain": 14, "cells": 13, "nodes": 2051595, "max_nodes": 504973, "subtrees": 42081, "secs": 87.0, "bytes": 5195956, "modules": 145}
+{"cls": 122, "sides": 12, "chain": 16, "cells": 15, "nodes": 3808303, "max_nodes": 867521, "subtrees": 84964, "secs": 195.4, "bytes": 10486190, "modules": 265}
+{"cls": 123, "sides": 12, "chain": 20, "cells": 19, "nodes": 3232103, "max_nodes": 610583, "subtrees": 77644, "secs": 173.2, "bytes": 9561899, "modules": 223}
+{"cls": 124, "error": "RuntimeError('more than 40000 subtrees in one cell')"}
+{"cls": 128, "sides": 14, "chain": 17, "cells": 16, "nodes": 5785255, "max_nodes": 1032401, "subtrees": 119103, "secs": 212.4, "bytes": 14693466, "modules": 404}
+{"cls": 129, "sides": 14, "chain": 17, "cells": 16, "nodes": 8044550, "max_nodes": 2171999, "subtrees": 111513, "secs": 359.1, "bytes": 13941918, "modules": 593}
+{"cls": 130, "sides": 14, "chain": 18, "cells": 17, "nodes": 3461495, "max_nodes": 874057, "subtrees": 58730, "secs": 166.4, "bytes": 7270470, "modules": 251}
+{"cls": 131, "sides": 14, "chain": 20, "cells": 19, "nodes": 6112197, "max_nodes": 1421265, "subtrees": 92525, "secs": 244.1, "bytes": 11462741, "modules": 439}
+{"cls": 132, "sides": 14, "chain": 19, "cells": 18, "nodes": 11957754, "max_nodes": 2407427, "subtrees": 195564, "secs": 330.9, "bytes": 24290478, "modules": 867}
+{"cls": 133, "sides": 16, "chain": 19, "cells": 18, "nodes": 1976920, "max_nodes": 357001, "subtrees": 34719, "secs": 128.0, "bytes": 4302835, "modules": 141}
+{"cls": 135, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 136, "sides": 16, "chain": 21, "cells": 20, "nodes": 2017404, "max_nodes": 398261, "subtrees": 52127, "secs": 107.4, "bytes": 6475746, "modules": 141}
+{"cls": 137, "error": "RuntimeError('cover: depth limit without an acceptable cell')"}
+{"cls": 141, "sides": 18, "chain": 27, "cells": 26, "nodes": 5954799, "max_nodes": 1242605, "subtrees": 130868, "secs": 282.7, "bytes": 16343199, "modules": 412}
+{"cls": 142, "sides": 18, "chain": 26, "cells": 25, "nodes": 10105409, "max_nodes": 1838605, "subtrees": 224256, "secs": 369.7, "bytes": 28327906, "modules": 696}
+{"cls": 143, "error": "RuntimeError('more than 40000 subtrees in one cell')"}
+{"cls": 49, "sides": 6, "chain": 9, "cells": 8, "nodes": 202634, "max_nodes": 72317, "subtrees": 5708, "secs": 8.3, "bytes": 700343, "modules": 16}
+{"cls": 59, "sides": 6, "chain": 9, "cells": 8, "nodes": 210528, "max_nodes": 70677, "subtrees": 5754, "secs": 9.2, "bytes": 706921, "modules": 17}
+{"cls": 79, "sides": 8, "chain": 10, "cells": 9, "nodes": 306375, "max_nodes": 83333, "subtrees": 7511, "secs": 11.4, "bytes": 921629, "modules": 23}
+{"cls": 83, "sides": 8, "chain": 11, "cells": 10, "nodes": 310324, "max_nodes": 90123, "subtrees": 7986, "secs": 15.4, "bytes": 980306, "modules": 24}
+{"cls": 86, "sides": 8, "chain": 9, "cells": 8, "nodes": 311550, "max_nodes": 99425, "subtrees": 7865, "secs": 11.1, "bytes": 962105, "modules": 24}
+{"cls": 80, "sides": 8, "chain": 12, "cells": 11, "nodes": 322927, "max_nodes": 65899, "subtrees": 8316, "secs": 13.8, "bytes": 1025368, "modules": 24}
+{"cls": 57, "sides": 6, "chain": 8, "cells": 7, "nodes": 336078, "max_nodes": 110141, "subtrees": 8311, "secs": 9.8, "bytes": 1012674, "modules": 25}
+{"cls": 95, "sides": 10, "chain": 10, "cells": 9, "nodes": 340487, "max_nodes": 76917, "subtrees": 8343, "secs": 14.5, "bytes": 1014582, "modules": 26}
+{"cls": 75, "sides": 8, "chain": 12, "cells": 11, "nodes": 366059, "max_nodes": 82053, "subtrees": 8967, "secs": 20.4, "bytes": 1098740, "modules": 27}
+{"cls": 64, "sides": 7, "chain": 9, "cells": 8, "nodes": 380246, "max_nodes": 82055, "subtrees": 9992, "secs": 10.5, "bytes": 1209911, "modules": 28}
+{"cls": 89, "sides": 8, "chain": 11, "cells": 10, "nodes": 402633, "max_nodes": 123119, "subtrees": 10966, "secs": 12.4, "bytes": 1333324, "modules": 30}
+{"cls": 87, "sides": 8, "chain": 11, "cells": 10, "nodes": 415020, "max_nodes": 73379, "subtrees": 11590, "secs": 15.2, "bytes": 1406824, "modules": 31}
+{"cls": 100, "sides": 10, "chain": 13, "cells": 11, "nodes": 415089, "max_nodes": 130263, "subtrees": 9026, "secs": 14.0, "bytes": 1111639, "modules": 31}
+{"cls": 119, "sides": 12, "chain": 17, "cells": 16, "nodes": 439708, "max_nodes": 86791, "subtrees": 11007, "secs": 18.1, "bytes": 1352398, "modules": 33}
+{"cls": 88, "sides": 8, "chain": 10, "cells": 9, "nodes": 463471, "max_nodes": 121905, "subtrees": 12324, "secs": 13.4, "bytes": 1496464, "modules": 34}
+{"cls": 65, "sides": 7, "chain": 9, "cells": 8, "nodes": 464030, "max_nodes": 115891, "subtrees": 12140, "secs": 12.7, "bytes": 1469053, "modules": 34}
+{"cls": 91, "sides": 8, "chain": 13, "cells": 12, "nodes": 489370, "max_nodes": 134859, "subtrees": 13678, "secs": 17.4, "bytes": 1675476, "modules": 36}
+{"cls": 84, "sides": 8, "chain": 13, "cells": 12, "nodes": 575708, "max_nodes": 118539, "subtrees": 14855, "secs": 16.5, "bytes": 1808491, "modules": 41}
+{"cls": 134, "sides": 16, "chain": 21, "cells": 20, "nodes": 581146, "max_nodes": 76923, "subtrees": 13912, "secs": 29.5, "bytes": 1736705, "modules": 43}
+{"cls": 69, "sides": 8, "chain": 11, "cells": 10, "nodes": 633663, "max_nodes": 141889, "subtrees": 17873, "secs": 17.1, "bytes": 2163173, "modules": 45}
+{"cls": 121, "sides": 12, "chain": 18, "cells": 17, "nodes": 646659, "max_nodes": 127561, "subtrees": 15583, "secs": 27.3, "bytes": 1942425, "modules": 47}
+{"cls": 138, "sides": 18, "chain": 27, "cells": 26, "nodes": 678943, "max_nodes": 65559, "subtrees": 17106, "secs": 34.7, "bytes": 2144103, "modules": 49}
+{"cls": 112, "sides": 12, "chain": 15, "cells": 14, "nodes": 723128, "max_nodes": 129697, "subtrees": 19791, "secs": 21.6, "bytes": 2407657, "modules": 52}
+{"cls": 106, "sides": 10, "chain": 15, "cells": 14, "nodes": 769860, "max_nodes": 125415, "subtrees": 21879, "secs": 21.2, "bytes": 2655460, "modules": 54}
+{"cls": 126, "sides": 14, "chain": 16, "cells": 15, "nodes": 789322, "max_nodes": 108085, "subtrees": 22152, "secs": 25.4, "bytes": 2698753, "modules": 56}
+{"cls": 139, "sides": 18, "chain": 24, "cells": 23, "nodes": 876738, "max_nodes": 147299, "subtrees": 21580, "secs": 32.1, "bytes": 2684100, "modules": 63}
+{"cls": 117, "sides": 12, "chain": 20, "cells": 19, "nodes": 884648, "max_nodes": 135093, "subtrees": 18673, "secs": 29.0, "bytes": 2335044, "modules": 63}
+{"cls": 140, "sides": 18, "chain": 30, "cells": 29, "nodes": 1994109, "max_nodes": 148073, "subtrees": 53476, "secs": 50.5, "bytes": 6625970, "modules": 138}
+{"cls": 57, "sides": 6, "chain": 7, "cells": 5, "nodes": 19406, "max_nodes": 8428, "subtrees": 0, "form": "sub", "secs": 19.5, "bytes": 219172, "modules": 4}
+{"cls": 95, "sides": 10, "chain": 10, "cells": 9, "nodes": 681479, "max_nodes": 178619, "subtrees": 0, "form": "sub", "secs": 88.0, "bytes": 1615850, "modules": 52}
+{"cls": 75, "sides": 8, "chain": 11, "cells": 10, "nodes": 243172, "max_nodes": 58406, "subtrees": 0, "form": "sub", "secs": 90.5, "bytes": 1035531, "modules": 19}
+{"cls": 64, "sides": 7, "chain": 7, "cells": 4, "nodes": 11018, "max_nodes": 4651, "subtrees": 0, "form": "sub", "secs": 7.1, "bytes": 209353, "modules": 3}
+{"cls": 95, "sides": 10, "chain": 13, "cells": 12, "nodes": 137642, "max_nodes": 37535, "subtrees": 0, "form": "sub", "secs": 8006.8, "bytes": 617692, "modules": 12}
+{"cls": 57, "sides": 6, "chain": 9, "cells": 7, "nodes": 7225, "max_nodes": 1515, "subtrees": 0, "form": "sub", "secs": 13.7, "bytes": 126670, "modules": 3}
+{"cls": 75, "sides": 8, "chain": 13, "cells": 12, "nodes": 33813, "max_nodes": 6801, "subtrees": 0, "form": "sub", "secs": 1434.7, "bytes": 487760, "modules": 5}
+{"cls": 64, "sides": 7, "chain": 7, "cells": 4, "nodes": 6319, "max_nodes": 2787, "subtrees": 0, "form": "sub", "secs": 8.3, "bytes": 112665, "modules": 3}
+{"cls": 127, "sides": 14, "chain": 16, "cells": 10, "nodes": 16640, "max_nodes": 2336, "subtrees": 0, "form": "sub", "secs": 27.3, "bytes": 316429, "modules": 4}
+{"cls": 89, "sides": 8, "chain": 10, "cells": 8, "nodes": 22430, "max_nodes": 6176, "subtrees": 0, "form": "sub", "secs": 17.8, "bytes": 162564, "modules": 4}
+{"cls": 87, "sides": 8, "chain": 8, "cells": 1, "nodes": 3506, "max_nodes": 3506, "subtrees": 0, "form": "sub", "secs": 18.4, "bytes": 57363, "modules": 3}
+{"cls": 100, "sides": 10, "chain": 13, "cells": 10, "nodes": 90052, "max_nodes": 19444, "subtrees": 0, "form": "sub", "secs": 41.8, "bytes": 220272, "modules": 9}
+{"cls": 119, "sides": 12, "chain": 14, "cells": 11, "nodes": 40344, "max_nodes": 7254, "subtrees": 0, "form": "sub", "secs": 14.0, "bytes": 160260, "modules": 5}
+{"cls": 88, "sides": 8, "chain": 9, "cells": 7, "nodes": 9966, "max_nodes": 2330, "subtrees": 0, "form": "sub", "secs": 48.3, "bytes": 402175, "modules": 3}
+{"cls": 65, "sides": 7, "chain": 7, "cells": 4, "nodes": 6682, "max_nodes": 2619, "subtrees": 0, "form": "sub", "secs": 25.1, "bytes": 251950, "modules": 3}
+{"cls": 91, "sides": 8, "chain": 11, "cells": 9, "nodes": 74084, "max_nodes": 20026, "subtrees": 0, "form": "sub", "secs": 39.5, "bytes": 472921, "modules": 7}
+{"cls": 114, "sides": 12, "chain": 15, "cells": 11, "nodes": 10686, "max_nodes": 1808, "subtrees": 0, "form": "sub", "secs": 17.4, "bytes": 206413, "modules": 3}
+{"cls": 84, "sides": 8, "chain": 12, "cells": 11, "nodes": 35727, "max_nodes": 9580, "subtrees": 0, "form": "sub", "secs": 28.1, "bytes": 163257, "modules": 5}
+{"cls": 134, "sides": 16, "chain": 17, "cells": 10, "nodes": 167652, "max_nodes": 42706, "subtrees": 0, "form": "sub", "secs": 2384.3, "bytes": 724884, "modules": 14}
+{"cls": 69, "sides": 8, "chain": 8, "cells": 5, "nodes": 6267, "max_nodes": 2622, "subtrees": 0, "form": "sub", "secs": 17.5, "bytes": 159167, "modules": 3}
+{"cls": 121, "sides": 12, "chain": 15, "cells": 10, "nodes": 333868, "max_nodes": 63842, "subtrees": 0, "form": "sub", "secs": 43.7, "bytes": 1073965, "modules": 26}
+{"cls": 138, "sides": 18, "chain": 22, "cells": 19, "nodes": 81130, "max_nodes": 6622, "subtrees": 0, "form": "sub", "secs": 33.1, "bytes": 422377, "modules": 8}
+{"cls": 112, "sides": 12, "chain": 13, "cells": 7, "nodes": 46897, "max_nodes": 10425, "subtrees": 0, "form": "sub", "secs": 439.1, "bytes": 205649, "modules": 6}
+{"cls": 106, "sides": 10, "chain": 12, "cells": 10, "nodes": 23370, "max_nodes": 5250, "subtrees": 0, "form": "sub", "secs": 45.2, "bytes": 194848, "modules": 4}
+{"cls": 126, "sides": 14, "chain": 18, "cells": 16, "nodes": 43394, "max_nodes": 5638, "subtrees": 0, "form": "sub", "secs": 314.6, "bytes": 588597, "modules": 5}
+{"cls": 139, "sides": 18, "chain": 24, "cells": 17, "nodes": 94326, "max_nodes": 8214, "subtrees": 0, "form": "sub", "secs": 46.5, "bytes": 422800, "modules": 9}
+{"cls": 117, "sides": 12, "chain": 16, "cells": 12, "nodes": 59930, "max_nodes": 10170, "subtrees": 0, "form": "sub", "secs": 95.3, "bytes": 272577, "modules": 7}
+{"cls": 140, "sides": 18, "chain": 24, "cells": 19, "nodes": 160470, "max_nodes": 18092, "subtrees": 0, "form": "sub", "secs": 210.0, "bytes": 727430, "modules": 14}
+{"cls": 61, "sides": 6, "chain": 10, "cells": 8, "nodes": 34814, "max_nodes": 8702, "subtrees": 0, "form": "sub", "secs": 90.2, "bytes": 186901, "modules": 5}
+{"cls": 77, "sides": 8, "chain": 17, "cells": 16, "nodes": 395009, "max_nodes": 88716, "subtrees": 0, "form": "sub", "secs": 1418.4, "bytes": 1126549, "modules": 31}
+{"cls": 90, "sides": 8, "chain": 10, "cells": 8, "nodes": 46796, "max_nodes": 14286, "subtrees": 0, "form": "sub", "secs": 34.3, "bytes": 361188, "modules": 6}
+{"cls": 96, "sides": 10, "chain": 16, "cells": 14, "nodes": 622258, "max_nodes": 159353, "subtrees": 0, "form": "sub", "secs": 910.5, "bytes": 1957525, "modules": 45}
+{"cls": 87, "sides": 8, "chain": 8, "cells": 1, "nodes": 3506, "max_nodes": 3506, "subtrees": 0, "form": "sub", "secs": 20.2, "bytes": 58060, "modules": 5}
+{"cls": 99, "sides": 10, "chain": 16, "cells": 13, "nodes": 215698, "max_nodes": 66386, "subtrees": 0, "form": "sub", "secs": 285.1, "bytes": 766370, "modules": 18}
+{"cls": 88, "sides": 8, "chain": 9, "cells": 7, "nodes": 9966, "max_nodes": 2330, "subtrees": 0, "form": "sub", "secs": 47.1, "bytes": 406013, "modules": 14}
+{"cls": 65, "sides": 7, "chain": 7, "cells": 4, "nodes": 6682, "max_nodes": 2619, "subtrees": 0, "form": "sub", "secs": 27.1, "bytes": 254392, "modules": 10}
+{"cls": 114, "sides": 12, "chain": 15, "cells": 11, "nodes": 10686, "max_nodes": 1808, "subtrees": 0, "form": "sub", "secs": 18.7, "bytes": 208506, "modules": 9}
+{"cls": 84, "sides": 8, "chain": 12, "cells": 11, "nodes": 35727, "max_nodes": 9580, "subtrees": 0, "form": "sub", "secs": 23.9, "bytes": 164303, "modules": 8}
+{"cls": 101, "sides": 10, "chain": 20, "cells": 19, "nodes": 302182, "max_nodes": 59138, "subtrees": 0, "form": "sub", "secs": 218.1, "bytes": 946501, "modules": 28}
+{"cls": 103, "sides": 10, "chain": 12, "cells": 10, "nodes": 78396, "max_nodes": 23632, "subtrees": 0, "form": "sub", "secs": 129.9, "bytes": 282735, "modules": 13}
+{"cls": 107, "sides": 10, "chain": 14, "cells": 12, "nodes": 175958, "max_nodes": 42234, "subtrees": 0, "form": "sub", "secs": 227.3, "bytes": 608247, "modules": 26}
+{"cls": 108, "sides": 10, "chain": 16, "cells": 14, "nodes": 87342, "max_nodes": 19436, "subtrees": 0, "form": "sub", "secs": 177.9, "bytes": 682499, "modules": 21}
+{"cls": 109, "sides": 10, "chain": 13, "cells": 10, "nodes": 26512, "max_nodes": 4394, "subtrees": 0, "form": "sub", "secs": 61.4, "bytes": 381455, "modules": 14}
+{"cls": 110, "sides": 11, "chain": 15, "cells": 14, "nodes": 370322, "max_nodes": 84367, "subtrees": 0, "form": "sub", "secs": 1430.6, "bytes": 1216858, "modules": 37}
+{"cls": 111, "sides": 12, "chain": 16, "cells": 12, "nodes": 235206, "max_nodes": 62802, "subtrees": 0, "form": "sub", "secs": 134.5, "bytes": 925577, "modules": 24}
+{"cls": 113, "sides": 12, "chain": 14, "cells": 9, "nodes": 31816, "max_nodes": 5754, "subtrees": 0, "form": "sub", "secs": 96.0, "bytes": 497674, "modules": 15}
+{"cls": 134, "sides": 16, "chain": 17, "cells": 10, "nodes": 167652, "max_nodes": 42706, "subtrees": 0, "form": "sub", "secs": 2398.6, "bytes": 728373, "modules": 24}
+{"cls": 69, "sides": 8, "chain": 8, "cells": 5, "nodes": 6267, "max_nodes": 2622, "subtrees": 0, "form": "sub", "secs": 16.3, "bytes": 160911, "modules": 8}
+{"cls": 121, "sides": 12, "chain": 15, "cells": 10, "nodes": 333868, "max_nodes": 63842, "subtrees": 0, "form": "sub", "secs": 44.8, "bytes": 1076058, "modules": 32}
+{"cls": 138, "sides": 18, "chain": 22, "cells": 19, "nodes": 81130, "max_nodes": 6622, "subtrees": 0, "form": "sub", "secs": 37.5, "bytes": 425517, "modules": 17}
+{"cls": 112, "sides": 12, "chain": 13, "cells": 7, "nodes": 46897, "max_nodes": 10425, "subtrees": 0, "form": "sub", "secs": 383.6, "bytes": 207044, "modules": 10}
+{"cls": 106, "sides": 10, "chain": 12, "cells": 10, "nodes": 23370, "max_nodes": 5250, "subtrees": 0, "form": "sub", "secs": 47.2, "bytes": 196592, "modules": 9}
+{"cls": 126, "sides": 14, "chain": 18, "cells": 16, "nodes": 43394, "max_nodes": 5638, "subtrees": 0, "form": "sub", "secs": 293.0, "bytes": 593831, "modules": 20}
+{"cls": 139, "sides": 18, "chain": 24, "cells": 17, "nodes": 94326, "max_nodes": 8214, "subtrees": 0, "form": "sub", "secs": 46.3, "bytes": 425940, "modules": 18}
+{"cls": 117, "sides": 12, "chain": 16, "cells": 12, "nodes": 59930, "max_nodes": 10170, "subtrees": 0, "form": "sub", "secs": 90.5, "bytes": 274670, "modules": 13}
+{"cls": 140, "sides": 18, "chain": 24, "cells": 19, "nodes": 160470, "max_nodes": 18092, "subtrees": 0, "form": "sub", "secs": 179.1, "bytes": 731966, "modules": 27}
+{"cls": 61, "sides": 6, "chain": 10, "cells": 8, "nodes": 34814, "max_nodes": 8702, "subtrees": 0, "form": "sub", "secs": 84.1, "bytes": 188296, "modules": 9}
+{"cls": 77, "sides": 8, "chain": 17, "cells": 16, "nodes": 395009, "max_nodes": 88716, "subtrees": 0, "form": "sub", "secs": 1359.0, "bytes": 1129689, "modules": 40}
+{"cls": 90, "sides": 8, "chain": 10, "cells": 8, "nodes": 46796, "max_nodes": 14286, "subtrees": 0, "form": "sub", "secs": 37.0, "bytes": 363630, "modules": 13}
+{"cls": 96, "sides": 10, "chain": 16, "cells": 14, "nodes": 622258, "max_nodes": 159353, "subtrees": 0, "form": "sub", "secs": 880.0, "bytes": 1960665, "modules": 54}
+{"cls": 115, "sides": 12, "chain": 21, "cells": 19, "nodes": 99646, "max_nodes": 9430, "subtrees": 0, "form": "sub", "secs": 4019.2, "bytes": 1657673, "modules": 34}
+{"cls": 116, "sides": 12, "chain": 19, "cells": 17, "nodes": 806191, "max_nodes": 199958, "subtrees": 0, "form": "sub", "secs": 105.4, "bytes": 2977816, "modules": 62}
+{"cls": 118, "sides": 12, "chain": 13, "cells": 8, "nodes": 104636, "max_nodes": 24863, "subtrees": 0, "form": "sub", "secs": 14.3, "bytes": 322676, "modules": 15}
+{"cls": 122, "sides": 12, "chain": 14, "cells": 11, "nodes": 127830, "max_nodes": 27506, "subtrees": 0, "form": "sub", "secs": 176.0, "bytes": 616024, "modules": 22}
+{"cls": 123, "sides": 12, "chain": 17, "cells": 14, "nodes": 212204, "max_nodes": 37821, "subtrees": 0, "form": "sub", "secs": 246.7, "bytes": 756373, "modules": 29}
+{"cls": 124, "sides": 12, "chain": 17, "cells": 14, "nodes": 597740, "max_nodes": 202807, "subtrees": 0, "form": "sub", "secs": 549.6, "bytes": 2025757, "modules": 68}
+{"cls": 128, "sides": 14, "chain": 17, "cells": 15, "nodes": 1022825, "max_nodes": 183226, "subtrees": 0, "form": "sub", "secs": 3518.1, "bytes": 2898139, "modules": 89}
+{"cls": 129, "sides": 14, "chain": 17, "cells": 14, "nodes": 475226, "max_nodes": 125698, "subtrees": 0, "form": "sub", "secs": 225.8, "bytes": 1334648, "modules": 43}
+{"cls": 130, "sides": 14, "chain": 18, "cells": 16, "nodes": 117494, "max_nodes": 15678, "subtrees": 0, "form": "sub", "secs": 143.3, "bytes": 488558, "modules": 19}
+{"cls": 131, "sides": 14, "chain": 23, "cells": 22, "nodes": 443616, "max_nodes": 98654, "subtrees": 0, "form": "sub", "secs": 135.1, "bytes": 1569025, "modules": 40}
+{"cls": 132, "sides": 14, "chain": 23, "cells": 21, "nodes": 114952, "max_nodes": 14316, "subtrees": 0, "form": "sub", "secs": 184.6, "bytes": 830460, "modules": 29}
+{"cls": 133, "sides": 16, "chain": 19, "cells": 15, "nodes": 220384, "max_nodes": 38790, "subtrees": 0, "form": "sub", "secs": 155.2, "bytes": 969358, "modules": 25}
+{"cls": 135, "sides": 16, "chain": 22, "cells": 20, "nodes": 1055948, "max_nodes": 230984, "subtrees": 0, "form": "sub", "secs": 742.2, "bytes": 3572688, "modules": 95}
+{"cls": 136, "sides": 16, "chain": 19, "cells": 14, "nodes": 160110, "max_nodes": 31876, "subtrees": 0, "form": "sub", "secs": 180.6, "bytes": 518036, "modules": 21}
+{"cls": 137, "error": "RuntimeError('cover_sub: depth limit without an acceptable cell')"}
+{"cls": 141, "sides": 18, "chain": 25, "cells": 22, "nodes": 303766, "max_nodes": 60676, "subtrees": 0, "form": "sub", "secs": 113.2, "bytes": 1101137, "modules": 34}
+{"cls": 142, "sides": 18, "chain": 25, "cells": 22, "nodes": 395184, "max_nodes": 62322, "subtrees": 0, "form": "sub", "secs": 220.3, "bytes": 1500832, "modules": 40}
+{"cls": 143, "sides": 24, "chain": 34, "cells": 33, "nodes": 1089595, "max_nodes": 194954, "subtrees": 0, "form": "sub", "secs": 3410.8, "bytes": 3838478, "modules": 93}
+{"cls": 87, "sides": 8, "chain": 8, "cells": 1, "nodes": 3506, "max_nodes": 3506, "subtrees": 0, "form": "sub", "secs": 17.1, "bytes": 59842, "modules": 10}
+{"cls": 65, "sides": 7, "chain": 7, "cells": 4, "nodes": 6682, "max_nodes": 2619, "subtrees": 0, "form": "sub", "secs": 30.9, "bytes": 256174, "modules": 15}
+{"cls": 88, "sides": 8, "chain": 9, "cells": 7, "nodes": 9966, "max_nodes": 2330, "subtrees": 0, "form": "sub", "secs": 47.1, "bytes": 407795, "modules": 19}
+{"cls": 87, "sides": 8, "chain": 8, "cells": 1, "nodes": 3506, "max_nodes": 3506, "subtrees": 0, "form": "sub", "secs": 20.5, "bytes": 72415, "modules": 37}
+{"cls": 87, "sides": 8, "chain": 8, "cells": 1, "nodes": 3506, "max_nodes": 3506, "subtrees": 0, "form": "sub", "secs": 17.3, "bytes": 61491, "modules": 6}
+{"cls": 65, "sides": 7, "chain": 7, "cells": 4, "nodes": 6682, "max_nodes": 2619, "subtrees": 0, "form": "sub", "secs": 26.0, "bytes": 259124, "modules": 11}
+{"cls": 88, "sides": 8, "chain": 9, "cells": 7, "nodes": 9966, "max_nodes": 2330, "subtrees": 0, "form": "sub", "secs": 45.0, "bytes": 409445, "modules": 15}
+{"cls": 140, "sides": 18, "chain": 24, "cells": 19, "nodes": 160470, "max_nodes": 18092, "subtrees": 0, "form": "sub", "secs": 195.7, "bytes": 733006, "modules": 28}
+{"cls": 61, "sides": 6, "chain": 10, "cells": 8, "nodes": 34814, "max_nodes": 8702, "subtrees": 0, "form": "sub", "secs": 93.0, "bytes": 189098, "modules": 10}
+{"cls": 77, "sides": 8, "chain": 17, "cells": 16, "nodes": 395009, "max_nodes": 88716, "subtrees": 0, "form": "sub", "secs": 1504.7, "bytes": 1130494, "modules": 41}
+{"cls": 90, "sides": 8, "chain": 10, "cells": 8, "nodes": 46796, "max_nodes": 14286, "subtrees": 0, "form": "sub", "secs": 38.4, "bytes": 365140, "modules": 14}
+{"cls": 96, "sides": 10, "chain": 16, "cells": 14, "nodes": 622258, "max_nodes": 159353, "subtrees": 0, "form": "sub", "secs": 942.9, "bytes": 1961483, "modules": 55}
+{"cls": 99, "sides": 10, "chain": 16, "cells": 13, "nodes": 215698, "max_nodes": 66386, "subtrees": 0, "form": "sub", "secs": 312.2, "bytes": 772360, "modules": 31}
+{"cls": 101, "sides": 10, "chain": 20, "cells": 19, "nodes": 302182, "max_nodes": 59138, "subtrees": 0, "form": "sub", "secs": 245.4, "bytes": 947167, "modules": 29}
+{"cls": 103, "sides": 10, "chain": 12, "cells": 10, "nodes": 78396, "max_nodes": 23632, "subtrees": 0, "form": "sub", "secs": 140.5, "bytes": 283538, "modules": 14}
+{"cls": 107, "sides": 10, "chain": 14, "cells": 12, "nodes": 175958, "max_nodes": 42234, "subtrees": 0, "form": "sub", "secs": 259.3, "bytes": 610052, "modules": 27}
+{"cls": 108, "sides": 10, "chain": 16, "cells": 14, "nodes": 87342, "max_nodes": 19436, "subtrees": 0, "form": "sub", "secs": 191.7, "bytes": 684830, "modules": 22}
+{"cls": 109, "sides": 10, "chain": 13, "cells": 10, "nodes": 26512, "max_nodes": 4394, "subtrees": 0, "form": "sub", "secs": 64.1, "bytes": 383785, "modules": 15}
+{"cls": 110, "sides": 11, "chain": 15, "cells": 14, "nodes": 370322, "max_nodes": 84367, "subtrees": 0, "form": "sub", "secs": 1367.3, "bytes": 1217827, "modules": 38}
+{"cls": 111, "sides": 12, "chain": 16, "cells": 12, "nodes": 235206, "max_nodes": 62802, "subtrees": 0, "form": "sub", "secs": 125.6, "bytes": 926480, "modules": 25}
+{"cls": 113, "sides": 12, "chain": 14, "cells": 9, "nodes": 31816, "max_nodes": 5754, "subtrees": 0, "form": "sub", "secs": 89.2, "bytes": 501105, "modules": 16}
+{"cls": 115, "sides": 12, "chain": 21, "cells": 19, "nodes": 99646, "max_nodes": 9430, "subtrees": 0, "form": "sub", "secs": 3857.6, "bytes": 1661105, "modules": 35}
+{"cls": 116, "sides": 12, "chain": 19, "cells": 17, "nodes": 806191, "max_nodes": 199958, "subtrees": 0, "form": "sub", "secs": 117.0, "bytes": 2978618, "modules": 63}
+{"cls": 118, "sides": 12, "chain": 13, "cells": 8, "nodes": 104636, "max_nodes": 24863, "subtrees": 0, "form": "sub", "secs": 16.6, "bytes": 323578, "modules": 16}
+{"cls": 122, "sides": 12, "chain": 14, "cells": 11, "nodes": 127830, "max_nodes": 27506, "subtrees": 0, "form": "sub", "secs": 201.4, "bytes": 617383, "modules": 23}
+{"cls": 123, "sides": 12, "chain": 17, "cells": 14, "nodes": 212204, "max_nodes": 37821, "subtrees": 0, "form": "sub", "secs": 278.4, "bytes": 757734, "modules": 30}
+{"cls": 124, "sides": 12, "chain": 17, "cells": 14, "nodes": 597740, "max_nodes": 202807, "subtrees": 0, "form": "sub", "secs": 614.1, "bytes": 2029188, "modules": 69}
+{"cls": 128, "sides": 14, "chain": 17, "cells": 15, "nodes": 1022825, "max_nodes": 183226, "subtrees": 0, "form": "sub", "secs": 3929.4, "bytes": 2899500, "modules": 90}
+{"cls": 129, "sides": 14, "chain": 17, "cells": 14, "nodes": 475226, "max_nodes": 125698, "subtrees": 0, "form": "sub", "secs": 258.1, "bytes": 1335440, "modules": 44}
+{"cls": 130, "sides": 14, "chain": 18, "cells": 16, "nodes": 117494, "max_nodes": 15678, "subtrees": 0, "form": "sub", "secs": 162.0, "bytes": 489460, "modules": 20}
+{"cls": 131, "sides": 14, "chain": 23, "cells": 22, "nodes": 443616, "max_nodes": 98654, "subtrees": 0, "form": "sub", "secs": 156.2, "bytes": 1569690, "modules": 41}
+{"cls": 132, "sides": 14, "chain": 23, "cells": 21, "nodes": 114952, "max_nodes": 14316, "subtrees": 0, "form": "sub", "secs": 215.0, "bytes": 832865, "modules": 30}
+{"cls": 133, "sides": 16, "chain": 19, "cells": 15, "nodes": 220384, "max_nodes": 38790, "subtrees": 0, "form": "sub", "secs": 176.4, "bytes": 970396, "modules": 26}
+{"cls": 135, "sides": 16, "chain": 22, "cells": 20, "nodes": 1055948, "max_nodes": 230984, "subtrees": 0, "form": "sub", "secs": 869.1, "bytes": 3574047, "modules": 96}
+{"cls": 136, "sides": 16, "chain": 19, "cells": 14, "nodes": 160110, "max_nodes": 31876, "subtrees": 0, "form": "sub", "secs": 203.2, "bytes": 519397, "modules": 22}
+{"cls": 137, "error": "RuntimeError('cover_sub: depth limit without an acceptable cell')"}
+{"cls": 141, "sides": 18, "chain": 25, "cells": 22, "nodes": 303766, "max_nodes": 60676, "subtrees": 0, "form": "sub", "secs": 127.4, "bytes": 1102233, "modules": 35}
+{"cls": 142, "sides": 18, "chain": 25, "cells": 22, "nodes": 395184, "max_nodes": 62322, "subtrees": 0, "form": "sub", "secs": 242.7, "bytes": 1502015, "modules": 41}
+{"cls": 143, "sides": 24, "chain": 34, "cells": 33, "nodes": 1089595, "max_nodes": 194954, "subtrees": 0, "form": "sub", "secs": 3589.2, "bytes": 3839728, "modules": 94}
+{"cls": 137, "error": "RuntimeError('cover_sub: depth limit without an acceptable cell')"}
+{"cls": 93, "sides": 9, "chain": 13, "cells": 12, "nodes": 259007, "max_nodes": 55721, "subtrees": 0, "form": "sub", "secs": 1220.2, "bytes": 1331808, "modules": 28}
+{"cls": 137, "error": "RuntimeError('cover_sub: depth limit without an acceptable cell')"}
+{"cls": 137, "error": "NameError(\"name 'trace_form' is not defined\")"}
+{"cls": 137, "sides": 18, "chain": 18, "cells": 6, "nodes": 7404, "max_nodes": 2080, "subtrees": 0, "form": "sub", "secs": 1021.2, "bytes": 219194, "modules": 8}

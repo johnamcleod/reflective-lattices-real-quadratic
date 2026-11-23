@@ -1,0 +1,81 @@
+{"cls": 2, "ok": true, "rc": 0, "user": 18.19, "wall": 164.4, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 155}
+{"cls": 11, "ok": true, "rc": 0, "user": 23.08, "wall": 172.4, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 469}
+{"cls": 4, "ok": true, "rc": 0, "user": 19.84, "wall": 164.0, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 541}
+{"cls": 1, "ok": true, "rc": 0, "user": 21.54, "wall": 156.4, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 605}
+{"cls": 0, "ok": true, "rc": 0, "user": 24.88, "wall": 156.0, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 841}
+{"cls": 23, "ok": true, "rc": 0, "user": 25.47, "wall": 155.6, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 1055}
+{"cls": 14, "ok": true, "rc": 0, "user": 29.11, "wall": 137.3, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 1507}
+{"cls": 8, "ok": true, "rc": 0, "user": 27.06, "wall": 133.3, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 1541}
+{"cls": 17, "ok": true, "rc": 0, "user": 30.51, "wall": 155.1, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 1767}
+{"cls": 5, "ok": true, "rc": 0, "user": 36.3, "wall": 156.1, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 1947}
+{"cls": 13, "ok": true, "rc": 0, "user": 32.05, "wall": 161.3, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 2149}
+{"cls": 29, "ok": true, "rc": 0, "user": 37.22, "wall": 163.4, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 2159}
+{"cls": 12, "ok": true, "rc": 0, "user": 45.25, "wall": 186.1, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 2211}
+{"cls": 3, "ok": true, "rc": 0, "user": 47.11, "wall": 179.4, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 2219}
+{"cls": 6, "ok": true, "rc": 0, "user": 35.43, "wall": 169.4, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 2723}
+{"cls": 7, "ok": true, "rc": 0, "user": 44.91, "wall": 176.7, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 2879}
+{"cls": 24, "ok": true, "rc": 0, "user": 61.91, "wall": 192.8, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 3730}
+{"cls": 21, "ok": true, "rc": 0, "user": 79.53, "wall": 208.1, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 5115}
+{"cls": 30, "ok": true, "rc": 0, "user": 114.09, "wall": 207.4, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 5946}
+{"cls": 15, "ok": true, "rc": 0, "user": 91.9, "wall": 198.4, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 6117}
+{"cls": 51, "ok": true, "rc": 0, "user": 104.92, "wall": 231.6, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 6943}
+{"cls": 34, "ok": true, "rc": 0, "user": 150.03, "wall": 271.6, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 9205}
+{"cls": 50, "ok": true, "rc": 0, "user": 107.65, "wall": 249.8, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 10612}
+{"cls": 20, "ok": true, "rc": 0, "user": 214.89, "wall": 387.3, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 12034}
+{"cls": 40, "ok": true, "rc": 0, "user": 169.23, "wall": 307.0, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 14915}
+{"cls": 42, "ok": true, "rc": 0, "user": 216.49, "wall": 318.9, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 15016}
+{"cls": 38, "ok": true, "rc": 0, "user": 217.37, "wall": 326.6, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 15781}
+{"cls": 53, "ok": true, "rc": 0, "user": 164.92, "wall": 324.5, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 15845}
+{"cls": 32, "ok": true, "rc": 0, "user": 188.29, "wall": 355.0, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 16510}
+{"cls": 18, "ok": true, "rc": 0, "user": 412.27, "wall": 620.4, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 17748}
+{"cls": 37, "ok": true, "rc": 0, "user": 284.25, "wall": 487.0, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 20365}
+{"cls": 52, "ok": false, "rc": 134, "user": 6.68, "wall": 87.1, "axioms": null, "errors": [], "nodes": 20417}
+{"cls": 19, "ok": false, "rc": 134, "user": 5.79, "wall": 69.2, "axioms": null, "errors": [], "nodes": 20705}
+{"cls": 36, "ok": true, "rc": 0, "user": 293.37, "wall": 428.9, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 21673}
+{"cls": 16, "ok": true, "rc": 0, "user": 265.44, "wall": 390.0, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 22055}
+{"cls": 39, "ok": true, "rc": 0, "user": 421.2, "wall": 574.4, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 25161}
+{"cls": 62, "ok": true, "rc": 0, "user": 343.75, "wall": 461.0, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 27433}
+{"cls": 82, "ok": true, "rc": 0, "user": 340.17, "wall": 507.5, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 27741}
+{"cls": 45, "ok": true, "rc": 0, "user": 285.78, "wall": 438.3, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 28827}
+{"cls": 25, "ok": false, "rc": 134, "user": 9.26, "wall": 122.3, "axioms": null, "errors": [], "nodes": 30356}
+{"cls": 71, "ok": false, "rc": 134, "user": 9.01, "wall": 115.5, "axioms": null, "errors": [], "nodes": 30564}
+{"cls": 10, "ok": false, "rc": 137, "user": 17.03, "wall": 267.6, "axioms": null, "errors": ["memcap: footprint 4481 MB > 4000 MB; killing PIDs 28185 28293"], "nodes": 37202}
+{"cls": 41, "ok": true, "rc": 0, "user": 198.74, "wall": 339.1, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 38249}
+{"cls": 46, "ok": true, "rc": 0, "user": 239.73, "wall": 381.8, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 40621}
+{"cls": 26, "ok": true, "rc": 0, "user": 259.29, "wall": 393.7, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 41801}
+{"cls": 68, "ok": true, "rc": 0, "user": 314.37, "wall": 465.6, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 42214}
+{"cls": 70, "ok": true, "rc": 0, "user": 260.1, "wall": 381.2, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 43528}
+{"cls": 9, "ok": false, "rc": 137, "user": 15.96, "wall": 267.1, "axioms": null, "errors": ["memcap: footprint 4409 MB > 4000 MB; killing PIDs 38715 38809"], "nodes": 43890}
+{"cls": 54, "ok": false, "rc": 137, "user": 13.96, "wall": 231.8, "axioms": null, "errors": ["memcap: footprint 4879 MB > 4000 MB; killing PIDs 38725 38808"], "nodes": 47573}
+{"cls": 33, "ok": true, "rc": 0, "user": 513.59, "wall": 684.0, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 52725}
+{"cls": 22, "ok": true, "rc": 0, "user": 523.59, "wall": 712.0, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 54508}
+{"cls": 48, "ok": false, "rc": 137, "user": 21.37, "wall": 348.3, "axioms": null, "errors": ["memcap: footprint 4387 MB > 4000 MB; killing PIDs 46770 46854"], "nodes": 59473}
+{"cls": 56, "ok": false, "rc": 137, "user": 23.6, "wall": 375.6, "axioms": null, "errors": ["memcap: footprint 4466 MB > 4000 MB; killing PIDs 47335 47396"], "nodes": 60034}
+{"cls": 66, "ok": true, "rc": 0, "user": 350.98, "wall": 506.5, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 60979}
+{"cls": 85, "ok": false, "rc": 134, "user": 6.31, "wall": 84.7, "axioms": null, "errors": [], "nodes": 67809}
+{"cls": 31, "ok": false, "rc": 137, "user": 26.17, "wall": 413.0, "axioms": null, "errors": ["memcap: footprint 4022 MB > 4000 MB; killing PIDs 51295 51383"], "nodes": 68373}
+{"cls": 28, "ok": true, "rc": 0, "user": 563.16, "wall": 756.7, "axioms": ["propext", "Classical.choice", "Quot.sound"], "errors": [], "nodes": 72206}
+{"cls": 35, "ok": false, "rc": 137, "user": 17.81, "wall": 285.4, "axioms": null, "errors": ["memcap: footprint 4089 MB > 4000 MB; killing PIDs 55141 55212"], "nodes": 73480}
+{"cls": 72, "ok": false, "rc": 137, "user": 26.26, "wall": 417.3, "axioms": null, "errors": ["memcap: footprint 4235 MB > 4000 MB; killing PIDs 57760 57838"], "nodes": 76976}
+{"cls": 58, "ok": false, "rc": 137, "user": 46.88, "wall": 752.7, "axioms": null, "errors": ["memcap: footprint 4057 MB > 4000 MB; killing PIDs 61341 61404"], "nodes": 82577}
+{"cls": 27, "ok": false, "rc": 137, "user": 29.85, "wall": 481.9, "axioms": null, "errors": ["memcap: footprint 4248 MB > 4000 MB; killing PIDs 61635 61702"], "nodes": 87092}
+{"cls": 55, "ok": false, "rc": 137, "user": 17.13, "wall": 279.9, "axioms": null, "errors": ["memcap: footprint 4570 MB > 4000 MB; killing PIDs 66112 66197"], "nodes": 88668}
+{"cls": 94, "ok": false, "rc": 134, "user": 5.4, "wall": 71.9, "axioms": null, "errors": [], "nodes": 89283}
+{"cls": 43, "ok": false, "rc": 134, "user": 6.11, "wall": 78.5, "axioms": null, "errors": [], "nodes": 92518}
+{"cls": 76, "ok": false, "rc": 137, "user": 49.99, "wall": 775.6, "axioms": null, "errors": ["memcap: footprint 4218 MB > 4000 MB; killing PIDs 69331 69398"], "nodes": 100787}
+{"cls": 60, "ok": false, "rc": 137, "user": 26.16, "wall": 406.9, "axioms": null, "errors": ["memcap: footprint 4713 MB > 4000 MB; killing PIDs 69785 69859"], "nodes": 101378}
+{"cls": 73, "ok": false, "rc": 137, "user": 29.6, "wall": 463.9, "axioms": null, "errors": ["memcap: footprint 4389 MB > 4000 MB; killing PIDs 73771 73852"], "nodes": 103333}
+{"cls": 78, "ok": false, "rc": 134, "user": 8.03, "wall": 103.8, "axioms": null, "errors": [], "nodes": 108838}
+{"cls": 81, "ok": false, "rc": 137, "user": 12.1, "wall": 223.6, "axioms": null, "errors": ["memcap: footprint 4030 MB > 4000 MB; killing PIDs 77799 77878"], "nodes": 113506}
+{"cls": 67, "ok": false, "rc": 137, "user": 52.75, "wall": 867.5, "axioms": null, "errors": ["memcap: footprint 4045 MB > 4000 MB; killing PIDs 78166 78249"], "nodes": 122177}
+{"cls": 63, "ok": false, "rc": 137, "user": 19.85, "wall": 334.6, "axioms": null, "errors": ["memcap: footprint 4034 MB > 4000 MB; killing PIDs 79655 79759"], "nodes": 122697}
+{"cls": 98, "ok": false, "rc": 137, "user": 15.01, "wall": 249.5, "axioms": null, "errors": ["memcap: footprint 4043 MB > 4000 MB; killing PIDs 82656 82725"], "nodes": 126006}
+{"cls": 44, "ok": false, "rc": 137, "user": 16.15, "wall": 270.5, "axioms": null, "errors": ["memcap: footprint 4047 MB > 4000 MB; killing PIDs 84867 84945"], "nodes": 131184}
+{"cls": 47, "ok": false, "rc": 137, "user": 19.37, "wall": 319.5, "axioms": null, "errors": ["memcap: footprint 4039 MB > 4000 MB; killing PIDs 85752 85821"], "nodes": 146619}
+{"cls": 105, "ok": false, "rc": 137, "user": 16.69, "wall": 278.6, "axioms": null, "errors": ["memcap: footprint 4049 MB > 4000 MB; killing PIDs 87181 87254"], "nodes": 149944}
+{"cls": 97, "ok": false, "rc": 137, "user": 16.39, "wall": 275.4, "axioms": null, "errors": ["memcap: footprint 4167 MB > 4000 MB; killing PIDs 88299 88372"], "nodes": 172547}
+{"cls": 93, "ok": false, "rc": 137, "user": 10.47, "wall": 171.6, "axioms": null, "errors": ["memcap: footprint 4073 MB > 4000 MB; killing PIDs 89389 89454"], "nodes": 193888}
+{"cls": 92, "ok": false, "rc": 134, "user": 7.03, "wall": 87.9, "axioms": null, "errors": [], "nodes": 195690}
+{"cls": 49, "ok": false, "rc": 134, "user": 4.91, "wall": 54.6, "axioms": null, "errors": [], "nodes": 202634}
+{"cls": 102, "ok": false, "rc": 137, "user": 17.47, "wall": 416.7, "axioms": null, "errors": ["memcap: footprint 4092 MB > 4000 MB; killing PIDs 91414 91512"], "nodes": 207579}
+{"cls": 59, "ok": false, "rc": 137, "user": 15.85, "wall": 385.2, "axioms": null, "errors": ["memcap: footprint 4043 MB > 4000 MB; killing PIDs 91436 91521"], "nodes": 210528}

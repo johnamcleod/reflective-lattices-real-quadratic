@@ -1,0 +1,6 @@
+811 lattices
+pass pass4: 2 unresolved; hops=40 delta=64 limit=43200s
+2 to do
+start short_pair [[1, 0], [2, 1], [0, 0], [0, 0], [1, 0], [31, 22], [2, 0]] 0
+start short_edge [[1, 0], [1, 0], [0, 0], [0, 0], [1, 0], [23, 17]] 0
+{"ls": {"timeout": 2}, "not_ls": {}}
